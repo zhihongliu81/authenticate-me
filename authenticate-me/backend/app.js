@@ -19,7 +19,7 @@ app.use(express.json());
 
 const routes = require('./routes');
 
-app.use(routes);
+
 
 // Security Middleware
 if (!isProduction) {
@@ -44,6 +44,11 @@ app.use(
         }
     })
 )
+
+app.use(routes);
+
+// 4zEpdDs6-gmgEAwm-Phqc536zA_jzjzozfcw
+
 
 
 

@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const sessionRouter = require('./session.js');
+const usersRouter = require('./users.js');
 const { restoreUser } = require('../../utils/auth.js');
 
 // Connect restoreUser middleware to the API router
@@ -6,15 +8,18 @@ const { restoreUser } = require('../../utils/auth.js');
   // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
+router.use('/session', sessionRouter);
+router.use('/users', usersRouter);
+
 
 // router.get('/restore-user', (req, res) => {
 //     return res.json(req.user);
 // })
 
-// //POST /api/test
-// router.post('/test', (req, res) => {
-//     res.json({requestBody: req.body})
-// })
+//POST /api/test
+router.post('/test', (req, res) => {
+    res.json({requestBody: req.body})
+})
 
 
 // // GET /api/set-token-cookie
