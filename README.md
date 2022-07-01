@@ -50,7 +50,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/users/session
+  * URL: /api/users/current
   * Body: none
 
 * Successful Response
@@ -142,7 +142,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /api/users
+  * URL: /api/users/signup
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -250,7 +250,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/users/session/groups
+  * URL: /api/groups/current
   * Body: none
 
 * Successful Response
@@ -521,7 +521,7 @@ Returns the members of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/groups/:groupId/users
+  * URL: /api/groups/:groupId/members
   * Body: none
 
 * Successful Response: If you ARE the organizer of the group. Shows all
@@ -783,7 +783,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:groupId/membership/membershipId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1052,7 +1052,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /api/groups/:groupId/venues
+  * URL: /api/groups/:groupId/venues/new
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1202,7 +1202,7 @@ Creates and returns a new event for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /api/groups/:groupId/events
+  * URL: /api/groups/:groupId/events/new
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1418,7 +1418,7 @@ Returns the attendees of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/events/:id/users
+  * URL: /api/events/:eventId/attendees
   * Body: none
 
 * Successful Response: If you ARE the organizer of the group or a member of the
@@ -1580,7 +1580,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: /api/events/:eventId/attendance
+  * URL: /api/events/:eventId/attendees/update
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1655,7 +1655,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: /api/events/:eventId/attendance
+  * URL: /api/events/:eventId/attendees/attendeeId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1856,7 +1856,7 @@ Return events filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/events?
+  * URL: /api/events?page=integer1&size=integer2&name=&type=&startDate=
   * Query Parameters
     * page: integer, minimum: 0, maximum: 10, default: 0
     * size: integer, minimum: 0, maximum: 20, default: 20
