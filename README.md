@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+`![meetup-clone-database-schema](https://user-images.githubusercontent.com/102339574/176936501-1a28cd07-fbe9-4761-9f97-94b7e5f4ab03.png)`
 
 ## API Documentation
 
