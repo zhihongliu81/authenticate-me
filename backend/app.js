@@ -18,6 +18,11 @@ app.use(cookieParser());
 app.use(express.json());
 
 const routes = require('./routes');
+app.get(
+    '/',
+    async (req, res) => {
+      return res.send('success')  }
+    );
 
 
 
