@@ -19,11 +19,7 @@ app.use(express.json());
 
 const routes = require('./routes');
 
-app.get(
-    '/',
-    async (req, res) => {
-      return res.send('success')  }
-    );
+
 
 
 
@@ -51,6 +47,13 @@ app.use(
     })
 )
 
+app.get(
+    '/',
+    async (req, res) => {
+        const csrfToken = req.csrfToken();
+        res.cookie("XSRF-TOKEN", csrfToken);
+        return res.send('success');
+    });
 app.use(routes);
 
 // 4zEpdDs6-gmgEAwm-Phqc536zA_jzjzozfcw
@@ -81,10 +84,18 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
+
+    let errors = {};
+    err.errors.forEach(el => {
+        let errObj = JSON.parse(el);
+        errors = {...errors, ...errObj};
+    })
+
     res.json({
-        title: err.title || 'Sever Error',
+        // title: err.title || 'Sever Error',
         message: err.message,
-        errors: err.errors,
+        statusCode: res.statusCode,
+        errors,
         stack: isProduction ? null : err.stack
     });
 });
