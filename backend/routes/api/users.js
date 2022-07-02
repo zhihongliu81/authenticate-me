@@ -23,6 +23,7 @@ const validateLogin = [
     .withMessage(JSON.stringify({"password":"Password is required"})),
   handleValidationErrors
 ];
+
 router.post('/login', validateLogin, async (req, res, next) => {
   const {email, password} = req.body;
   const user = await User.login({ email, password });
