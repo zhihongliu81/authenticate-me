@@ -20,7 +20,7 @@ module.exports = {
       private: true,
       city: "G1-New York",
       state: "NY",
-      previewImage: "image url1",
+      previewImage: "image url-group1",
       },
       {
         organizerId: 2,
@@ -30,7 +30,7 @@ module.exports = {
         private: true,
         city: "G2-New York",
         state: "NY",
-        previewImage: "image url2",
+        previewImage: "image url-group2",
         },
         {
           organizerId: 3,
@@ -40,7 +40,7 @@ module.exports = {
           private: true,
           city: "G3-New York",
           state: "NY",
-          previewImage: "image url3",
+          previewImage: "image url-group3",
           },
      ], {} )
   },
@@ -54,14 +54,38 @@ module.exports = {
      */
      const Op = Sequelize.Op;
      await queryInterface.bulkDelete('Groups',{
-       name: {[Op.in]: [
-        "G1-Evening Tennis on the Water",
-        "G2-Evening Tennis on the Water",
-        "G3-Evening Tennis on the Water"
-     ]}
+      [Op.or]: [
+        {
+          organizerId: 1,
+          name: "G1-Evening Tennis on the Water",
+          about: "G1-Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          type: "In person",
+          private: true,
+          city: "G1-New York",
+          state: "NY",
+          previewImage: "image url-group1",
+          },
+          {
+            organizerId: 2,
+            name: "G2-Evening Tennis on the Water",
+            about: "G2-Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+            type: "In person",
+            private: true,
+            city: "G2-New York",
+            state: "NY",
+            previewImage: "image url-group2",
+            },
+            {
+              organizerId: 3,
+              name: "G3-Evening Tennis on the Water",
+              about: "G3-Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+              type: "In person",
+              private: true,
+              city: "G3-New York",
+              state: "NY",
+              previewImage: "image url-group3",
+              },
+      ]
      }, {})
   }
 };
-
-
-
