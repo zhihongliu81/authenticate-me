@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, sequelize, Membership } = require('../../db/models');
+const { User, Group, sequelize, Membership, Image } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -35,16 +35,13 @@ router.get('/', async (req, res) => {
         formattedGroups.push(formattedGroup);
     }
     res.json({groups: formattedGroups});
+
+
 })
 
 
 // Get all Groups by the current user
 router.get('/current', restoreUser, requireAuth, async (req, res) => {
-    // const user = await User.findByPk(req.user.id);
-    // console.log(req.user.id);
-    // const groups = await user.getGroups({
-    //     joinTableAttributes: ['status']
-    // });
 
     const groups = await Group.findAll({
         include: {
@@ -74,9 +71,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
                 };
                 formattedGroups.push(formattedGroup);
             }
-
         }
-
     }
     res.json({Groups: formattedGroups});
 })
@@ -84,8 +79,28 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 // Get details of a group by id
 router.get('/:groupId', async(req, res) => {
     const group = await Group.findByPk(req.params.groupId, {
-        include: User
+        include: [
+            {
+              model: User,
+            },
+            {
+              model: Image,
+              attributes: ['url']
+            }
+        ]
     });
+    if (!group) {
+        res.statusCode = 404;
+       return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    }
+    let images = [];
+    for (let i = 0; i < group.Images.length; i++) {
+        let ele = group.Images[i];
+        images.push(ele.url);
+    }
     const organizer = await User.findByPk(group.organizerId, {
         attributes: ['id', 'firstName', 'lastName']
     })
@@ -101,12 +116,13 @@ router.get('/:groupId', async(req, res) => {
         createdAt: group.createdAt,
         updatedAt: group.updatedAt,
         numMembers: group.Users.length,
-        previewImage: group.previewImage,
+        images,
         Organizer: organizer
     };
     res.json(formattedGroup);
 })
 
+// Create a Group
 
 
 module.exports = router;
