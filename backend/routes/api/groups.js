@@ -81,6 +81,31 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     res.json({Groups: formattedGroups});
 })
 
+// Get details of a group by id
+router.get('/:groupId', async(req, res) => {
+    const group = await Group.findByPk(req.params.groupId, {
+        include: User
+    });
+    const organizer = await User.findByPk(group.organizerId, {
+        attributes: ['id', 'firstName', 'lastName']
+    })
+    let formattedGroup = {
+        id: group.id,
+        organizerId: group.organizerId,
+        name: group.name,
+        about: group.about,
+        type: group.type,
+        private: group.private,
+        city: group.city,
+        state: group.state,
+        createdAt: group.createdAt,
+        updatedAt: group.updatedAt,
+        numMembers: group.Users.length,
+        previewImage: group.previewImage,
+        Organizer: organizer
+    };
+    res.json(formattedGroup);
+})
 
 
 
