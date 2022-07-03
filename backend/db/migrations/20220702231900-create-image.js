@@ -10,11 +10,11 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+
       },
       eventId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        
       },
       url: {
         type: Sequelize.STRING,
