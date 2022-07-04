@@ -197,6 +197,35 @@ router.put('/:groupId', restoreUser, requireAuth, validateGroup, async (req, res
     res.json(group);
 })
 
+// Delete a group
+router.delete('/:groupId', restoreUser, requireAuth, async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    }
+    if (group.organizerId !== req.user.id) {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+    
+    console.log(group);
+    await group.destroy();
+
+    res.statusCode = 200;
+
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+      });
+
+})
 
 
 module.exports = router;

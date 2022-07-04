@@ -13,12 +13,14 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Groups'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       memberId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Users' }
+        references: { model: 'Users' },
+        // onDelete: 'CASCADE'
       },
       status: {
         type: Sequelize.STRING

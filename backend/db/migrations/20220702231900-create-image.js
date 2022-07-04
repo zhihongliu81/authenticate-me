@@ -10,12 +10,13 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Groups'}
+        references: {model: 'Groups'},
+        onDelete: "SET NULL"
 
       },
       eventId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Events'}
+        // references: {model: 'Events'}
 
       },
       url: {

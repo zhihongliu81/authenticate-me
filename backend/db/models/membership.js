@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Membership extends Model {
     /**
@@ -18,11 +19,21 @@ module.exports = (sequelize, DataTypes) => {
   Membership.init({
     groupId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'Groups',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
     },
     memberId: {
       type: DataTypes.INTEGER,
-      allowNull:false
+      allowNull:false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
     },
     status: {
       type: DataTypes.STRING
