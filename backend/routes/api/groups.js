@@ -326,4 +326,71 @@ router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => 
 })
 
 
+// change the status of a membership for a group specified by id
+router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          });
+    }
+    const membership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.body.memberId
+        }
+    });
+
+    if(!membership) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Membership between the user and the group does not exits",
+            "statusCode": 404
+          })
+    }
+
+    if (req.body.status === 'pending') {
+        res.statusCode = 400;
+        return res.json({
+            "message": "Cannot change a membership status to pending",
+            "statusCode": 400
+          })
+    }
+    let currentUserMembership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.user.id
+        }
+    })
+    const status = currentUserMembership.toJSON().status;
+    console.log(status)
+    if (req.body.status === 'member' && (status !== 'organizer' && status !== 'co-host')) {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Current User must be the organizer or a co-host to make someone a member",
+            "statusCode": 403
+          })
+    }
+
+    if (req.body.status === 'co-host' && status !== 'organizer') {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Current User must be the organizer to add a co-host",
+            "statusCode": 403
+          })
+    }
+
+    // const newMembership = await membership.update({
+    //     status: req.body.status
+    // })
+    membership.status = req.body.status;
+    
+    await membership.save();
+
+    res.json(membership);
+})
+
+
 module.exports = router;
