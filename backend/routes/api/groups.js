@@ -226,7 +226,7 @@ router.delete('/:groupId', restoreUser, requireAuth, async (req, res) => {
 
 
 // Get all members of a group specified by its id
-router.get('/:groupId/members',restoreUser, async (req, res, next) => {
+router.get('/:groupId/members', restoreUser, async (req, res, next) => {
     const group = await Group.findByPk(req.params.groupId);
     if (!group) {
         res.statusCode = 404;
@@ -235,7 +235,6 @@ router.get('/:groupId/members',restoreUser, async (req, res, next) => {
             "statusCode": 404
           })
     }
-
 
     const members = await Membership.findAll({
         where: {
@@ -270,6 +269,60 @@ router.get('/:groupId/members',restoreUser, async (req, res, next) => {
     }
 
     res.json(formattedMembers);
+})
+
+
+// Request a Membership for a group based on the group's id
+router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+       return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    let membership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.user.id
+        }
+    })
+
+    if (membership) {
+        if (membership.status === "pending") {
+            res.statusCode = 400;
+            return res.json({
+                "message": "Membership has already been requested",
+                "statusCode": 400
+              })
+        } else {
+            res.statusCode = 400;
+            return res.json({
+                "message": "User is already a member of the group",
+                "statusCode": 400
+              })
+        }
+    }
+//    await Membership.create({
+//         groupId: req.params.groupId,
+//         memberId: req.user.id,
+//         status: "pending"
+//     })
+       membership = Membership.build({
+        groupId: req.params.groupId,
+        memberId: req.user.id,
+        status: "pending"
+       });
+       await membership.save();
+    membership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.user.id
+        }
+    })
+    res.json(membership);
 })
 
 
