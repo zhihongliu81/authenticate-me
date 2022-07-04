@@ -123,6 +123,55 @@ router.get('/:groupId', async(req, res) => {
 })
 
 // Create a Group
+const validateCreateGroup = [
+    check('name')
+    .exists({ checkFalsy: true })
+    .isLength({ max: 60 })
+    .withMessage( "Name must be 60 characters or less"),
+    check('about')
+    .exists({checkFalsy: true})
+    .isLength({min: 50})
+    .withMessage("About must be 50 characters or more"),
+    check('type')
+    .exists({checkFalsy: true})
+    .isIn(['Online', 'In person'])
+    .withMessage("Type must be Online or In person"),
+    check('private')
+    .exists({checkFalsy: true})
+    .isBoolean()
+    .withMessage("Private must be a boolean"),
+    check('city')
+    .exists({checkFalsy: true})
+    .withMessage("City is required"),
+    check('state')
+    .exists({checkFalsy: true})
+    .withMessage("State is required"),
+    handleValidationErrors
+]
+router.post('/', restoreUser, requireAuth, validateCreateGroup, async (req, res) => {
+    const {name, about, type, private, city, state} = req.body;
+    const group = await Group.create({
+        organizerId: req.user.id,
+        name,
+        about,
+        type,
+        private,
+        city,
+        state,
+    });
+    const membership = await Membership.create({
+        groupId: group.id,
+        memberId: req.user.id,
+        status: 'organizer'
+    })
+    res.statusCode = 201;
+    res.json(group);
+
+
+})
+
+
+
 
 
 module.exports = router;

@@ -17,10 +17,10 @@ const validateLogin = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage(JSON.stringify({"email":"Email is required"})),
+    .withMessage("Email is required"),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage(JSON.stringify({"password":"Password is required"})),
+    .withMessage("Password is required"),
   handleValidationErrors
 ];
 
@@ -63,14 +63,14 @@ const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage(JSON.stringify({"email":"Invalid email"})),
+    .withMessage("Invalid email"),
   check('firstName')
     .exists({ checkFalsy: true })
     // .isLength({ min: 4 })
-    .withMessage(JSON.stringify({"firstName":"First Name is required"})),
+    .withMessage("First Name is required"),
     check('lastName')
     .exists({ checkFalsy: true })
-    .withMessage(JSON.stringify({"LastName":"Last Name is required"})),
+    .withMessage("Last Name is required"),
   // check('username')
   //   .not()
   //   .isEmail()
@@ -87,11 +87,11 @@ router.post(
     validateSignup,
     async (req, res) => {
       const { email, password, firstName, lastName } = req.body;
-      console.log(typeof email);
       let user = await User.findOne({where:{email: email}});
-      console.log(user);
+
 
       if (user) {
+        res.statusCode = 403;
         return res.json({
           "message": "User already exists",
           "statusCode": 403,

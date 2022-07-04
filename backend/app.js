@@ -87,8 +87,40 @@ app.use((err, _req, res, _next) => {
 
     let errors = {};
     err.errors.forEach(el => {
-        let errObj = JSON.parse(el);
-        errors = {...errors, ...errObj};
+        if (el === "Email is required") {
+            errors.email = el;
+        }
+        if (el === "Password is required") {
+            errors.password = el;
+        }
+        if (el === 'Invalid email') {
+            errors.email = el;
+        }
+        if (el === "First Name is required") {
+            errors.firstName = el;
+        }
+        if (el === "Last Name is required") {
+            errors.lastName = el;
+        }
+        if (el === "Name must be 60 characters or less") {
+            errors.name = el;
+        }
+        if (el === "About must be 50 characters or more") {
+            errors.about = el;
+        }
+        if (el === "Type must be Online or In person") {
+            errors.type = el;
+        }
+        if (el ===  "Private must be a boolean") {
+            errors.private = el;
+        }
+        if (el === "City is required") {
+            errors.city = el;
+        }
+        if (el === "State is required") {
+            errors.state = el;
+        }
+
     })
 
     res.json({
