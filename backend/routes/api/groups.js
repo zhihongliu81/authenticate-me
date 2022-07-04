@@ -214,17 +214,62 @@ router.delete('/:groupId', restoreUser, requireAuth, async (req, res) => {
             "statusCode": 403
           })
     }
-    
-    console.log(group);
+
     await group.destroy();
 
     res.statusCode = 200;
-
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
       });
+})
 
+
+// Get all members of a group specified by its id
+router.get('/:groupId/members',restoreUser, async (req, res, next) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+
+    const members = await Membership.findAll({
+        where: {
+            groupId: req.params.groupId
+        },
+        include: {
+            model: User
+        }
+    });
+
+    const formattedMembers = [];
+    if (!req.user || group.organizerId !== req.user.id) {
+        members.forEach(member => {
+            let memberObj = {};
+            memberObj.id = member.memberId;
+            memberObj.firstName = member.User.firstName;
+            memberObj.lastName = member.User.lastName;
+            memberObj.Membership = {status: member.status};
+            if (member.status !== 'pending') {
+                formattedMembers.push(memberObj);
+            }
+        })
+    } else {
+            members.forEach(member => {
+            let memberObj = {};
+            memberObj.id = member.memberId;
+            memberObj.firstName = member.User.firstName;
+            memberObj.lastName = member.User.lastName;
+            memberObj.Membership = {status: member.status};
+            formattedMembers.push(memberObj);
+        })
+    }
+
+    res.json(formattedMembers);
 })
 
 

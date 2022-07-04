@@ -16,17 +16,17 @@ module.exports = {
        { groupId: 1, memberId: 1, status: 'organizer' },
        { groupId: 1, memberId: 4, status: 'co-host' },
        { groupId: 1, memberId: 7, status: 'member' },
-       { groupId: 1, memberId: 2, status: 'member' },
+       { groupId: 1, memberId: 2, status: 'pending' },
        { groupId: 2, memberId: 2, status: 'organizer' },
        { groupId: 2, memberId: 5, status: 'co-host' },
        { groupId: 2, memberId: 8, status: 'member' },
        { groupId: 2, memberId: 1, status: 'member' },
-       { groupId: 2, memberId: 9, status: 'member' },
+       { groupId: 2, memberId: 9, status: 'pending' },
        { groupId: 3, memberId: 3, status: 'organizer' },
        { groupId: 3, memberId: 6, status: 'co-host' },
        { groupId: 3, memberId: 9, status: 'member' },
        { groupId: 3, memberId: 1, status: 'member' },
-       { groupId: 3, memberId: 5, status: 'member' }
+       { groupId: 3, memberId: 5, status: 'pending' }
      ], {});
   },
 
@@ -44,17 +44,17 @@ module.exports = {
         { groupId: 1, memberId: 1, status: 'organizer' },
        { groupId: 1, memberId: 4, status: 'co-host' },
        { groupId: 1, memberId: 7, status: 'member' },
-       { groupId: 1, memberId: 2, status: 'member' },
+       { groupId: 1, memberId: 2, status: 'pending' },
        { groupId: 2, memberId: 2, status: 'organizer' },
        { groupId: 2, memberId: 5, status: 'co-host' },
        { groupId: 2, memberId: 8, status: 'member' },
        { groupId: 2, memberId: 1, status: 'member' },
-       { groupId: 2, memberId: 9, status: 'member' },
+       { groupId: 2, memberId: 9, status: 'pending' },
        { groupId: 3, memberId: 3, status: 'organizer' },
        { groupId: 3, memberId: 6, status: 'co-host' },
        { groupId: 3, memberId: 9, status: 'member' },
        { groupId: 3, memberId: 1, status: 'member' },
-       { groupId: 3, memberId: 5, status: 'member' }
+       { groupId: 3, memberId: 5, status: 'pending' }
      ]
      }, {})
   }

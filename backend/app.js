@@ -90,6 +90,13 @@ app.use((err, _req, res, _next) => {
         let errors = {};
         for (let i = 0; i < err.errors.length; i++) {
             let el = err.errors[i];
+            if (el === "Authentication required") {
+                res.statusCode = 401;
+                return res.json({
+                    "message": "Authentication required",
+                    "statusCode": 401
+                  })
+            }
             if (el === "Email is required") {
                 errors.email = el;
             }
