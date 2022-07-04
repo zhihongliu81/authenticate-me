@@ -287,7 +287,7 @@ Returns the details of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/group/:groupId
+  * URL: /api/groups/:groupId
   * Body: none
 
 * Successful Response
