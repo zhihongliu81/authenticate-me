@@ -123,7 +123,7 @@ router.get('/:groupId', async(req, res) => {
 })
 
 // Create a Group
-const validateCreateGroup = [
+const validateGroup = [
     check('name')
     .exists({ checkFalsy: true })
     .isLength({ max: 60 })
@@ -148,7 +148,7 @@ const validateCreateGroup = [
     .withMessage("State is required"),
     handleValidationErrors
 ]
-router.post('/', restoreUser, requireAuth, validateCreateGroup, async (req, res) => {
+router.post('/', restoreUser, requireAuth, validateGroup, async (req, res) => {
     const {name, about, type, private, city, state} = req.body;
     const group = await Group.create({
         organizerId: req.user.id,
@@ -166,11 +166,36 @@ router.post('/', restoreUser, requireAuth, validateCreateGroup, async (req, res)
     })
     res.statusCode = 201;
     res.json(group);
-
-
 })
 
+// Edit a group
+router.put('/:groupId', restoreUser, requireAuth, validateGroup, async (req, res) => {
 
+    let group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          });
+    }
+    if (req.user.id !== group.organizerId) {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          });
+    }
+    await group.update({
+        ...req.body
+    })
+    group = await Group.findByPk(req.params.groupId, {
+        attributes: {
+            exclude: ['previewImage']
+        }
+    });
+    res.json(group);
+})
 
 
 
