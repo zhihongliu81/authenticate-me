@@ -130,6 +130,15 @@ app.use((err, _req, res, _next) => {
             if (el === "State is required") {
                 errors.state = el;
             }
+            if (el === "Street address is required") {
+                errors.address = el;
+            }
+            if (el === "Latitude is not valid") {
+                errors.lat = el;
+            }
+            if (el === "Longitude is not valid") {
+                errors.lng = el;
+            }
         };
 
 

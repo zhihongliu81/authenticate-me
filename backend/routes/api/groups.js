@@ -490,7 +490,62 @@ router.get('/:groupId/events', async (req, res) => {
 })
 
 
+const validateVenue = [
+    check('address')
+    .exists({ checkFalsy: true })
+    .withMessage( "Street address is required" ),
+    check('city')
+    .exists({checkFalsy: true})
+    .withMessage("City is required"),
+    check('state')
+    .exists({checkFalsy: true})
+    .withMessage("State is required"),
+    check('lat')
+    .exists({checkFalsy: true})
+    .isFloat({min: -90, max: 90})
+    .withMessage( "Latitude is not valid"),
+    check('lng')
+    .exists({checkFalsy: true})
+    .isFloat({min: -180, max: 180})
+    .withMessage( "Longitude is not valid"),
+    handleValidationErrors
+]
+// Create a new Venue for a group specified by its id
+router.post('/:groupId/venues/new', restoreUser, requireAuth, validateVenue, async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    };
 
+    const membership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.user.id
+        }
+    })
+
+    if (membership && (membership.status === 'organizer' || membership.status === 'co-host')) {
+        const newVenue = await Venue.create({
+            groupId: req.params.groupId,
+            ...req.body
+        });
+        const {id, groupId, address, city, state, lat, lng} = newVenue;
+
+        return res.json({id, groupId, address, city, state, lat, lng});
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+
+
+})
 
 
 
