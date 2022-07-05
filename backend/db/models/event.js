@@ -11,23 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Event.belongsToMany(models.User, {through: models.Attendee, foreignKey: 'eventId'});
-      // Event.belongsTo(models.Group, {foreignKey: 'groupId'});
-      // Event.belongsTo(models.Venue, {foreignKey: 'venueId'});
-      // Event.hasMany(models.Image, {foreignKey: 'eventId'});
+      Event.belongsToMany(models.User, {through: models.Attendee, foreignKey: 'eventId'});
+      Event.belongsTo(models.Group, {foreignKey: 'groupId'});
+      Event.belongsTo(models.Venue, {foreignKey: 'venueId'});
+      Event.hasMany(models.Image, {foreignKey: 'eventId', onDelete: "CASCADE", hooks: true});
     }
   }
   Event.init({
     groupId: {
       type:  DataTypes.INTEGER,
-      allowNull: false
+
     },
     venueId: {
       type: DataTypes.INTEGER,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [5, ]
+      }
     },
     description: {
       type: DataTypes.STRING,
@@ -35,7 +38,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isIn: ['Online', 'In person']
+      }
     },
     capacity: {
       type: DataTypes.INTEGER,
@@ -47,11 +53,29 @@ module.exports = (sequelize, DataTypes) => {
     },
     startDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        beInFuture(value) {
+          const now = Date.now();
+          const startTime = Date.parse(value);
+          if (startTime <= now) {
+            throw new Error("Start date must be in the future");
+          }
+        }
+      }
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        endDateAfterStartDate(value) {
+          const startTime = Date.parse(this.startDate);
+          const endTime = Date.parse(value);
+          if (endTime <= startTime) {
+            throw new Error("End date is less than start date")
+          }
+        }
+      }
     },
     previewImage: {
       type: DataTypes.STRING

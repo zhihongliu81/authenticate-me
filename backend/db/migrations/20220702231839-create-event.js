@@ -10,12 +10,13 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        // references: {model: 'Groups'}
+        references: {model: 'Groups'},
+        onDelete: "SET Null"
       },
       venueId: {
         type: Sequelize.INTEGER,
-        references: {model: 'Venues'}
+        references: {model: 'Venues'},
+        onDelete: "CASCADE"
       },
       name: {
         type: Sequelize.STRING,
