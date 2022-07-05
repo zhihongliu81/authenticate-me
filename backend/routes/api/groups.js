@@ -386,11 +386,61 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
     //     status: req.body.status
     // })
     membership.status = req.body.status;
-    
+
     await membership.save();
 
     res.json(membership);
 })
+
+// Delete membership to a group specified by id
+router.delete('/:groupId/membership/membershipId', restoreUser, requireAuth, async (req, res) => {
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    };
+
+    const membership = await Membership.findOne({
+        where: {
+            groupId: req.params.groupId,
+            memberId: req.body.memberId
+        }
+    });
+    if (!membership) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Membership does not exist for this User",
+            "statusCode": 404
+          })
+    };
+
+    if (req.user.id === group.organizerId || req.user.id === req.body.memberId) {
+        await membership.destroy();
+        return res.json({
+            "message": "Successfully deleted membership from group"
+          })
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+
+})
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;
