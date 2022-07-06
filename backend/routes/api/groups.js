@@ -582,6 +582,13 @@ router.post('/:groupId/venues/new', restoreUser, requireAuth, validateVenue, asy
 const validateEvent = [
     check('venueId')
     .exists({ checkFalsy: true })
+    .custom(async (value, {req}) => {
+        const venue = await Venue.findByPk(value);
+        if (!venue) {
+            throw new Error("Venue does not exist")
+        }
+        return true;
+    })
     .withMessage( "Venue does not exist" ),
     check('name')
     .exists({checkFalsy: true})
