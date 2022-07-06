@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 
     }
 
-    res.json(formattedEvents);
+    res.json({Events: formattedEvents});
 })
 
 
@@ -99,6 +99,8 @@ router.get('/:eventId', async (req, res) => {
             name: event.name,
             description: event.description,
             type: event.type,
+            capacity: event.capacity,
+            price: event.price,
             startDate: event.startDate,
             endDate: event.endDate,
             numAttending: event.Users.length,

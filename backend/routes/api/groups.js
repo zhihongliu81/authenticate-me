@@ -165,7 +165,18 @@ router.post('/', restoreUser, requireAuth, validateGroup, async (req, res) => {
         status: 'organizer'
     })
     res.statusCode = 201;
-    res.json(group);
+    res.json({
+        id: group.id,
+        organizerId: group.organizerId,
+        name: group.name,
+        about: group.about,
+        type: group.type,
+        private:group.private,
+        city: group.city,
+        state: group.state,
+        createdAt: group.createdAt,
+        updatedAt: group.updatedAt
+    });
 })
 
 // Edit a group
@@ -268,7 +279,7 @@ router.get('/:groupId/members', restoreUser, async (req, res, next) => {
         })
     }
 
-    res.json(formattedMembers);
+    res.json({Members:formattedMembers});
 })
 
 
@@ -343,6 +354,10 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
         where: {
             groupId: req.params.groupId,
             memberId: req.body.memberId
+        },
+        attributes: {
+            include: ['id', 'groupId', 'memberId', 'status'],
+            exclude: ['createdAt', 'updatedAt']
         }
     });
 
@@ -360,15 +375,22 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
             "message": "Cannot change a membership status to pending",
             "statusCode": 400
           })
-    }
+    };
     let currentUserMembership = await Membership.findOne({
         where: {
             groupId: req.params.groupId,
             memberId: req.user.id
         }
-    })
+    });
+
+    if (!currentUserMembership) {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    };
     const status = currentUserMembership.toJSON().status;
-    console.log(status)
     if (req.body.status === 'member' && (status !== 'organizer' && status !== 'co-host')) {
         res.statusCode = 403;
         return res.json({
@@ -388,11 +410,18 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
     // const newMembership = await membership.update({
     //     status: req.body.status
     // })
+
+    // res.json(newMembership);
     membership.status = req.body.status;
 
     await membership.save();
 
-    res.json(membership);
+    res.json({
+        id: membership.id,
+        groupId: membership.groupId,
+        memberId: membership.memberId,
+        status: membership.status
+    });
 })
 
 // Delete membership to a group specified by id
@@ -428,7 +457,7 @@ router.delete('/:groupId/membership/membershipId', restoreUser, requireAuth, asy
     } else {
         res.statusCode = 403;
         return res.json({
-            "message": "Forbidden",
+            "message": "Only the User or organizer may delete a Membership",
             "statusCode": 403
           })
     }
@@ -488,7 +517,7 @@ router.get('/:groupId/events', async (req, res) => {
 
     }
 
-    res.json(formattedEvents)
+    res.json({Events:formattedEvents})
 
 })
 
