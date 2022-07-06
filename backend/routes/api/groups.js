@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
         };
         formattedGroups.push(formattedGroup);
     }
-    res.json({groups: formattedGroups});
+    res.json({Groups: formattedGroups});
 
 
 })

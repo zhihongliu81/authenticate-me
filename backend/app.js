@@ -54,6 +54,7 @@ app.get(
         res.cookie("XSRF-TOKEN", csrfToken);
         return res.send('success');
     });
+
 app.use(routes);
 
 // 4zEpdDs6-gmgEAwm-Phqc536zA_jzjzozfcw
@@ -84,6 +85,11 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
     console.error(err);
+
+    const errStack = {};
+    if (!isProduction) {
+        errStack.stack = err.stack;
+    }
 
 
     if (typeof err.errors !== 'undefined') {
@@ -147,14 +153,14 @@ app.use((err, _req, res, _next) => {
             message: err.message,
             statusCode: res.statusCode,
             errors,
-            stack: isProduction ? null : err.stack
+            ...errStack
         });
     } else {
         res.json({
             title: err.title || 'Server Error',
             message: err.message,
             errors: err.errors,
-            stack: isProduction ? null : err.stack
+            ...errStack
           });
     }
 
