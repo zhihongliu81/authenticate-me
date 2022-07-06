@@ -320,6 +320,9 @@ router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => 
         where: {
             groupId: req.params.groupId,
             memberId: req.user.id
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
         }
     })
     res.json(membership);
