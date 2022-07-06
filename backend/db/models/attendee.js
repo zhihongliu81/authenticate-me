@@ -16,11 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   Attendee.init({
     eventId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      
     },
     status: {
       type:  DataTypes.STRING,
