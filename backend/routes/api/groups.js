@@ -575,12 +575,97 @@ router.post('/:groupId/venues/new', restoreUser, requireAuth, validateVenue, asy
             "statusCode": 403
           })
     }
-
-
 })
 
 
+// Create an Event for a group specified by its id
+const validateEvent = [
+    check('venueId')
+    .exists({ checkFalsy: true })
+    .withMessage( "Venue does not exist" ),
+    check('name')
+    .exists({checkFalsy: true})
+    .isLength({min: 5})
+    .withMessage("Name must be at least 5 characters"),
+    check('type')
+    .exists({checkFalsy: true})
+    .isIn(['Online', 'In person'])
+    .withMessage("Type must be Online or In person"),
+    check('capacity')
+    .exists({checkFalsy: true})
+    .isInt()
+    .withMessage( "Capacity must be an integer"),
+    check('price')
+    .exists({checkFalsy: true})
+    .isFloat()
+    .withMessage( "Price is invalid"),
+    check('description')
+    .exists({checkFalsy: true})
+    .withMessage("Description is required"),
+    check('startDate')
+    .isISO8601()
+    .isAfter()
+    .withMessage("Start date must be in the future"),
+    check('endDate')
+    .isISO8601()
+    .custom((value, {req}) => {
+        const startTime = Date.parse(req.body.startDate);
+        const endTime = Date.parse(value);
+        if (endTime <= startTime) {
+            throw new Error("End date is less than start date")
+        }
+        return true;
+    })
+    .withMessage("End date is less than start date"),
+    handleValidationErrors
+]
+router.post('/:groupId/events/new', restoreUser, requireAuth, validateEvent, async (req, res) => {
 
+    const group = await Group.findByPk(req.params.groupId);
+    if (!group) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+          })
+    }
+    const membership = await Membership.findOne({
+        where: {
+            memberId: req.user.id,
+            groupId: req.params.groupId
+        }
+    })
+
+    if (membership && (membership.status === 'organizer' || membership.status === 'co-host')) {
+        const event = await Event.create({
+            groupId: req.params.groupId,
+            ...req.body
+        })
+        const formattedEvent = {
+            id: event.id,
+            groupId: event.groupId,
+            venueId: event.venueId,
+            name: event.name,
+            type: event.type,
+            capacity: event.capacity,
+            price: event.price,
+            description: event.description,
+            startDate: event.startDate,
+            endDate: event.endDate
+        }
+
+        res.json(formattedEvent)
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+
+
+
+} )
 
 
 

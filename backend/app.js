@@ -145,6 +145,30 @@ app.use((err, _req, res, _next) => {
             if (el === "Longitude is not valid") {
                 errors.lng = el;
             }
+            if (el === "Venue does not exist") {
+                errors.venueId = el;
+            }
+            if (el === "Name must be at least 5 characters") {
+                errors.name = el;
+            }
+            if (el === "Type must be Online or In person") {
+                errors.type = el;
+            }
+            if (el === "Capacity must be an integer") {
+                errors.capacity = el;
+            }
+            if (el === "Price is invalid") {
+                errors.price = el;
+            }
+            if (el === "Description is required") {
+                errors.description = el;
+            }
+            if (el === "Start date must be in the future") {
+                errors.startDate = el;
+            }
+            if (el === "End date is less than start date" ) {
+                errors.endDate = el
+            }
         };
 
 
