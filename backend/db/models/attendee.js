@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Attendee.belongsTo(models.User, {foreignKey: 'userId'});
     }
   }
   Attendee.init({
@@ -22,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      
+
     },
     status: {
       type:  DataTypes.STRING,

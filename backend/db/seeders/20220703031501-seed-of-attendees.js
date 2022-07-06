@@ -20,7 +20,7 @@ module.exports = {
     {
       eventId: 1,
       userId: 2,
-      status: "member"
+      status: "pending"
     },
     {
       eventId: 1,
@@ -35,7 +35,7 @@ module.exports = {
     {
       eventId: 2,
       userId: 5,
-      status: "member"
+      status: "pending"
     },
     {
       eventId: 2,
@@ -78,7 +78,7 @@ module.exports = {
         {
           eventId: 1,
           userId: 2,
-          status: "member"
+          status: "pending"
         },
         {
           eventId: 1,
@@ -93,7 +93,7 @@ module.exports = {
         {
           eventId: 2,
           userId: 5,
-          status: "member"
+          status: "pending"
         },
         {
           eventId: 2,

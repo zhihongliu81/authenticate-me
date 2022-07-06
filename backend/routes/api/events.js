@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, sequelize, Membership, Image, Event, Venue } = require('../../db/models');
+const { User, Group, sequelize, Membership, Image, Event, Venue, Attendee } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -240,6 +240,89 @@ router.delete('/:eventId', restoreUser, requireAuth, async (req, res) => {
     }
 
 })
+
+
+// Get all attendees of an Event specified by its id
+router.get('/:eventId/attendees', restoreUser, async (req, res) => {
+    const event = await Event.findByPk(req.params.eventId);
+    if (!event) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Event couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    let attendees = await Attendee.findAll({
+        where: {
+            eventId: req.params.eventId
+        },
+        include: {
+            model: User
+        }
+    });
+
+    const formattedAttendees = [];
+
+    if (req.user) {
+        const membership = await Membership.findOne({
+            where: {
+                groupId: event.groupId,
+                memberId: req.user.id
+            }
+        });
+        if (membership && (membership.status === 'organizer' || membership.status === 'co-host')) {
+            for (let i = 0; i < attendees.length; i++) {
+                let attendee = attendees[i].toJSON();
+
+                    let formattedAttendee = {
+                        ...attendee.User,
+                        Attendance: {
+                            status: attendee.status
+                        }
+                    };
+                    formattedAttendees.push(formattedAttendee)
+            }
+        } else {
+            for (let i = 0; i < attendees.length; i++) {
+                let attendee = attendees[i].toJSON();
+                if (attendee.status !== 'pending') {
+                    let formattedAttendee = {
+                        ...attendee.User,
+                        Attendance: {
+                            status: attendee.status
+                        }
+                    };
+                    formattedAttendees.push(formattedAttendee)
+                }
+            }
+        }
+    } else {
+        for (let i = 0; i < attendees.length; i++) {
+            let attendee = attendees[i].toJSON();
+            if (attendee.status !== 'pending') {
+                let formattedAttendee = {
+                    ...attendee.User,
+                    Attendance: {
+                        status: attendee.status
+                    }
+                };
+                formattedAttendees.push(formattedAttendee)
+            }
+        }
+    }
+
+
+
+
+    res.json({Attendees: formattedAttendees})
+
+
+    // res.json(attendees);
+})
+
+
+
 
 
 
