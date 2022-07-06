@@ -312,14 +312,74 @@ router.get('/:eventId/attendees', restoreUser, async (req, res) => {
         }
     }
 
-
-
-
     res.json({Attendees: formattedAttendees})
-
-
-    // res.json(attendees);
 })
+
+
+// Request to attend an event based on the event's id
+router.post('/:eventId/register', restoreUser, requireAuth, async (req, res) => {
+    const event = await Event.findByPk(req.params.eventId);
+    if (!event) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Event couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    const membership = await Membership.findOne({
+        where: {
+            memberId: req.user.id,
+            groupId: event.groupId
+        }
+    });
+
+    if (membership && membership !== 'pending') {
+        const attendee = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.user.id
+            }
+
+        });
+
+        if (!attendee) {
+            const newAttendee = await Attendee.create({
+                eventId: req.params.eventId,
+                userId: req.user.id,
+                status: 'pending'
+            });
+
+            res.json({
+                eventId: newAttendee.eventId,
+                userId: newAttendee.userId,
+                status: newAttendee.status
+            });
+        } else {
+            if (attendee.status === 'pending') {
+                res.statusCode = 400;
+                return res.json({
+                    "message": "Attendance has already been requested",
+                    "statusCode": 400
+                  })
+            } else {
+                res.statusCode = 400;
+                return res.json({
+                    "message": "User is already an attendee of the event",
+                    "statusCode": 400
+                  })
+            }
+        }
+
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+} )
+
 
 
 
