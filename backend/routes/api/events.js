@@ -96,7 +96,7 @@ router.get('/', validateQuery, async (req, res) => {
             page = 10;
         }
     } else {
-        page = 0
+        page = 1
     }
     if (size) {
         size = Number(size);
