@@ -167,7 +167,22 @@ app.use((err, _req, res, _next) => {
                 errors.startDate = el;
             }
             if (el === "End date is less than start date" ) {
-                errors.endDate = el
+                errors.endDate = el;
+            }
+            if (el === "Page must be greater than or equal to 0") {
+                errors.page = el;
+            }
+            if (el === "Size must be greater than or equal to 0") {
+                errors.size = el;
+            }
+            if (el === "Name must be a string") {
+                errors.name = el;
+            }
+            if (el === "Type must be 'Online' or 'In Person'") {
+                errors.type = el;
+            }
+            if (el === "Start date must be a valid datetime") {
+                errors.startDate = el;
             }
         };
 

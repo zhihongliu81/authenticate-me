@@ -8,47 +8,150 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 // Get all events
-router.get('/', async (req, res) => {
-    const events = await Event.findAll({
-        include: [
-            {
-                model: Group,
-                attributes: ['id', 'name', 'city', 'state']
-            },
-            {
-                model: Venue,
-                attributes: ['id', 'city', 'state']
-            },
-            {
-                model: User,
-                attributes: ['id']
-            }
-        ]
-    });
+// router.get('/', async (req, res) => {
+//     const events = await Event.findAll({
+//         include: [
+//             {
+//                 model: Group,
+//                 attributes: ['id', 'name', 'city', 'state']
+//             },
+//             {
+//                 model: Venue,
+//                 attributes: ['id', 'city', 'state']
+//             },
+//             {
+//                 model: User,
+//                 attributes: ['id']
+//             }
+//         ]
+//     });
 
-    let formattedEvents = [];
-    for (let i = 0; i < events.length; i++) {
-        let event = events[i];
-        let formattedEvent = {
-            id: event.id,
-            groupId: event.groupId,
-            venueId: event.venueId,
-            name: event.name,
-            type: event.type,
-            startDate: event.startDate,
-            numAttending: event.Users.length,
-            previewImage: event.previewImage,
-            Group: event.Group,
-            Venue: event.Venue
-        };
+//     let formattedEvents = [];
+//     for (let i = 0; i < events.length; i++) {
+//         let event = events[i];
+//         let formattedEvent = {
+//             id: event.id,
+//             groupId: event.groupId,
+//             venueId: event.venueId,
+//             name: event.name,
+//             type: event.type,
+//             startDate: event.startDate,
+//             numAttending: event.Users.length,
+//             previewImage: event.previewImage,
+//             Group: event.Group,
+//             Venue: event.Venue
+//         };
 
-        formattedEvents.push(formattedEvent);
+//         formattedEvents.push(formattedEvent);
 
+//     }
+
+//     res.json({Events: formattedEvents});
+// })
+
+
+// get all events with query
+const validateQuery = [
+    check('page')
+    .if(check('page').exists())
+    .isInt({min: 0})
+    .withMessage( "Page must be greater than or equal to 0" ),
+    check('size')
+    .if(check('size').exists())
+    .isInt({min: 0})
+    .withMessage("Size must be greater than or equal to 0"),
+    check('name')
+    .if(check('name').exists())
+    .isString()
+    .withMessage("Name must be a string"),
+    check('type')
+    .if(check('type').exists())
+    .isIn(['Online', 'In person'])
+    .withMessage("Type must be 'Online' or 'In Person'"),
+    check('startDate')
+    .if(check('startDate').exists())
+    .isISO8601()
+    .withMessage("Start date must be a valid datetime"),
+
+    handleValidationErrors
+]
+
+router.get('/', validateQuery, async (req, res) => {
+    let {page, size, name, type, startDate} = req.query;
+    const where = {};
+    if (name) {
+        where.name = name;
+    }
+    if (type) {
+        where.type = type;
+    }
+    if (startDate) {
+        where.startDate = startDate
     }
 
-    res.json({Events: formattedEvents});
-})
+    const pagination = {};
+    if (page) {
+        page = Number(page);
+        if (page > 10) {
+            page = 10;
+        }
+    } else {
+        page = 0
+    }
+    if (size) {
+        size = Number(size);
+        if (size > 20) {
+            size = 20
+        }
+    } else {
+        size = 20
+    }
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
 
+    const events = await Event.findAll({
+        where,
+        include: [
+                        {
+                            model: Group,
+                            attributes: ['id', 'name', 'city', 'state']
+                        },
+                        {
+                            model: Venue,
+                            attributes: ['id', 'city', 'state']
+                        },
+                        {
+                            model: User,
+                            attributes: ['id']
+                        }
+                    ],
+        ...pagination
+
+    })
+
+    let formattedEvents = [];
+        for (let i = 0; i < events.length; i++) {
+            let event = events[i];
+            let formattedEvent = {
+                id: event.id,
+                groupId: event.groupId,
+                venueId: event.venueId,
+                name: event.name,
+                type: event.type,
+                startDate: event.startDate,
+                numAttending: event.Users.length,
+                previewImage: event.previewImage,
+                Group: event.Group,
+                Venue: event.Venue
+            };
+
+            formattedEvents.push(formattedEvent);
+
+        }
+
+        res.json({Events: formattedEvents});
+    
+})
 
 // Get details of an event specified by its id
 router.get('/:eventId', async (req, res) => {
