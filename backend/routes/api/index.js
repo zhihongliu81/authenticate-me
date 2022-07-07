@@ -4,6 +4,7 @@ const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const eventsRouter = require('./events.js');
 const venuesRouter = require('./venues.js');
+const imagesRouter = require('./images.js');
 const { restoreUser } = require('../../utils/auth.js');
 
 // Connect restoreUser middleware to the API router
@@ -17,6 +18,7 @@ router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
 router.use('/events', eventsRouter);
 router.use('/venues', venuesRouter);
+router.use('/images', imagesRouter);
 
 
 // router.get('/restore-user', (req, res) => {
