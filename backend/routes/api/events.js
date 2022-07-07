@@ -381,6 +381,66 @@ router.post('/:eventId/register', restoreUser, requireAuth, async (req, res) => 
 } )
 
 
+// Change the status of an attendance for an event specified by id
+router.put('/:eventId/attendees/update', restoreUser, requireAuth, async (req, res) => {
+    const event = await Event.findByPk(req.params.eventId);
+    if (!event) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Event couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    const attendee = await Attendee.findOne({
+        where: {
+            eventId: req.params.eventId,
+            userId: req.body.userId
+        }
+    });
+    if (!attendee) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Attendance between the user and the event does not exist",
+            "statusCode": 404
+          })
+    }
+
+    if (req.body.status === 'pending') {
+        res.statusCode = 400;
+        return res.json({
+            "message": "Cannot change an attendance status to pending",
+            "statusCode": 400
+          })
+    }
+
+    const membership = await Membership.findOne({
+        where: {
+            groupId: event.groupId,
+            memberId: req.user.id
+        }
+    })
+    if (membership && (membership.status === 'organizer' || membership.status === 'co-host')) {
+        await attendee.update({
+            status: req.body.status
+        });
+        const newAttendee = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.body.userId
+            },
+            attributes:['id', 'eventId', 'userId', 'status']
+        })
+        res.json(newAttendee);
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+
+})
 
 
 
