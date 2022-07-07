@@ -491,5 +491,48 @@ router.delete('/:eventId/attendees/attendeeId', restoreUser, requireAuth, async 
 } )
 
 
+// Add an image to an event based on the event's id
+router.post('/:eventId/images', restoreUser, requireAuth, async (req, res) => {
+    const event = Event.findByPk(req.params.eventId);
+    if (!event) {
+        res.statusCode = 404;
+        return res.json({
+            "message": "Event couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    const attendee = await Attendee.findOne({
+        where: {
+            eventId: req.params.eventId,
+            userId: req.user.id
+        }
+    })
+    if (attendee) {
+        const newImage = await Image.create({
+            eventId: req.params.eventId,
+            url: req.body.url
+        })
+        res.json({
+            id: newImage.id,
+            imageableId: newImage.eventId,
+            imageableType: 'Event',
+            url: newImage.url
+        })
+    } else {
+        res.statusCode = 403;
+        return res.json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
+})
+
+
+
+
+
+
+
 
 module.exports = router;
