@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         beInFuture(value) {
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         endDateAfterStartDate(value) {

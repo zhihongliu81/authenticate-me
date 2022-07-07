@@ -150,7 +150,7 @@ router.get('/', validateQuery, async (req, res) => {
         }
 
         res.json({Events: formattedEvents});
-    
+
 })
 
 // Get details of an event specified by its id
@@ -596,7 +596,7 @@ router.delete('/:eventId/attendees/attendeeId', restoreUser, requireAuth, async 
 
 // Add an image to an event based on the event's id
 router.post('/:eventId/images', restoreUser, requireAuth, async (req, res) => {
-    const event = Event.findByPk(req.params.eventId);
+    const event = await Event.findByPk(req.params.eventId);
     if (!event) {
         res.statusCode = 404;
         return res.json({
