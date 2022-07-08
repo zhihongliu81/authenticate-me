@@ -14,6 +14,12 @@ module.exports = {
     */
    await queryInterface.bulkInsert('Users', [
     {
+      email: "john.smith@gmail.com",
+      firstName: "John",
+      lastName: "Smith",
+      hashedPassword: bcrypt.hashSync('secret password')
+    },
+    {
       email: 'user1@user.io',
       // username: 'FakeUser1',
       firstName: 'firstName1',
@@ -75,13 +81,8 @@ module.exports = {
       firstName: 'firstName9',
       lastName: 'lastName9',
       hashedPassword: bcrypt.hashSync('password9')
-    },
-    {
-      email: "john.smith@gmail.com",
-      firstName: "John",
-      lastName: "Smith",
-      hashedPassword: bcrypt.hashSync('secret password')
     }
+
    ])
   },
 
