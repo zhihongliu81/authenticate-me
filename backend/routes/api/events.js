@@ -92,8 +92,8 @@ router.get('/', validateQuery, async (req, res) => {
     const pagination = {};
     if (page) {
         page = Number(page);
-        if (page > 10) {
-            page = 10;
+        if (page > 11) {
+            page = 11;
         }
     } else {
         page = 1
