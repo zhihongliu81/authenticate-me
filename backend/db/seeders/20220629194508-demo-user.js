@@ -75,6 +75,12 @@ module.exports = {
       firstName: 'firstName9',
       lastName: 'lastName9',
       hashedPassword: bcrypt.hashSync('password9')
+    },
+    {
+      email: "john.smith@gmail.com",
+      firstName: "John",
+      lastName: "Smith",
+      hashedPassword: bcrypt.hashSync('secret password')
     }
    ])
   },
@@ -91,7 +97,8 @@ module.exports = {
       email: {[Op.in]: [
         'user1@user.io', 'user2@user.io', 'user3@user.io',
         'user4@user.io', 'user5@user.io', 'user6@user.io',
-        'user7@user.io', 'user8@user.io', 'user9@user.io'
+        'user7@user.io', 'user8@user.io', 'user9@user.io',
+        'john.smith@gmail.com'
     ]}
     }, {})
   }
