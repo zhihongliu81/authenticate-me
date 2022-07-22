@@ -92,11 +92,11 @@ router.get('/', validateQuery, async (req, res) => {
     const pagination = {};
     if (page) {
         page = Number(page);
-        if (page > 11) {
-            page = 11;
+        if (page > 10) {
+            page = 10;
         }
     } else {
-        page = 1
+        page = 0
     }
     if (size) {
         size = Number(size);
@@ -107,7 +107,12 @@ router.get('/', validateQuery, async (req, res) => {
         size = 20
     }
     pagination.limit = size;
-    pagination.offset = size * (page - 1);
+    if (page < 1) {
+        pagination.offset = 0;
+    } else {
+        pagination.offset = size * (page - 1);
+    }
+
 
     const events = await Event.findAll({
         where,
@@ -149,7 +154,7 @@ router.get('/', validateQuery, async (req, res) => {
 
         }
 
-        res.json({Events: formattedEvents});
+        res.json({Events: formattedEvents, page, size});
 
 })
 

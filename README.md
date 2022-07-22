@@ -1935,3 +1935,17 @@ Return events filtered by query parameters.
       }
     }
     ```
+
+
+
+The most challenging part of the project:
+  1. setup the database correctly with associations.
+  2.validation the date. I have to make a custom validator for the validation of the enddate has to be after the startdate.
+
+What part of your work on the project are you most proud of?
+  1. I am using colection of postman for testing the routers. It makes the testing process much faster.
+
+What are some parts you would like to go back and improve and/or minor bugs you would like to clean up?
+  1. rewrite the error handler.
+  2. format the 'createdAt' and 'updatedAt' to local time.
+  3. try to use eager loading to get the data from the database to decrease the connection to the database.
