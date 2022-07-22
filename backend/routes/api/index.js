@@ -25,10 +25,10 @@ router.use('/images', imagesRouter);
 //     return res.json(req.user);
 // })
 
-//POST /api/test
-router.post('/test', (req, res) => {
-    res.json({requestBody: req.body})
-})
+// //POST /api/test
+// router.post('/test', (req, res) => {
+//     res.json({requestBody: req.body})
+// })
 
 
 // // GET /api/set-token-cookie
