@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { loadEventsThunk } from '../../store/events';
 
 const AllEvents = () => {
@@ -17,6 +18,7 @@ const AllEvents = () => {
 
     return events.map(event => (
         <div key={event.id}>{`Event ${event.id}: `}
+            <NavLink to={`/api/events/${event.id}`}>{`Event ${event.id}`}</NavLink>
             <div>{event.id}</div>
             <div>{event.groupId}</div>
             <div>{event.venueId}</div>
@@ -39,7 +41,7 @@ const AllEvents = () => {
                 <div>{event.Venue.state}</div>
                 </div>
             )}
-            {/* <div>{event.Venue}</div> */}
+            
         </div>
     ))
 

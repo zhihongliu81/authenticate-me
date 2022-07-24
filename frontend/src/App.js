@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import AllEvents from "./components/AllEventsList";
 import AllGroups from "./components/AllGroupsList";
 import GroupDetails from "./components/GroupDetails";
+import EventDetails from "./components/Eventdetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,11 @@ function App() {
           <Route path={'/api/groups/:groupId'}>
             <GroupDetails />
           </Route>
+          <Route path={'/api/events/:eventId'}>
+            <EventDetails />
+          </Route>
+
+
         </Switch>
       )}
     </>

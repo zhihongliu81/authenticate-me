@@ -1,4 +1,5 @@
 const LOAD_EVENTS = 'events/LOAD_EVENTS';
+const GET_EVENT = 'events/GET_EVENT';
 
 
 const loadEvents = (events) => {
@@ -8,11 +9,27 @@ const loadEvents = (events) => {
     }
 }
 
+const getEvent = (event) => {
+    return {
+        type: GET_EVENT,
+        event
+    }
+}
+
 export const loadEventsThunk = () => async dispatch => {
     const response = await fetch('/api/events');
     if (response.ok) {
         const data = await response.json();
         dispatch(loadEvents(data.Events));
+        return data
+    }
+};
+
+export const eventDetailsThunk = (eventId) => async dispatch => {
+    const response = await fetch(`/api/events/${eventId}`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getEvent(data));
         return data
     }
 }
@@ -25,6 +42,11 @@ const eventsReducer = (state = initialState, action) => {
             const events = {};
             action.events.map(event => events[event.id] = event);
             newState = { ...events }
+            return newState;
+        };
+        case GET_EVENT: {
+            newState = {...state};
+            newState[action.event.id] = {...newState[action.event.id], ...action.event};
             return newState;
         }
         default:
