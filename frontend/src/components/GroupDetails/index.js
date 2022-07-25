@@ -17,11 +17,15 @@ const GroupDetails = () => {
     let showNewEventButton = false;
     if(user && group) {
         const userId = user.id;
-        if(group.members) {
-            const membership = group.members[userId].Membership.status;
-            if (membership === 'organizer' || membership === 'co-host') {
-                showNewEventButton = true;
+
+        if(group.members && Object.keys(group.members).length > 0) {
+            if (group.members[userId]) {
+                const membership = group.members[userId].Membership.status;
+                if (membership === 'organizer' || membership === 'co-host') {
+                    showNewEventButton = true;
+                }
             }
+
         }
     }
 
