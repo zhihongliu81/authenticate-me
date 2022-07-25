@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { newEventThunk } from "../../store/groups";
+import { updateEventThunk } from "../../store/events";
+import { useState } from "react";
 
-
-const CreateNewEvent = ({hiddenForm, groupId}) => {
+const EditEvent = ({hiddenForm, eventId}) => {
+    const event = useSelector(state => state.events[eventId]);
     const dispatch = useDispatch();
     const history = useHistory();
-    const [venueId, setVenueId] = useState();
-    const [name, setName] = useState('');
-    const [type, setType] = useState('');
-    const [capacity, setCapacity] = useState();
-    const [price, setPrice] = useState();
-    const [description, setDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+
+    const [venueId, setVenueId] = useState(event.venueId);
+    const [name, setName] = useState(event.name);
+    const [type, setType] = useState(event.type);
+    const [capacity, setCapacity] = useState(event.capacity);
+    const [price, setPrice] = useState(event.price);
+    const [description, setDescription] = useState(event.description);
+    const [startDate, setStartDate] = useState(event.startDate);
+    const [endDate, setEndDate] = useState(event.endDate);
 
     const handleSumbit = async (e) => {
         e.preventDefault();
-
-        const newEvent = {
+        const updatedEvent = {
             venueId,
             name,
             type,
@@ -29,23 +29,22 @@ const CreateNewEvent = ({hiddenForm, groupId}) => {
             startDate,
             endDate
         };
-        let createdNewEvent;
-        try {
-            createdNewEvent = await dispatch(newEventThunk(groupId, newEvent));
 
-        } catch (error) {
+        let newEvent;
+        try {
+            newEvent = await dispatch(updateEventThunk(eventId, updatedEvent));
+        } catch(error) {
             console.log(error);
         }
 
-        if (createdNewEvent) {
-            history.push(`/api/events/${createdNewEvent.id}`);
+        if (newEvent) {
+            history.push(`/api/events/${eventId}`);
             hiddenForm();
         }
-
-    };
+    }
 
     return (
-        <div>{`Create New Event for Group ${groupId}:`}
+        <div>{`Update Event for Event ${eventId}:`}
             <form onSubmit={handleSumbit}>
                 <label>venueId:<input type={'number'} value={venueId} onChange={e => setVenueId(e.target.value)}></input></label>
                 <label>name:<input type={'text'} value={name} onChange={e => setName(e.target.value)}></input></label>
@@ -64,4 +63,5 @@ const CreateNewEvent = ({hiddenForm, groupId}) => {
     );
 }
 
-export default CreateNewEvent;
+
+export default EditEvent;

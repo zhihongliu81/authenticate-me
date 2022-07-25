@@ -4,6 +4,7 @@ const LOAD_GROUPS = 'groups/LOAD_GROUPS';
 const GET_GROUP = 'groups/GET_GROUP';
 const GROUP_EVENTS = 'groups/GROUP_EVENTS';
 const GROUP_NEWEVENT = 'groups/GROUP_NEWEVENT';
+const GET_MEMBERS = 'groups/GET_MEMBERS';
 
 
 const loadGroups = (groups) => {
@@ -35,6 +36,14 @@ const newEvent = (newEvent) => {
     }
 }
 
+const getMembers = (members, groupId) => {
+    return {
+        type: GET_MEMBERS,
+        members,
+        groupId
+    }
+}
+
 export const loadGroupsThunk = () => async dispatch => {
     const response = await fetch('/api/groups');
     if (response.ok) {
@@ -53,8 +62,18 @@ export const groupDetailsThunk = (groupId) => async dispatch => {
     }
 }
 
+export const getMembersThunk = (groupId) => async dispatch => {
+    const response = await fetch(`/api/groups/${groupId}/members`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getMembers(data.Members, groupId));
+        return data;
+    }
+}
+
 export const groupEventsThunk = (groupId) => async dispatch => {
     const response = await fetch(`/api/groups/${groupId}/events`);
+
 
     if (response.ok) {
         const data = await response.json();
@@ -75,7 +94,6 @@ export const newEventThunk = (groupId, event) => async dispatch => {
 
     if (response.ok) {
         const data = await response.json();
-        console.log(data)
         dispatch(newEvent(data));
         return data;
     }
@@ -107,6 +125,13 @@ const groupsReducer = (state = initialState, action) => {
             newState[action.newEvent.groupId] = {...newState[action.newEvent.groupId],
                                                  events: newState[action.newEvent.groupId].events ? [...newState[action.newEvent.groupId].events, action.newEvent ] : [ action.newEvent ]
                                                 }
+            return newState;
+        }
+        case GET_MEMBERS: {
+            newState = {...state};
+            const members = {};
+            action.members.forEach(member => members[member.id] = member);
+            newState[action.groupId] = {...newState[action.groupId], members}
             return newState;
         }
         default:

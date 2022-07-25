@@ -3,12 +3,20 @@ import { csrfFetch } from './csrf';
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
-const setUser = (user) => {
+// const setUser = (user) => {
+//   return {
+//     type: SET_USER,
+//     payload: user,
+//   };
+// };
+
+const setUser = (user, groups) => {
   return {
     type: SET_USER,
-    payload: user,
-  };
-};
+    user,
+    groups
+  }
+}
 
 const removeUser = () => {
   return {
@@ -26,14 +34,49 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
+
+  // Get all Groups joined or organized by the Current User
+  const res = await fetch('/api/groups/current');
+  const resbody = await res.json();
+  const groups = {};
+  resbody.Groups.forEach(async group => {
+
+    //get member status
+   const res1 = await fetch(`/api/groups/${group.id}/members`);
+   const data1 = await res1.json();
+   const member = data1.Members.find(ele => data.user.id === ele.id);
+   const status = member.Membership.status;
+   groups[group.id] = {...group, status};
+  })
+
+  dispatch(setUser(data.user, groups));
+
+  // dispatch(setUser(data.user));
   return response;
 };
 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-  dispatch(setUser(data.user));
+
+// Get all Groups joined or organized by the Current User
+const res = await fetch('/api/groups/current');
+const resbody = await res.json();
+const groups = {};
+resbody.Groups.forEach(async group => {
+
+  //get member status
+ const res1 = await fetch(`/api/groups/${group.id}/members`);
+ const data1 = await res1.json();
+ const member = data1.Members.find(ele => data.user.id === ele.id);
+ const status = member.Membership.status;
+ groups[group.id] = {...group, status};
+})
+
+dispatch(setUser(data.user, groups));
+
+
+  // dispatch(setUser(data.user));
   return response;
 };
 
@@ -68,7 +111,8 @@ const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       newState = Object.assign({}, state);
-      newState.user = action.payload;
+      newState.user = action.user;
+      newState.groups = action.groups;
       return newState;
     case REMOVE_USER:
       newState = Object.assign({}, state);

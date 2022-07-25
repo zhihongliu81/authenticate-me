@@ -1,5 +1,8 @@
+import { csrfFetch } from "./csrf";
+
 const LOAD_EVENTS = 'events/LOAD_EVENTS';
 const GET_EVENT = 'events/GET_EVENT';
+const UPDATE_EVENT = 'events/UPDATE_EVENT';
 
 
 const loadEvents = (events) => {
@@ -12,6 +15,13 @@ const loadEvents = (events) => {
 const getEvent = (event) => {
     return {
         type: GET_EVENT,
+        event
+    }
+}
+
+const updateEvent = (event) => {
+    return {
+        type: UPDATE_EVENT,
         event
     }
 }
@@ -32,6 +42,22 @@ export const eventDetailsThunk = (eventId) => async dispatch => {
         dispatch(getEvent(data));
         return data
     }
+};
+
+export const updateEventThunk = (eventId, updatedEvent) => async dispatch => {
+    const response = await csrfFetch(`/api/events/${eventId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedEvent)
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(updateEvent(data))
+        return data;
+    }
 }
 
 const initialState = {}
@@ -47,6 +73,11 @@ const eventsReducer = (state = initialState, action) => {
         case GET_EVENT: {
             newState = {...state};
             newState[action.event.id] = {...newState[action.event.id], ...action.event};
+            return newState;
+        };
+        case UPDATE_EVENT: {
+            newState = {...state};
+            newState[action.event.id] = action.event;
             return newState;
         }
         default:
