@@ -39,12 +39,14 @@ export const login = (user) => async (dispatch) => {
   const res = await fetch('/api/groups/current');
   const resbody = await res.json();
   const groups = {};
+  if (!resbody.Groups || resbody.Groups.length === 0) return dispatch(setUser(data.user));
   resbody.Groups.forEach(async group => {
 
     //get member status
    const res1 = await fetch(`/api/groups/${group.id}/members`);
    const data1 = await res1.json();
    const member = data1.Members.find(ele => data.user.id === ele.id);
+   if(!member) return dispatch(setUser(data.user));
    const status = member.Membership.status;
    groups[group.id] = {...group, status};
   })
@@ -60,8 +62,12 @@ export const restoreUser = () => async dispatch => {
   const data = await response.json();
 
 // Get all Groups joined or organized by the Current User
+  if (Object.keys(data).length === 0) {
+    return dispatch(setUser(data.user))
+  }
 const res = await fetch('/api/groups/current');
 const resbody = await res.json();
+if (!resbody.Groups || resbody.Groups.length === 0) return dispatch(setUser(data.user));
 const groups = {};
 resbody.Groups.forEach(async group => {
 
@@ -69,6 +75,7 @@ resbody.Groups.forEach(async group => {
  const res1 = await fetch(`/api/groups/${group.id}/members`);
  const data1 = await res1.json();
  const member = data1.Members.find(ele => data.user.id === ele.id);
+ if(!member) return dispatch(setUser(data.user));
  const status = member.Membership.status;
  groups[group.id] = {...group, status};
 })

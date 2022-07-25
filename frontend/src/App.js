@@ -9,6 +9,7 @@ import AllEvents from "./components/AllEventsList";
 import AllGroups from "./components/AllGroupsList";
 import GroupDetails from "./components/GroupDetails";
 import EventDetails from "./components/Eventdetails";
+import YourGroups from "./components/YourGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path={'/allGroups'}>
             <AllGroups />
+          </Route>
+          <Route path={'/yourGroups'}>
+            <YourGroups />
           </Route>
           <Route path={'/api/groups/:groupId'}>
             <GroupDetails />

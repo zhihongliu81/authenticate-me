@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { deleteEventThunk, eventDetailsThunk } from "../../store/events";
 import EditEvent from "../EditEvent";
 import ShowAttendees from "../ShowAttendees";
+import RequestAttendee from "../RequestAttendee";
 
 const EventDetails = () => {
     const {eventId} = useParams();
@@ -55,10 +56,9 @@ const EventDetails = () => {
 
                 )}
                 <div>
-                    <button onClick={() => setShowAttendees(true)}>Attendees</button>
-                    {showAttendees && (
-                        <ShowAttendees hidden={() => setShowAttendees(false)} eventId={eventId}/>
-                    )}
+
+                    <button onClick={() => RequestAttendee(event, user)}>Request to Attend</button>
+
                 </div>
                 <div>
                     {showForm && (
@@ -69,6 +69,9 @@ const EventDetails = () => {
             </div>
             <div>{event.id}</div>
             <div>{event.description}</div>
+            <div>
+                <ShowAttendees eventId={eventId}/>
+            </div>
         </>
 
     );
