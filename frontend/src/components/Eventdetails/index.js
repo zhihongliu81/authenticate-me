@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteEventThunk, eventDetailsThunk } from "../../store/events";
 import EditEvent from "../EditEvent";
+import ShowAttendees from "../ShowAttendees";
 
 const EventDetails = () => {
     const {eventId} = useParams();
@@ -12,6 +13,7 @@ const EventDetails = () => {
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
     const [showForm, setShowForm] = useState(false);
+    const [showAttendees, setShowAttendees] = useState(false);
 
 
     let showEditEventButton = false;
@@ -30,7 +32,8 @@ const EventDetails = () => {
         if (response) {
             history.push('/allEvents');
         }
-    }
+    };
+
 
     useEffect(() => {
         dispatch(eventDetailsThunk(eventId));
@@ -44,22 +47,28 @@ const EventDetails = () => {
             <div>
                 {`Event ${event.id}: `}
 
-                 {showEditEventButton && (
+                {showEditEventButton && (
                     <div>
-                       <button onClick={() => setShowForm(true)}>Edit Event</button>
-                       <button onClick={() => handleDelete(event.id)}>Delete</button>
+                        <button onClick={() => setShowForm(true)}>Edit Event</button>
+                        <button onClick={() => handleDelete(event.id)}>Delete</button>
                     </div>
 
-                 )}
-                 <div>
-                {showForm && (
-                    <EditEvent hiddenForm = {() => setShowForm(false)} eventId = {eventId}/>
                 )}
-            </div>
+                <div>
+                    <button onClick={() => setShowAttendees(true)}>Attendees</button>
+                    {showAttendees && (
+                        <ShowAttendees hidden={() => setShowAttendees(false)} eventId={eventId}/>
+                    )}
+                </div>
+                <div>
+                    {showForm && (
+                        <EditEvent hiddenForm={() => setShowForm(false)} eventId={eventId} />
+                    )}
+                </div>
 
             </div>
-            <div>{ event.id }</div>
-            <div>{ event.description }</div>
+            <div>{event.id}</div>
+            <div>{event.description}</div>
         </>
 
     );

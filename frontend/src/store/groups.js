@@ -100,9 +100,9 @@ export const newEventThunk = (groupId, event) => async dispatch => {
 
 }
 
-const initialState = {}
+const initialState = {};
 const groupsReducer = (state = initialState, action) => {
-    let newState
+    let newState;
     switch (action.type) {
         case LOAD_GROUPS: {
             const groups = {};
