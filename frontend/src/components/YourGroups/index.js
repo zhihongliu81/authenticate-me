@@ -9,7 +9,7 @@ const YourGroups = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
-    
+
     useEffect(() => {
         dispatch(getYourGroupsThunk(user));
     }, [dispatch])
@@ -28,6 +28,7 @@ const YourGroups = () => {
         <div>Your Groups:
             {groupsArr.map(group => <div key={group.id}>{group.id}</div>)}
         </div>
+        
     )
 };
 

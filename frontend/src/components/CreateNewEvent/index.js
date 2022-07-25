@@ -59,7 +59,6 @@ const CreateNewEvent = ({hiddenForm, groupId}) => {
                 <button onClick={hiddenForm}>Cancle</button>
             </form>
 
-
         </div>
     );
 }

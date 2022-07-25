@@ -78,7 +78,7 @@ export const restoreUser = () => async dispatch => {
   const resbody = await res.json();
   if (!resbody.Groups || resbody.Groups.length === 0) return dispatch(setUser(data.user));
   const groups = {};
-  resbody.Groups.forEach(async group => {
+  resbody.Groups.forEach( async group => {
 
     //get member status
     const res1 = await fetch(`/api/groups/${group.id}/members`);
@@ -90,7 +90,7 @@ export const restoreUser = () => async dispatch => {
     dispatch(setUser(data.user, groups));
   })
 
-
+// console.log(groups);
 
 
   // dispatch(setUser(data.user));
