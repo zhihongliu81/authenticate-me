@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { eventDetailsThunk } from "../../store/events";
+import { useHistory, useParams } from "react-router-dom";
+import { deleteEventThunk, eventDetailsThunk } from "../../store/events";
 import EditEvent from "../EditEvent";
 
 const EventDetails = () => {
     const {eventId} = useParams();
     const dispatch = useDispatch();
+    const history = useHistory();
     const event = useSelector(state => state.events[eventId]);
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
@@ -24,6 +25,12 @@ const EventDetails = () => {
         }
     }
 
+    const handleDelete = async (eventId) => {
+        const response = await dispatch(deleteEventThunk(eventId));
+        if (response) {
+            history.push('/allEvents');
+        }
+    }
 
     useEffect(() => {
         dispatch(eventDetailsThunk(eventId));
@@ -37,7 +44,13 @@ const EventDetails = () => {
             <div>
                 {`Event ${event.id}: `}
 
-                 {showEditEventButton && <button onClick={() => setShowForm(true)}>Edit Event</button>}
+                 {showEditEventButton && (
+                    <div>
+                       <button onClick={() => setShowForm(true)}>Edit Event</button>
+                       <button onClick={() => handleDelete(event.id)}>Delete</button>
+                    </div>
+
+                 )}
                  <div>
                 {showForm && (
                     <EditEvent hiddenForm = {() => setShowForm(false)} eventId = {eventId}/>
