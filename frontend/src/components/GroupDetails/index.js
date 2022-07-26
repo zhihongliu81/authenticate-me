@@ -62,7 +62,7 @@ const GroupDetails = () => {
             <div>
                 {showEditGroupButton && <button onClick={() => setShowEditGroupForm(true)}>Edit Group</button>}
                 {showEditGroupForm && (
-                    <EditGroup hiddenForm = {() => setShowEditGroupForm(false)} groupId = {group.id}/>
+                    <EditGroup hiddenForm = {() => setShowEditGroupForm(false)} group = {group}/>
                 )}
             </div>
             <div>{group.id}</div>
