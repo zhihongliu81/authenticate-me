@@ -36,7 +36,7 @@ const EditGroup = ({hiddenForm, group}) => {
         }
 
         if (updatedGroup) {
-            history.push(`/api/groups/${group.id}`);
+            history.push(`/yourGroups`);
             hiddenForm();
         }
     }

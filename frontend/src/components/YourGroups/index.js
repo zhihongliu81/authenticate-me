@@ -11,13 +11,9 @@ const YourGroups = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
-    // const [name, setName] = useState(group.name);
-    // const [about, setAbout] = useState(group.about);
-    // const [type, setType] = useState(group.type);
-    // const [privateStatus, setPrivateStatus] = useState(group.private);
-    // const [city, setCity] = useState(group.city);
-    // const [state, setState] = useState(group.state);
+
     const [showEditGroupForm, setShowEditGroupForm] = useState(false);
+    const [buttonIndex, setButtonIndex] = useState(0);
 
     const handleDelete = async (groupId) => {
         const deletedGroup = dispatch(deleteGroupThunk(groupId));
@@ -30,7 +26,8 @@ const YourGroups = () => {
 
     }
 
-    const handleEditGroup = async (group) => {
+    const handleEditGroup = async (group, index) => {
+        setButtonIndex(index);
         setShowEditGroupForm(true);
 
     }
@@ -54,11 +51,11 @@ const YourGroups = () => {
             {groupsArr.map((group, index) =>
             <div key={group.id}>
                 <div>{`Group ${index + 1}: `}
-                    <button onClick={() => handleEditGroup(group)}>Edit Group</button>
+                    <button onClick={() => handleEditGroup(group, index)} id={index}>Edit Group</button>
                     <button onClick={() => handleDelete(group.id)}>DELETE</button>
                 </div>
                 <div>
-                    {showEditGroupForm && (
+                    {showEditGroupForm && (index === buttonIndex) && (
                     <EditGroup group={group} hiddenForm={() => setShowEditGroupForm(false)}/>
                     )}
                 </div>
