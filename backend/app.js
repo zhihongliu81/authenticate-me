@@ -184,6 +184,12 @@ app.use((err, _req, res, _next) => {
             if (el === "Start date must be a valid datetime") {
                 errors.startDate = el;
             }
+            if (el === 'The provided credentials were invalid.') {
+                errors.invalidCredentials = el;
+            }
+            if (el ===  'Please provide a valid email.') {
+                errors.invalidEmail = el;
+            }
         };
 
 
