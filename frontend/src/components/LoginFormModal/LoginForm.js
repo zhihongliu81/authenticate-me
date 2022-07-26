@@ -1,5 +1,5 @@
 // frontend/src/components/LoginFormModal/LoginForm.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './LoginFormModal.css';
@@ -10,6 +10,32 @@ function LoginForm({close}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [emailValidationErrors, setEmailValidationErrors] = useState([]);
+  const [passwordValidationErrors, setPasswordValidationErrors] = useState([]);
+
+  useEffect(()=> {
+    const errors = [];
+    if (!email.length) errors.push('email is required');
+
+    function ValidateEmail(email) {
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (email.match(mailformat)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+   if (!ValidateEmail(email)) errors.push('Email has invalid format')
+   setEmailValidationErrors(errors);
+  }, [email]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!password.length) errors.push('Password is required');
+    setPasswordValidationErrors(errors);
+  }, [password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +46,6 @@ function LoginForm({close}) {
         if (Object.keys(data.errors).length > 0) {
           const err = Object.values(data.errors)
           setErrors(err);
-
         }
       }
     );
@@ -59,6 +84,11 @@ function LoginForm({close}) {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+          <>
+          {emailValidationErrors.map((error, idx) => (
+            <li key={idx} style={{color: 'red'}}>{error}</li>
+          ))}
+        </>
         </div>
         <div className="login-form-password">
         <label htmlFor="password">
@@ -71,6 +101,11 @@ function LoginForm({close}) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+           <>
+          {passwordValidationErrors.map((error, idx) => (
+            <li key={idx} style={{color: 'red'}}>{error}</li>
+          ))}
+        </>
         </div>
         <div>
       <label className="checkbox-label">
