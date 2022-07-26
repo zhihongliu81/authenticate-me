@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAttendeesThunk } from "../../store/attendees";
 
-const ShowAttendees = ({hidden, eventId}) => {
+const ShowAttendees = ({eventId}) => {
     const dispatch = useDispatch();
     const attendees = useSelector(state => state.attendees[eventId]);
 
@@ -15,7 +15,7 @@ const ShowAttendees = ({hidden, eventId}) => {
     const attendeesArr = Object.values(attendees);
 
     return (
-        <div>
+        <div>Attendees: 
             {attendeesArr.length > 0 && (
                 attendeesArr.map(attendee => {
                     return (

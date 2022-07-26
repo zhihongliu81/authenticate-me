@@ -9,6 +9,8 @@ import AllEvents from "./components/AllEventsList";
 import AllGroups from "./components/AllGroupsList";
 import GroupDetails from "./components/GroupDetails";
 import EventDetails from "./components/Eventdetails";
+import YourGroups from "./components/YourGroups";
+import CreateGroup from "./components/CreateGroup";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +26,10 @@ function App() {
         <NavLink to={'/allEvents'}>Events</NavLink>
         <NavLink to={'/allgroups'}>Groups</NavLink>
       </div>
+      <div>
+        <div>Create your own Meetup Group</div>
+        <NavLink to={'/createGroup'}>Get Stated</NavLink>
+      </div>
 
       {isLoaded && (
         <Switch>
@@ -35,6 +41,12 @@ function App() {
           </Route>
           <Route path={'/allGroups'}>
             <AllGroups />
+          </Route>
+          <Route path={'/yourGroups'}>
+            <YourGroups />
+          </Route>
+          <Route path={'/createGroup'}>
+            <CreateGroup />
           </Route>
           <Route path={'/api/groups/:groupId'}>
             <GroupDetails />

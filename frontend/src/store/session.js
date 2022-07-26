@@ -2,7 +2,8 @@ import { csrfFetch } from './csrf';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
-
+const GET_YOURGROUPS = 'session/GET_YOURGROUPS';
+const DELETE_GROUP = 'session/DELETE_GROUP';
 // const setUser = (user) => {
 //   return {
 //     type: SET_USER,
@@ -10,11 +11,10 @@ const REMOVE_USER = 'session/removeUser';
 //   };
 // };
 
-const setUser = (user, groups) => {
+const setUser = (user) => {
   return {
     type: SET_USER,
-    user,
-    groups
+    user
   }
 }
 
@@ -23,6 +23,20 @@ const removeUser = () => {
     type: REMOVE_USER,
   };
 };
+
+const getYourGroups = (groups) => {
+  return {
+    type: GET_YOURGROUPS,
+    groups
+  }
+};
+
+const deleteGroup = (groupId) => {
+  return {
+    type: DELETE_GROUP,
+    groupId
+  }
+}
 
 export const login = (user) => async (dispatch) => {
   const { email, password } = user;
@@ -34,49 +48,16 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-
-  // Get all Groups joined or organized by the Current User
-  const res = await fetch('/api/groups/current');
-  const resbody = await res.json();
-  const groups = {};
-  resbody.Groups.forEach(async group => {
-
-    //get member status
-   const res1 = await fetch(`/api/groups/${group.id}/members`);
-   const data1 = await res1.json();
-   const member = data1.Members.find(ele => data.user.id === ele.id);
-   const status = member.Membership.status;
-   groups[group.id] = {...group, status};
-  })
-
-  dispatch(setUser(data.user, groups));
-
-  // dispatch(setUser(data.user));
+  dispatch(setUser(data.user));
+  dispatch(getYourGroupsThunk(data.user));
   return response;
 };
 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-
-// Get all Groups joined or organized by the Current User
-const res = await fetch('/api/groups/current');
-const resbody = await res.json();
-const groups = {};
-resbody.Groups.forEach(async group => {
-
-  //get member status
- const res1 = await fetch(`/api/groups/${group.id}/members`);
- const data1 = await res1.json();
- const member = data1.Members.find(ele => data.user.id === ele.id);
- const status = member.Membership.status;
- groups[group.id] = {...group, status};
-})
-
-dispatch(setUser(data.user, groups));
-
-
-  // dispatch(setUser(data.user));
+  dispatch(setUser(data.user));
+  dispatch(getYourGroupsThunk(data.user));
   return response;
 };
 
@@ -104,6 +85,55 @@ export const logout = () => async (dispatch) => {
   return response;
 };
 
+export const getYourGroupsThunk = (user) => async dispatch => {
+  if (!user) return null;
+  const userId = user.id;
+  const res = await fetch('/api/groups/current');
+  const resbody = await res.json();
+  const groups = {};
+  // if (resbody.Groups && resbody.Groups.length > 0) {
+  //   const addMember = () => {
+  //     resbody.Groups.forEach(async group => {
+  //       //get member status
+  //       const res1 = await fetch(`/api/groups/${group.id}/members`);
+  //       const data1 = await res1.json();
+  //       const member = data1.Members.find(ele => userId === ele.id);
+  //       if (member) {
+  //         const status = member.Membership.status;
+  //         groups[group.id] = { ...group, status };
+  //         dispatch(getYourGroups(groups));
+  //       }
+  //     })
+  //   }
+  //   await addMember();
+
+  if (resbody.Groups && resbody.Groups.length > 0) {
+    for (let i = 0; i < resbody.Groups.length; i++) {
+      let group = resbody.Groups[i];
+      const res1 = await fetch(`/api/groups/${group.id}/members`);
+      const data1 = await res1.json();
+      const member = data1.Members.find(ele => userId === ele.id);
+      if (member) {
+        const status = member.Membership.status;
+        groups[group.id] = { ...group, status };
+      }
+    }
+  }
+  dispatch(getYourGroups(groups));
+  return res;
+}
+
+export const deleteGroupThunk = (groupId) => async dispatch => {
+  const response = await csrfFetch(`/api/groups/${groupId}`, {
+    method: 'DELETE'
+  });
+  if (response.ok) {
+    dispatch(deleteGroup(groupId));
+  }
+  return response;
+
+}
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
@@ -112,12 +142,22 @@ const sessionReducer = (state = initialState, action) => {
     case SET_USER:
       newState = Object.assign({}, state);
       newState.user = action.user;
-      newState.groups = action.groups;
       return newState;
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
       return newState;
+    case GET_YOURGROUPS: {
+      newState = { ...state };
+      newState.groups = action.groups ;
+      return newState;
+    }
+    case DELETE_GROUP: {
+      newState = { ...state };
+      delete newState.groups[action.groupId];
+      newState.groups = {...newState.groups};
+      return newState;
+    }
     default:
       return state;
   }
