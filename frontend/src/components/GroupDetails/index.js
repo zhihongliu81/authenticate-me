@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { groupDetailsThunk, getMembersThunk } from "../../store/groups";
 import GroupEvents from "../GroupEvents";
 import CreateNewEvent from "../CreateNewEvent";
+import EditGroup from "../EditGroup";
 
 
 
@@ -13,6 +14,8 @@ const GroupDetails = () => {
     const group = useSelector(state => state.groups[groupId]);
     const user = useSelector(state => state.session.user);
     const [showForm, setShowForm] = useState(false);
+    const [showEditGroupForm, setShowEditGroupForm] = useState(false);
+
 
     let showNewEventButton = false;
     if(user && group) {
@@ -29,6 +32,13 @@ const GroupDetails = () => {
         }
     }
 
+    let showEditGroupButton = false;
+    if (user && group) {
+        if (user.id && group.organizerId && user.id === group.organizerId) {
+          showEditGroupButton = true;
+        }
+    }
+
 
     useEffect(() => {
         dispatch(groupDetailsThunk(groupId));
@@ -42,7 +52,6 @@ const GroupDetails = () => {
             <div>{`Group ${group.id}: `}
                 <NavLink to={`/api/groups/${groupId}/events`}><span>GroupEvents</span></NavLink>
             </div>
-
             {`Group ${groupId}: `}
             {showNewEventButton && <button onClick={() => setShowForm(true)}>New Event</button>}
             <div>
@@ -50,6 +59,15 @@ const GroupDetails = () => {
                     <CreateNewEvent hiddenForm = {() => setShowForm(false)} groupId = {group.id}/>
                 )}
             </div>
+            <div>
+                {showEditGroupButton && <button onClick={() => setShowEditGroupForm(true)}>Edit Group</button>}
+                {showEditGroupForm && (
+                    <EditGroup hiddenForm = {() => setShowEditGroupForm(false)} groupId = {group.id}/>
+                )}
+            </div>
+            <div>{group.id}</div>
+            <div>{group.name}</div>
+            <div>{group.about}</div>
             <Route path={'/api/groups/:groupId/events'}>
                 <GroupEvents />
             </Route>

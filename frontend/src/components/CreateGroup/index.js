@@ -15,7 +15,7 @@ const CreateGroup = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
 
-    const handleSumbit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newGroup = {
@@ -44,7 +44,7 @@ const CreateGroup = () => {
 
     return (
         <div>{`Create New Group:`}
-            <form onSubmit={handleSumbit}>
+            <form onSubmit={handleSubmit}>
                 <label>name:<input type={'text'} value={name} onChange={e => setName(e.target.value)}></input></label>
                 <label>about:<input type={'text'} value={about} onChange={e => setAbout(e.target.value)}></input></label>
                 <label>type:<input type={'text'} value={type} onChange={e => setType(e.target.value)}></input></label>
@@ -53,7 +53,7 @@ const CreateGroup = () => {
 
                 <label>city:<input type={'text'} value={city} onChange={e => setCity(e.target.value)}></input></label>
                 <label>state:<input type={'text'} value={state} onChange={e => setState(e.target.value)}></input></label>
-                <button type="sumbit" >Sumbit</button>
+                <button type="submit" >Submit</button>
                 {/* <button onClick={hiddenForm}>Cancle</button> */}
             </form>
 

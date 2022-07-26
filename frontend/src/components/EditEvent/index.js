@@ -17,7 +17,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
     const [startDate, setStartDate] = useState(event.startDate);
     const [endDate, setEndDate] = useState(event.endDate);
 
-    const handleSumbit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedEvent = {
             venueId,
@@ -45,7 +45,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
 
     return (
         <div>{`Update Event for Event ${eventId}:`}
-            <form onSubmit={handleSumbit}>
+            <form onSubmit={handleSubmit}>
                 <label>venueId:<input type={'number'} value={venueId} onChange={e => setVenueId(e.target.value)}></input></label>
                 <label>name:<input type={'text'} value={name} onChange={e => setName(e.target.value)}></input></label>
                 <label>type:<input type={'text'} value={type} onChange={e => setType(e.target.value)}></input></label>
@@ -54,7 +54,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
                 <label>description:<input type={'text'} value={description} onChange={e => setDescription(e.target.value)}></input></label>
                 <label>startDate:<input type={'text'} value={startDate} onChange={e => setStartDate(e.target.value)}></input></label>
                 <label>endDate:<input type={'text'} value={endDate} onChange={e => setEndDate(e.target.value)}></input></label>
-                <button type="sumbit" >Sumbit</button>
+                <button type="submit" >Submit</button>
                 <button onClick={hiddenForm}>Cancle</button>
             </form>
 
