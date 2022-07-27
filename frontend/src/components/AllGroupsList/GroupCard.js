@@ -1,8 +1,11 @@
 import { useHistory } from "react-router-dom";
+import './GroupCard.css'
 
 
 const GroupCard = ({group}) => {
     const history = useHistory();
+
+
     return (
         <div className='groupcard-main' onClick={() => history.push(`/api/groups/${group.id}`)} >
             <div className='groupcard-left'>
@@ -24,7 +27,7 @@ const GroupCard = ({group}) => {
 
                 </div>
                 <div className='groupcard-members-private'>
-                    {`${group.members.length} members . ${group.private ? 'private' : 'public'}`}
+                    {`${Object.keys(group.members).length} members . ${group.private ? 'private' : 'public'}`}
 
                 </div>
 

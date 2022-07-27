@@ -1,0 +1,48 @@
+.group-detail-top {
+    display: flex;
+    flex-direction: row;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
+}
+
+.group-detail-image {
+    height: 337px;
+    width: 600px;
+}
+
+.group-detail-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: #212121;
+}
+
+.group-detail-address,
+.group-detail-members,
+.group-detail-organizer {
+    font-size: 14px;
+    color: #212121;
+    font-weight: 300;
+}
+
+.organizer-name {
+    font-weight: 600;
+}
+
+.group-detail-bottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.group-detail-about {
+    min-height: 300px;
+    width: 600px;
+}
+.group-detail-about > h2 {
+    font-size: 20px;
+    color: #212121;
+}
+
+.group-detail-about > p {
+    font-size: 16px;
+    color: #212121;
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { newGroupThunk } from "../../store/groups";
 
@@ -8,12 +8,15 @@ import { newGroupThunk } from "../../store/groups";
 const CreateGroup = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector(state => state.user);
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
     const [type, setType] = useState('');
     const [privateStatus, setPrivateStatus] = useState(false);
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
+
+    // if (!user) history.push('/login');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,6 +29,7 @@ const CreateGroup = () => {
             city,
             state
         };
+       
         let createdNewGroup;
         try {
             createdNewGroup = await dispatch(newGroupThunk(newGroup));

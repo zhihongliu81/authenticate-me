@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { loadGroupsThunk } from '../../store/groups';
 import GroupCard from './GroupCard';
-import './AllGroupsList.css';
+
 
 const AllGroups = () => {
     const groups = useSelector(state => Object.values(state.groups));

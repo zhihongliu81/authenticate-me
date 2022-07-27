@@ -16,14 +16,13 @@ const YourGroups = () => {
     const [buttonIndex, setButtonIndex] = useState(0);
 
     const handleDelete = async (groupId) => {
-        const deletedGroup = dispatch(deleteGroupThunk(groupId));
+        const deletedGroup = await dispatch(deleteGroupThunk(groupId));
         if ( deletedGroup.ok ) {
             history.push('/yourGroups')
         } else {
             const response = await deletedGroup.json();
             return response;
         }
-
     }
 
     const handleEditGroup = async (group, index) => {
