@@ -1,0 +1,58 @@
+.groupcard-main {
+    display: flex;
+    width: 640px;
+    height: 153px;
+    padding: 10px;
+    border-bottom: 1px solid #757575 ;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.groupcard-left {
+    width: 178px;
+    height: 53px;
+}
+
+.groupcard-right {
+    width: 446px;
+    height: 66px;
+}
+
+.image {
+    width: 178px;
+    height: 100px;
+}
+
+.name-address {
+    box-sizing: border-box;
+    width: 446px;
+    height: 66px;
+    padding: 0px 0px 16px;
+}
+
+.name {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.address {
+    font-size: 14px;
+    color: #877457;
+    margin-left: 10px;
+    margin-top: 0px;
+}
+
+.about {
+    font-size: 14px;
+    color: #757575;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+.groupcard-members-private {
+    font-size: 14px;
+    color: #757575;
+    margin-left: 10px;
+    margin-top: 30px;
+}

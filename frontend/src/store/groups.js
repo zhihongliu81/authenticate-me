@@ -63,10 +63,21 @@ const getMembers = (members, groupId) => {
 export const loadGroupsThunk = () => async dispatch => {
     const response = await fetch('/api/groups');
     if (response.ok) {
-        const data = await response.json();
-        dispatch(loadGroups(data.Groups));
-        return data
+
+        const resbody = await response.json();
+        const groups = {};
+        if (resbody.Groups && resbody.Groups.length > 0) {
+            for (let i = 0; i < resbody.Groups.length; i++) {
+                let group = resbody.Groups[i];
+                const res1 = await fetch(`/api/groups/${group.id}/members`);
+                const data1 = await res1.json();
+                group.members = data1.Members;
+                groups[group.id] = group;
+            }
+        }
+        dispatch(loadGroups(groups));                        
     }
+    return response;
 }
 
 export const groupDetailsThunk = (groupId) => async dispatch => {
@@ -151,9 +162,7 @@ const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_GROUPS: {
-            const groups = {};
-            action.groups.map(group => groups[group.id] = group);
-            newState = { ...groups }
+            newState = action.groups
             return newState;
         }
         case GET_GROUP: {

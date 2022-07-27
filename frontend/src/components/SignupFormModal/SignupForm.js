@@ -1,19 +1,45 @@
-// frontend/src/components/LoginFormModal/LoginForm.js
 import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch } from "react-redux";
-import './LoginFormModal.css';
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import './SignupFormModal.css';
+import { NavLink, Redirect } from "react-router-dom";
 
-function LoginForm({close}) {
+function SignupForm({close}) {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [firstNameValidationErrors, setFirstNameValidationErrors] = useState([]);
+  const [lastNameValidationErrors, setLastNameValidationErrors] = useState([]);
   const [emailValidationErrors, setEmailValidationErrors] = useState([]);
   const [passwordValidationErrors, setPasswordValidationErrors] = useState([]);
+  const [showFirstNameErrors, setShowFirstNameErrors] = useState(false);
+  const [showLastNameErrors, setShowLastNameErrors] = useState(false);
   const [showEmailErrors, setShowEmailErrors] = useState(false);
   const [showPasswordErrors, setShowPasswordErrors] = useState(false);
+
+  useEffect(() => {
+    const errors = [];
+    if (!firstName.length) errors.push('First name is required');
+    setFirstNameValidationErrors(errors);
+  }, [firstName]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!lastName.length) errors.push('Last name is required');
+    setLastNameValidationErrors(errors);
+  }, [lastName]);
+
+  useEffect(() => {
+    const errors = [];
+    if (!password.length) errors.push('Password is required');
+    setPasswordValidationErrors(errors);
+  }, [password]);
 
   useEffect(()=> {
     const errors = [];
@@ -29,33 +55,36 @@ function LoginForm({close}) {
       }
     }
 
-   if (!ValidateEmail(email)) errors.push('Email has invalid format');
+   if (!ValidateEmail(email)) errors.push('Email has invalid format')
    setEmailValidationErrors(errors);
   }, [email]);
 
-  useEffect(() => {
-    const errors = [];
-    if (!password.length) errors.push('Password is required');
-    setPasswordValidationErrors(errors);
-  }, [password])
+  if (sessionUser) return <Redirect to="/" />;
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors([]);
-    return dispatch(sessionActions.login({ email, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (Object.keys(data.errors).length > 0) {
-          const err = Object.values(data.errors)
-          setErrors(err);
-        }
-      }
-    );
-  };
+    if (password === confirmPassword) {
+        setErrors([]);
+        return dispatch(sessionActions.signup({ email, firstName, lastName, password })).catch(
+          async (res) => {
+            const data = await res.json();
+            if (Object.keys(data.errors).length > 0) {
+              const err = Object.values(data.errors)
+              setErrors(err);
+            }
+          }
+        );
+      };
+      return setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+
 
   return (
     <div className="Modal">
-    <div className="LoginFormModalMain">
+    <div className="signupFormModalMain">
     <span onClick={close} class="close" title="Close Modal">&times;</span>
       <div>
         <svg viewBox="0 0 51 49" xmlns="http://www.w3.org/2000/svg" width="48" height="48" className="mb-2">
@@ -64,18 +93,49 @@ function LoginForm({close}) {
           </g>
         </svg>
       </div>
-      <h1 className="login-form-title">Log in</h1>
-      <div>
-        <span>Not a member yet?</span>
-        <NavLink to={'/signup'} className='login-form-signup-link'>Sign Up</NavLink>
-      </div>
-      <form onSubmit={handleSubmit} className='login-form'>
+      <h1 className="signup-form-title">Finish Signing up</h1>
+
+      <form onSubmit={handleSubmit} className='signup-form'>
         <ul>
           {errors.map((error, idx) => (
-            <li key={idx}  style={{color: 'red'}}>{error}</li>
+            <li key={idx}  className='error'>{error}</li>
           ))}
         </ul>
-        <div className="login-form-email">
+        <div className="signup-form-firstname">
+        <label htmlFor="firstName">
+          First Name
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            value={firstName}
+            onChange={(e) => {setFirstName(e.target.value); setShowFirstNameErrors(true)}}
+            required
+          />
+          <>
+          {showFirstNameErrors && firstNameValidationErrors.map((error, idx) => (
+            <li key={idx} className='error'>{error}</li>
+          ))}
+        </>
+        </div>
+        <div className="signup-form-lastname">
+        <label htmlFor="lastName">
+          Last Name
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={(e) => {setLastName(e.target.value); setShowLastNameErrors(true)}}
+            required
+          />
+          <>
+          {showLastNameErrors && lastNameValidationErrors.map((error, idx) => (
+            <li key={idx} className='error'>{error}</li>
+          ))}
+        </>
+        </div>
+        <div className="signup-form-email">
         <label htmlFor="email">
           Email
           </label>
@@ -87,12 +147,12 @@ function LoginForm({close}) {
             required
           />
           <>
-          {showEmailErrors && emailValidationErrors.map((error, idx) => (
-            <li key={idx} style={{color: 'red'}}>{error}</li>
-          ))}
+          {(showEmailErrors && emailValidationErrors.length > 0) ? emailValidationErrors.map((error, idx) => (
+            <li key={idx} className='error'>{error}</li>
+          )) : <span className="form-note">We'll use your email address to send you updates</span> }
         </>
         </div>
-        <div className="login-form-password">
+        <div className="signup-form-password">
         <label htmlFor="password">
           Password
           </label>
@@ -105,21 +165,33 @@ function LoginForm({close}) {
           />
            <>
           {showPasswordErrors && passwordValidationErrors.map((error, idx) => (
-            <li key={idx} style={{color: 'red'}}>{error}</li>
+            <li key={idx} className='error'>{error}</li>
           ))}
         </>
         </div>
+        <div className="signup-form-confirmpassword">
+        <label htmlFor="confirmpassword">
+          Confirm Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          </div>
         <div>
-      <label className="checkbox-label">
-        <input type="checkbox" className="login-form-checkbox" />
-        Keep me signed in
-      </label>
     </div>
-        <button type="submit" className="login-form-button">Log In</button>
+        <button type="submit" className="signup-form-button">Sign up</button>
       </form>
+      <div>
+        <span>Already a member?</span>
+        <NavLink to={'/login'} className='signup-form-login-link'>Log in</NavLink>
+      </div>
     </div>
     </div>
   );
 }
 
-export default LoginForm;
+export default SignupForm;

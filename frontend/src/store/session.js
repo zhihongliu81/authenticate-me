@@ -89,37 +89,24 @@ export const getYourGroupsThunk = (user) => async dispatch => {
   if (!user) return null;
   const userId = user.id;
   const res = await fetch('/api/groups/current');
-  const resbody = await res.json();
-  const groups = {};
-  // if (resbody.Groups && resbody.Groups.length > 0) {
-  //   const addMember = () => {
-  //     resbody.Groups.forEach(async group => {
-  //       //get member status
-  //       const res1 = await fetch(`/api/groups/${group.id}/members`);
-  //       const data1 = await res1.json();
-  //       const member = data1.Members.find(ele => userId === ele.id);
-  //       if (member) {
-  //         const status = member.Membership.status;
-  //         groups[group.id] = { ...group, status };
-  //         dispatch(getYourGroups(groups));
-  //       }
-  //     })
-  //   }
-  //   await addMember();
-
-  if (resbody.Groups && resbody.Groups.length > 0) {
-    for (let i = 0; i < resbody.Groups.length; i++) {
-      let group = resbody.Groups[i];
-      const res1 = await fetch(`/api/groups/${group.id}/members`);
-      const data1 = await res1.json();
-      const member = data1.Members.find(ele => userId === ele.id);
-      if (member) {
-        const status = member.Membership.status;
-        groups[group.id] = { ...group, status };
+  if (res.ok) {
+    const resbody = await res.json();
+    const groups = {};
+    if (resbody.Groups && resbody.Groups.length > 0) {
+      for (let i = 0; i < resbody.Groups.length; i++) {
+        let group = resbody.Groups[i];
+        const res1 = await fetch(`/api/groups/${group.id}/members`);
+        const data1 = await res1.json();
+        const member = data1.Members.find(ele => userId === ele.id);
+        if (member) {
+          const status = member.Membership.status;
+          groups[group.id] = { ...group, status };
+        }
       }
     }
+    dispatch(getYourGroups(groups));
   }
-  dispatch(getYourGroups(groups));
+
   return res;
 }
 

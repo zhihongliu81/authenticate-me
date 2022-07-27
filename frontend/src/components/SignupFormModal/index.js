@@ -1,23 +1,22 @@
-// frontend/src/components/LoginFormModal/index.js
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Modal } from '../../context/Modal';
-import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
-function LoginFormModal() {
+function SignupFormModal() {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       {/* <button onClick={() => setShowModal(true)}>Log In</button> */}
-      <NavLink onClick={() => setShowModal(true)}  to={'/login'} className='navlink-login'>Log In</NavLink>
+      <NavLink onClick={() => setShowModal(true)}  to={'/signup'} className='navlink-signup'>Sign up</NavLink>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <LoginForm close={() => setShowModal(false)}/>
+          <SignupForm close={() => setShowModal(false)}/>
         </Modal>
       )}
     </>
   );
 }
 
-export default LoginFormModal;
+export default SignupFormModal;

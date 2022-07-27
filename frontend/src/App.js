@@ -26,16 +26,10 @@ function App() {
         <NavLink to={'/allEvents'}>Events</NavLink>
         <NavLink to={'/allgroups'}>Groups</NavLink>
       </div>
-      <div>
-        <div>Create your own Meetup Group</div>
-        <NavLink to={'/createGroup'}>Get Stated</NavLink>
-      </div>
+
 
       {isLoaded && (
         <Switch>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
           <Route path={'/allEvents'}>
             <AllEvents />
           </Route>
@@ -54,10 +48,13 @@ function App() {
           <Route path={'/api/events/:eventId'}>
             <EventDetails />
           </Route>
-
-
         </Switch>
       )}
+
+      <div>
+        <div>Create your own Meetup Group</div>
+        <NavLink to={'/createGroup'}>Get Stated</NavLink>
+      </div>
     </>
   );
 }
