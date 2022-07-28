@@ -4,7 +4,7 @@ import { Modal } from '../../context/Modal';
 import SignupForm from './SignupForm';
 
 function SignupFormModal() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   // useEffect(() => {
   //   setShowModal(true)

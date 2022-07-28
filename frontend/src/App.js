@@ -42,12 +42,12 @@ function App() {
           <Route path={'/allGroups'}>
             <AllGroups />
           </Route>
-          <Route path={'/login'}>
+          {/* <Route path={'/login'}>
             <LoginFormModal />
           </Route>
           <Route path={'/signup'}>
             <SignupFormModal />
-          </Route>
+          </Route> */}
           <Route path={'/yourGroups'}>
             <YourGroups />
           </Route>
