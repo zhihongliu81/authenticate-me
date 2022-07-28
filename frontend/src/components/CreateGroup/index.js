@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { newGroupThunk } from "../../store/groups";
+import './CreateGroup.css';
 
 
 
@@ -54,7 +55,7 @@ const CreateGroup = ({close}) => {
 
     useEffect(() => {
         const errors =[];
-        if (privateStatus !== true || privateStatus !== false) errors.push("Private must be a boolean");
+        if (privateStatus !== 'true' && privateStatus !== 'false') errors.push("Private must be a boolean");
         setPrivateValidationErrors(errors);
     }, [privateStatus])
 
@@ -86,50 +87,62 @@ const CreateGroup = ({close}) => {
             state
         };
         setErrors([]);
-        // return dispatch(newGroupThunk(newGroup)).catch(
-        //   async (res) => {
-        //     const data = await res.json();
-        //     if (Object.keys(data.errors).length > 0) {
-        //       const err = Object.values(data.errors)
-        //       setErrors(err);
-        //     }
-        //   }
-        // )
-         const res = await dispatch(newGroupThunk(newGroup));
-         console.log(res.ok)
-
-        if (res.ok) {
-          const createdNewGroup = await res.json();
-          // console.log('createdNewGroup:',createdNewGroup)
-            history.push(`/api/groups/${createdNewGroup.id}`);
-            // hiddenForm();
-        } else {
-
-            const data = await res.json();
-            console.log(data)
-            if (Object.keys(data.errors).length > 0) {
-                const err = Object.values(data.errors)
-                setErrors(err);
+        dispatch(newGroupThunk(newGroup)).then((res) => {
+          close()
+          history.push(`/api/groups/${res.id}`);
+        }).catch(
+          async (res) => {
+              const data = await res.json();
+              console.log("data in catch:", data)
+              if (Object.keys(data.errors).length > 0) {
+                        const err = Object.values(data.errors)
+                        setErrors(err);
               }
-            }
+          }
+      );
+
+
+        //  const res = await dispatch(newGroupThunk(newGroup));
+
+
+        // if (res.ok) {
+        //   console.log(res);
+
+        //   const createdNewGroup = await res.json();
+        //   console.log(createdNewGroup);
+        //   // console.log('createdNewGroup:',createdNewGroup)
+        //   close()
+        //     history.push(`/api/groups/${createdNewGroup.id}`);
+        //     // hiddenForm();
+        // } else {
+        //   console.log(res);
+        //     const data = await res.json();
+        //     console.log(data)
+        //     if (Object.keys(data.errors).length > 0) {
+        //         const err = Object.values(data.errors)
+        //         setErrors(err);
+        //       }
+        //     }
     };
 
 
-  return (<div>
+  return (
+  <div className="create-group-form-main">
     <div>
-      <h1> Create Group</h1>
+      <h1 className="create-form-title"> Create Group</h1>
     </div>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="create-group-form">
       <ul>
         {errors.map((error, idx) => (
           <li key={idx} className='create-group-error'>{error}</li>
         ))}
       </ul>
-      <div>
+      <div className="create-group-form-name">
         <label>name:</label>
         <input
           type={'text'}
           value={name}
+          id="create-group-form-name-input"
           onChange={e => { setName(e.target.value); setShowNameErrors(true) }} />
         <>
           {showNameErrors && nameValidationErrors.map((error, idx) => (
@@ -137,11 +150,12 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <div>
+      <div className="create-group-form-about">
         <label>about:</label>
         <input
           type={'text'}
           value={about}
+          id="create-group-form-about-input"
           onChange={e => { setAbout(e.target.value); setShowAboutErrors(true) }} />
         <>
           {showAboutErrors && aboutValidationErrors.map((error, idx) => (
@@ -149,11 +163,12 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <div>
+      <div className="create-group-form-type">
         <label>type:</label>
         <input
           type={'text'}
           value={type}
+          id="create-group-form-type-input"
           onChange={e => { setType(e.target.value); setShowTypeErrors(true) }} />
         <>
           {showTypeErrors && typeValidationErrors.map((error, idx) => (
@@ -161,11 +176,12 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <div>
+      <div className="create-group-form-private">
         <label>private:</label>
         <input
           type={'boolean'}
           value={privateStatus}
+          id="create-group-form-private-input"
           onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }} />
         <>
           {showPrivateErrors && privateValidationErrors.map((error, idx) => (
@@ -173,11 +189,12 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <div>
+      <div className="create-group-form-city">
         <label>city:</label>
         <input
           type={'text'}
           value={city}
+          id="create-group-form-city-input"
           onChange={e => { setCity(e.target.value); setShowCityErrors(true) }} />
         <>
           {showCityErrors && cityValidationErrors.map((error, idx) => (
@@ -185,11 +202,12 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <div>
+      <div className="create-group-form-state">
         <label>state:</label>
         <input
           type={'text'}
           value={state}
+          id="create-group-form-state-input"
           onChange={e => { setState(e.target.value); setShowStateErrors(true) }} />
         <>
           {showStateErrors && stateValidationErrors.map((error, idx) => (
@@ -197,7 +215,7 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <button type="submit" >Submit</button>
+      <button type="submit" className="create-group-form-submit-button" >Submit</button>
       {/* <button onClick={hiddenForm}>Cancle</button> */}
     </form>
 

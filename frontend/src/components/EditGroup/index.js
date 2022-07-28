@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateGroupThunk } from "../../store/groups";
@@ -14,6 +14,10 @@ const EditGroup = ({hiddenForm, group}) => {
     const [privateStatus, setPrivateStatus] = useState(group.private);
     const [city, setCity] = useState(group.city);
     const [state, setState] = useState(group.state);
+
+    useEffect(() => {
+
+    }, [dispatch]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +40,7 @@ const EditGroup = ({hiddenForm, group}) => {
         }
 
         if (updatedGroup) {
-            history.push(`/yourGroups`);
+            history.push(`/api/groups/${updatedGroup.id}`);
             hiddenForm();
         }
     }

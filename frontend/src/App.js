@@ -12,6 +12,8 @@ import GroupDetails from "./components/GroupDetails";
 import EventDetails from "./components/Eventdetails";
 import YourGroups from "./components/YourGroups";
 import CreateGroup from "./components/CreateGroup";
+import LoginFormModal from "./components/LoginFormModal";
+import SignupFormModal from "./components/SignupFormModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +41,12 @@ function App() {
           </Route>
           <Route path={'/allGroups'}>
             <AllGroups />
+          </Route>
+          <Route path={'/login'}>
+            <LoginFormModal />
+          </Route>
+          <Route path={'/signup'}>
+            <SignupFormModal />
           </Route>
           <Route path={'/yourGroups'}>
             <YourGroups />

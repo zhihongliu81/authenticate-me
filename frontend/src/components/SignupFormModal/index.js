@@ -6,15 +6,15 @@ import SignupForm from './SignupForm';
 function SignupFormModal() {
   const [showModal, setShowModal] = useState(true);
 
-  useEffect(() => {
-    setShowModal(true)
+  // useEffect(() => {
+  //   setShowModal(true)
 
-  }, [])
+  // }, [])
 
   return (
     <>
-      {/* <button onClick={() => setShowModal(true)}>Log In</button> */}
-      <NavLink onClick={() => setShowModal(true)}  to={'/signup'} className='navlink-signup'>Sign up</NavLink>
+      <button onClick={() => setShowModal(true)}>Sign up</button>
+      {/* <NavLink onClick={() => setShowModal(true)}  to={'/signup'} className='navlink-signup'>Sign up</NavLink> */}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <SignupForm close={() => setShowModal(false)}/>

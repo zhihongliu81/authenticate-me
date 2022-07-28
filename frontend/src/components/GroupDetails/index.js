@@ -22,7 +22,7 @@ const GroupDetails = () => {
     useEffect(() => {
         dispatch(groupDetailsThunk(groupId));
         // dispatch(getMembersThunk(groupId));
-    }, [dispatch, groupId]);
+    }, [dispatch]);
 
 
     let showNewEventButton = false;
@@ -59,10 +59,15 @@ const GroupDetails = () => {
             return response;
         }
     }
-
+console.log("before")
     if (!group) return null;
+    console.log("before members")
+    console.log("group", group);
     if (!group.members) return null;
+    console.log("before organizer")
+    console.log("group", group);
     if (!group.Organizer) return null;
+    console.log("after")
 
     return (
         <div className="group-detail-main">

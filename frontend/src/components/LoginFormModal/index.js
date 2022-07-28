@@ -7,14 +7,14 @@ import LoginForm from './LoginForm';
 function LoginFormModal() {
   const [showLoginModal, setShowLoginModal] = useState(true);
 
-  useEffect(() => {
-    setShowLoginModal(true);
-  }, [])
+  // useEffect(() => {
+  //   setShowLoginModal(true);
+  // }, [])
 
   return (
     <>
-      {/* <button onClick={() => setShowModal(true)}>Log In</button> */}
-      <NavLink onClick={() => setShowLoginModal(true)}  to={'/login'} className='navlink-login'>Log In</NavLink>
+      <button onClick={() => setShowLoginModal(true)}>Log In</button>
+      {/* <NavLink onClick={() => setShowLoginModal(true)}  to={'/login'} className='navlink-login'>Log In</NavLink> */}
       {showLoginModal && (
         <Modal onClose={() => setShowLoginModal(false)}>
           <LoginForm close={() => setShowLoginModal(false)}/>

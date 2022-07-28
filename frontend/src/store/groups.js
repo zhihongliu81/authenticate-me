@@ -104,13 +104,13 @@ export const newGroupThunk = (newGroup) => async dispatch => {
         },
         body: JSON.stringify(newGroup)
     });
-    
+
 
     if (response.ok) {
 
         const data = await response.json();
         dispatch(createGroup(data));
-        return response;
+        return data;
     }
 
     return response;
@@ -174,12 +174,12 @@ const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_GROUPS: {
-            newState = action.groups
+            newState = {...state, ...action.groups}
             return newState;
         }
         case GET_GROUP: {
             newState = {...state};
-            newState[action.group.id] = {...newState[action.group.id], ...action.group};
+            newState[action.group.id] = action.group;
             return newState;
         }
         case CREATE_GROUP: {
@@ -189,7 +189,7 @@ const groupsReducer = (state = initialState, action) => {
         }
         case UPDATE_GROUP: {
             newState = {...state};
-            newState[action.group.id] = action.group;
+            newState[action.group.id] = {...newState[action.group.id], ...action.group };
             return newState;
         }
         case GROUP_EVENTS: {
