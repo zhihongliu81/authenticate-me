@@ -93,41 +93,18 @@ const CreateGroup = ({close}) => {
         }).catch(
           async (res) => {
               const data = await res.json();
-              console.log("data in catch:", data)
               if (Object.keys(data.errors).length > 0) {
                         const err = Object.values(data.errors)
                         setErrors(err);
               }
           }
       );
-
-
-        //  const res = await dispatch(newGroupThunk(newGroup));
-
-
-        // if (res.ok) {
-        //   console.log(res);
-
-        //   const createdNewGroup = await res.json();
-        //   console.log(createdNewGroup);
-        //   // console.log('createdNewGroup:',createdNewGroup)
-        //   close()
-        //     history.push(`/api/groups/${createdNewGroup.id}`);
-        //     // hiddenForm();
-        // } else {
-        //   console.log(res);
-        //     const data = await res.json();
-        //     console.log(data)
-        //     if (Object.keys(data.errors).length > 0) {
-        //         const err = Object.values(data.errors)
-        //         setErrors(err);
-        //       }
-        //     }
     };
 
 
   return (
   <div className="create-group-form-main">
+    <span onClick={close} className="close" title="Close Modal">&times;</span>
     <div>
       <h1 className="create-form-title"> Create Group</h1>
     </div>
@@ -216,15 +193,8 @@ const CreateGroup = ({close}) => {
         </>
       </div>
       <button type="submit" className="create-group-form-submit-button" >Submit</button>
-      {/* <button onClick={hiddenForm}>Cancle</button> */}
     </form>
-
   </div>
-
-
-
-
-
     );
 };
 

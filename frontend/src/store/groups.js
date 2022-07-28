@@ -174,7 +174,7 @@ const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_GROUPS: {
-            newState = {...state, ...action.groups}
+            newState = action.groups
             return newState;
         }
         case GET_GROUP: {

@@ -12,6 +12,7 @@ const YourGroups = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
+    const [yourGroupsIsLoaded, setYourGroupsIsLoaded] = useState(false);
 
     // const [showEditGroupForm, setShowEditGroupForm] = useState(false);
     // const [buttonIndex, setButtonIndex] = useState(0);
@@ -33,7 +34,9 @@ const YourGroups = () => {
     // }
 
     useEffect(() => {
-        dispatch(getYourGroupsThunk(user));
+        dispatch(getYourGroupsThunk(user)).then(() => {
+            setYourGroupsIsLoaded(true);
+        });
     }, [dispatch])
 
     if (!user) {
@@ -46,28 +49,15 @@ const YourGroups = () => {
     const groupsArr = Object.values(groups);
 
 
-    return (
-        <div>Your Groups:
-            {groupsArr.map((group, index) =>
-            <div key={group.id}>
-                <GroupCard group={group} />
-                {/* <div>{`Group ${index + 1}: `}
-                    <button onClick={() => handleEditGroup(group, index)} id={index}>Edit Group</button>
-                    <button onClick={() => handleDelete(group.id)}>DELETE</button>
-                </div>
-                <div>
-                    {showEditGroupForm && (index === buttonIndex) && (
-                    <EditGroup group={group} hiddenForm={() => setShowEditGroupForm(false)}/>
-                    )}
-                </div>
-                <div>{group.id}</div>
-                <div>{group.name}</div>
-                <div>{group.about}</div> */}
+    return <div>
+        {yourGroupsIsLoaded &&
+            groupsArr.map((group, index) =>
+                <div key={group.id}>
+                    <GroupCard group={group} />
+                </div>)}
+    </div>
 
-            </div>)}
-        </div>
 
-    )
 };
 
 
