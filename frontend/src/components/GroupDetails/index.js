@@ -7,6 +7,7 @@ import GroupEvents from "../GroupEvents";
 import CreateNewEvent from "../CreateNewEvent";
 import EditGroup from "../EditGroup";
 import { deleteGroupThunk } from "../../store/session";
+import EventCard from "../AllEventsList/EventCard";
 import './GroupDetails.css';
 
 

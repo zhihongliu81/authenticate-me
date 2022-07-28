@@ -1,5 +1,6 @@
 .group-detail-main {
-    width: 80%;
+    width: 1000px;
+    margin: 0 auto;
 }
 .group-detail-top {
     display: flex;

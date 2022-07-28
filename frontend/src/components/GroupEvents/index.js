@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { groupEventsThunk } from "../../store/groups";
+import EventCard from "../AllEventsList/EventCard";
 
 const GroupEvents = () => {
 
@@ -17,13 +18,13 @@ const GroupEvents = () => {
         dispatch(groupEventsThunk(groupId));
 
     }, [dispatch, groupId]);
-    
+
     if (!events) return null;
 
     return events.map(event => {
             return (
                 <div key={event.id}>
-                    {`event ${event.id}: `}
+                    <EventCard event={event}/>
                 </div>
             )
         })
