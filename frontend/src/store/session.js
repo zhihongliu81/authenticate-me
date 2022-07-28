@@ -98,9 +98,11 @@ export const getYourGroupsThunk = (user) => async dispatch => {
         const res1 = await fetch(`/api/groups/${group.id}/members`);
         const data1 = await res1.json();
         const member = data1.Members.find(ele => userId === ele.id);
+        const members = {};
+        data1.Members.forEach(member => members[member.id] = member);
         if (member) {
           const status = member.Membership.status;
-          groups[group.id] = { ...group, status };
+          groups[group.id] = { ...group, status, members };
         }
       }
     }

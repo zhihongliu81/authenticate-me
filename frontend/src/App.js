@@ -1,7 +1,8 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Route, Switch, useHistory } from "react-router-dom";
+import { Modal } from './context/Modal';
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
@@ -14,7 +15,10 @@ import CreateGroup from "./components/CreateGroup";
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
+  const user = useSelector(state => state.session.user);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -39,9 +43,9 @@ function App() {
           <Route path={'/yourGroups'}>
             <YourGroups />
           </Route>
-          <Route path={'/createGroup'}>
+          {/* <Route path={'/createGroup'}>
             <CreateGroup />
-          </Route>
+          </Route> */}
           <Route path={'/api/groups/:groupId'}>
             <GroupDetails />
           </Route>
@@ -53,7 +57,11 @@ function App() {
 
       <div>
         <div>Create your own Meetup Group</div>
-        <NavLink to={'/createGroup'}>Get Stated</NavLink>
+        <button onClick={() => {if (user) { setShowCreateGroupModal(true)} else {history.push('/login')}}}>Get Stated</button>
+        {showCreateGroupModal && (
+        <Modal onClose={() => setShowCreateGroupModal(false)}>
+          <CreateGroup close={() => setShowCreateGroupModal(false)}/>
+        </Modal>)}
       </div>
     </>
   );

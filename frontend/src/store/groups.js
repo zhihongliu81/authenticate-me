@@ -86,12 +86,17 @@ export const groupDetailsThunk = (groupId) => async dispatch => {
     const response = await fetch(`/api/groups/${groupId}`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(getGroup(data));
+        const res1 = await fetch(`/api/groups/${groupId}/members`);
+        const data1 = await res1.json();
+        const members = {};
+        data1.Members.forEach(member => members[member.id] = member);
+        dispatch(getGroup({...data, members}));
         return data
     }
 }
 
 export const newGroupThunk = (newGroup) => async dispatch => {
+
     const response = await csrfFetch(`/api/groups`, {
         method: 'POST',
         headers: {
@@ -99,11 +104,16 @@ export const newGroupThunk = (newGroup) => async dispatch => {
         },
         body: JSON.stringify(newGroup)
     });
+    
+
     if (response.ok) {
+
         const data = await response.json();
         dispatch(createGroup(data));
-        return data;
+        return response;
     }
+
+    return response;
 }
 
 export const updateGroupThunk = (newGroup, groupId) => async dispatch => {

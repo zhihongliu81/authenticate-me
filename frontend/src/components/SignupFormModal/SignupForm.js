@@ -85,7 +85,7 @@ function SignupForm({close}) {
   return (
     <div className="Modal">
     <div className="signupFormModalMain">
-    <span onClick={close} class="close" title="Close Modal">&times;</span>
+    <span onClick={close} className="close" title="Close Modal">&times;</span>
       <div>
         <svg viewBox="0 0 51 49" xmlns="http://www.w3.org/2000/svg" width="48" height="48" className="mb-2">
           <g fillRule="nonzero" fill="none">
@@ -187,7 +187,7 @@ function SignupForm({close}) {
       </form>
       <div>
         <span>Already a member?</span>
-        <NavLink to={'/login'} className='signup-form-login-link'>Log in</NavLink>
+        <NavLink to={'/login'} className='signup-form-login-link' onClick={close}>Log in</NavLink>
       </div>
     </div>
     </div>

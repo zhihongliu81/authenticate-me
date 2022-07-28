@@ -1,3 +1,6 @@
+.group-detail-main {
+    width: 80%;
+}
 .group-detail-top {
     display: flex;
     flex-direction: row;
@@ -18,7 +21,7 @@
 
 .group-detail-address,
 .group-detail-members,
-.group-detail-organizer {
+.group-detail-header-organizer {
     font-size: 14px;
     color: #212121;
     font-weight: 300;
@@ -45,4 +48,19 @@
 .group-detail-about > p {
     font-size: 16px;
     color: #212121;
+}
+
+.group-detail-topright, .group-detail-organizer {
+    margin-left: 20px;
+}
+
+.group-detail-buttons {
+    display: flex;
+
+}
+
+.group-detail-buttons > .button {
+    background-color: rgb(226, 236, 232);
+    margin-right: 10px;
+    border-radius: 4px;
 }

@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Modal } from '../../context/Modal';
 import SignupForm from './SignupForm';
 
 function SignupFormModal() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+
+  useEffect(() => {
+    setShowModal(true)
+
+  }, [])
 
   return (
     <>

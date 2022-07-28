@@ -19,6 +19,11 @@ const GroupDetails = () => {
     const [showForm, setShowForm] = useState(false);
     const [showEditGroupForm, setShowEditGroupForm] = useState(false);
 
+    useEffect(() => {
+        dispatch(groupDetailsThunk(groupId));
+        // dispatch(getMembersThunk(groupId));
+    }, [dispatch, groupId]);
+
 
     let showNewEventButton = false;
     if(user && group) {
@@ -43,10 +48,7 @@ const GroupDetails = () => {
     }
 
 
-    useEffect(() => {
-        dispatch(groupDetailsThunk(groupId));
-        dispatch(getMembersThunk(groupId));
-    }, [dispatch, groupId]);
+
 
     const handleDelete = async (groupId) => {
         const deletedGroup = await dispatch(deleteGroupThunk(groupId));
@@ -63,23 +65,23 @@ const GroupDetails = () => {
     if (!group.Organizer) return null;
 
     return (
-        <div>
+        <div className="group-detail-main">
             <div className="group-detail-top">
                 <div>
                     <img className="group-detail-image" alt="group preview image" src="https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg" />
                 </div>
-                <div>
+                <div className="group-detail-topright">
                 <div className="group-detail-header">
                     <h2 className="group-detail-name">{group.name}</h2>
                     <h3 className="group-detail-address">{`${group.city}, ${group.state}`}</h3>
                     <h3 className="group-detail-members">{`${Object.keys(group.members).length} members . ${group.private ? 'private' : 'public'}`}</h3>
-                    <h3 className="group-detail-organizer">Organized by <span className="organizer-name">{`${group.Organizer.firstName} ${group.Organizer.lastName}`}</span></h3>
+                    <h3 className="group-detail-header-organizer">Organized by <span className="organizer-name">{`${group.Organizer.firstName} ${group.Organizer.lastName}`}</span></h3>
                 </div>
                 <div>
-                    <div>
-                        {showNewEventButton && <button onClick={() => setShowForm(true)}>New Event</button>}
-                        {showEditGroupButton && <button onClick={() => setShowEditGroupForm(true)}>Edit Group</button>}
-                        {showEditGroupButton && <button onClick={() => handleDelete(group.id)}>DELETE</button>}
+                    <div className="group-detail-buttons">
+                        {showNewEventButton && <button className="button" onClick={() => setShowForm(true)}>New Event</button>}
+                        {showEditGroupButton && <button className="button" onClick={() => setShowEditGroupForm(true)}>Edit Group</button>}
+                        {showEditGroupButton && <button className="button" onClick={() => handleDelete(group.id)}>DELETE</button>}
                     </div>
                     <div>
                         {showForm && (

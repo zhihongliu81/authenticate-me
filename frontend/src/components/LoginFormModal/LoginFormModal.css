@@ -50,7 +50,7 @@
     margin: 1rem;
 }
 
-#email, #password {
+#login-email, #login-password {
     outline: 2px solid rgba(235, 216, 216, 0.2);
     border-radius: 0.5rem;
 
@@ -59,7 +59,7 @@
     height: 2rem;
 
 }
-#email:focus, #password:focus {
+#login-email:focus, #login-password:focus {
 
     outline: 2px solid rgba(231, 236, 229, 0.1);
 }

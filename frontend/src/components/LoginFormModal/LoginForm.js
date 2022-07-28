@@ -56,7 +56,7 @@ function LoginForm({close}) {
   return (
     <div className="Modal">
     <div className="LoginFormModalMain">
-    <span onClick={close} class="close" title="Close Modal">&times;</span>
+    <span onClick={close} className="close" title="Close Modal">&times;</span>
       <div>
         <svg viewBox="0 0 51 49" xmlns="http://www.w3.org/2000/svg" width="48" height="48" className="mb-2">
           <g fillRule="nonzero" fill="none">
@@ -67,7 +67,7 @@ function LoginForm({close}) {
       <h1 className="login-form-title">Log in</h1>
       <div>
         <span>Not a member yet?</span>
-        <NavLink to={'/signup'} className='login-form-signup-link'>Sign Up</NavLink>
+        <NavLink to={'/signup'} className='login-form-signup-link' onClick={close}>Sign Up</NavLink>
       </div>
       <form onSubmit={handleSubmit} className='login-form'>
         <ul>
@@ -76,12 +76,12 @@ function LoginForm({close}) {
           ))}
         </ul>
         <div className="login-form-email">
-        <label htmlFor="email">
+        <label htmlFor="login-email">
           Email
           </label>
           <input
             type="text"
-            id="email"
+            id="login-email"
             value={email}
             onChange={(e) => {setEmail(e.target.value); setShowEmailErrors(true)}}
             required
@@ -93,12 +93,12 @@ function LoginForm({close}) {
         </>
         </div>
         <div className="login-form-password">
-        <label htmlFor="password">
+        <label htmlFor="login-password">
           Password
           </label>
           <input
             type="password"
-            id="password"
+            id="login-password"
             value={password}
             onChange={(e) => {setPassword(e.target.value); setShowPasswordErrors(true)}}
             required
