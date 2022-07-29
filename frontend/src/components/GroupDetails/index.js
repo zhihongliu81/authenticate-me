@@ -20,12 +20,12 @@ const GroupDetails = () => {
     const user = useSelector(state => state.session.user);
     const [showForm, setShowForm] = useState(false);
     const [showEditGroupForm, setShowEditGroupForm] = useState(false);
-    // const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
+    const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);
     const [showCreateEventModal, setShowCreateEventModal] = useState(false);
 
     useEffect(() => {
-        dispatch(groupDetailsThunk(groupId));
+        dispatch(groupDetailsThunk(groupId)).then(() => setGroupDetailsIsLoaded(true));
         // dispatch(getMembersThunk(groupId));
     }, [dispatch, groupId]);
 
@@ -68,7 +68,7 @@ const GroupDetails = () => {
     if (!group) return null;
     if (!group.members) return null;
     if (!group.Organizer) return null;
-    return <><div className="group-detail-main">
+    return <>{groupDetailsIsLoaded && <div className="group-detail-main">
     <div className="group-detail-top">
         <div>
             <img className="group-detail-image" alt="group preview image" src="https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg" />
@@ -123,7 +123,7 @@ const GroupDetails = () => {
     <Route path={'/api/groups/:groupId/events'}>
         <GroupEvents />
     </Route>
-</div>
+</div>}
     </>
 
 
