@@ -88,7 +88,7 @@ const GroupDetails = () => {
             </div>
             <div>
                 {showCreateEventModal && (
-                    <Modal>
+                    <Modal onClose={() => setShowCreateEventModal(false)}>
                        <CreateNewEvent close={() => setShowCreateEventModal(false)} groupId={group.id} />
                     </Modal>
 
@@ -96,7 +96,7 @@ const GroupDetails = () => {
             </div>
             <div>
                 {showEditGroupModal && (
-                    <Modal>
+                    <Modal onClose={() => setShowEditGroupModal(false)}>
                    <EditGroup close={() => setShowEditGroupModal(false)} group={group} />
                     </Modal>
                   )}

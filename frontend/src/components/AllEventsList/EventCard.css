@@ -1,5 +1,7 @@
 .event-card-container {
     display: flex;
+    width: 40rem;
+    margin:0 auto;
     margin-top: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid gray;

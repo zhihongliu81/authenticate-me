@@ -81,10 +81,7 @@ const EventDetails = () => {
                 <div>
                     <button className="event-detail-delete-button" onClick={() => handleDelete(event.id)}>Delete</button>
                 </div>
-
             )}
-
-
         </div>
 
     </div>

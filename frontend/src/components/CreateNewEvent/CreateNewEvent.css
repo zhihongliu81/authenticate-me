@@ -1,0 +1,93 @@
+.create-event-form-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    outline: 3px solid white;
+    border-radius: 3px;
+    padding: 0px;
+    width: 40rem;
+    max-width: 484px;
+    min-height: 800px;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.create-event-close {
+    font-size: 2rem;
+    color: grey;
+    align-self: flex-end;
+    padding-right: 5px;
+}
+
+.create-event-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.create-event-form-title{
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 36px;
+    margin-bottom: 0px;
+}
+
+.create-event-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-event-form-venueId,
+.create-event-form-name,
+.create-event-form-type,
+.create-event-form-capacity,
+.create-event-form-price,
+.create-event-form-description,
+.create-event-form-startDate,
+.create-event-form-endDate {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 0.5rem;
+}
+
+#create-event-form-venueId-input,
+#create-event-form-name-input,
+#create-event-form-type-input,
+#create-event-form-capacity-input,
+#create-event-form-price-input,
+#create-event-form-description-input,
+#create-event-form-startDate-input,
+#create-event-form-endDate-input {
+    outline: 2px solid rgba(235, 216, 216, 0.2);
+    border-radius: 0.5rem;
+
+    transition-duration: .15s;
+    width: 20rem;
+    height: 2rem;
+}
+
+#create-event-form-venueId-input:focus,
+#create-event-form-name-input:focus,
+#create-event-form-type-input:focus,
+#create-event-form-capacity-input:focus,
+#create-event-form-price-input:focus,
+#create-event-form-description-input:focus,
+#create-event-form-startDate-input:focus,
+#create-event-form-endDate-input:focus {
+    outline: 2px solid rgba(231, 236, 229, 0.1);
+}
+
+.create-event-form-submit-button {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: #83cf50;
+    border-color: #b6babe;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}

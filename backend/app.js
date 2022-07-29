@@ -47,13 +47,13 @@ app.use(
     })
 )
 
-app.get(
-    '/',
-    async (req, res) => {
-        // const csrfToken = req.csrfToken();
-        // res.cookie("XSRF-TOKEN", csrfToken);
-        return res.send('Welcome!');
-    });
+// app.get(
+//     '/',
+//     async (req, res) => {
+//         // const csrfToken = req.csrfToken();
+//         // res.cookie("XSRF-TOKEN", csrfToken);
+//         return res.send('Welcome!');
+//     });
 
 app.use(routes);
 
