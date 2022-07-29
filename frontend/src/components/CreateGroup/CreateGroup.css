@@ -1,0 +1,80 @@
+.create-group-form-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    outline: 3px solid white;
+    border-radius: 3px;
+    padding: 0px;
+    width: 40rem;
+    height: 80rem;
+    max-width: 484px;
+    max-height: 800px;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.create-group-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.create-form-title {
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 36px;
+}
+
+.create-group-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-group-form-name,
+.create-group-form-about,
+.create-group-form-type,
+.create-group-form-private,
+.create-group-form-city,
+.create-group-form-state {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 0.5rem;
+}
+
+#create-group-form-name-input,
+#create-group-form-about-input,
+#create-group-form-type-input,
+#create-group-form-private-input,
+#create-group-form-city-input,
+#create-group-form-state-input {
+    outline: 2px solid rgba(235, 216, 216, 0.2);
+    border-radius: 0.5rem;
+
+    transition-duration: .15s;
+    width: 20rem;
+    height: 2rem;
+}
+
+#create-group-form-name-input:focus,
+#create-group-form-about-input:focus,
+#create-group-form-type-input:focus,
+#create-group-form-private-input:focus,
+#create-group-form-city-input:focus,
+#create-group-form-state-input:focus {
+    outline: 2px solid rgba(231, 236, 229, 0.1);
+}
+
+.create-group-form-submit-button {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: #57616b;
+    border-color: #b6babe;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}

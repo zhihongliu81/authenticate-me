@@ -1,0 +1,94 @@
+.signupFormModalMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    outline: 3px solid white;
+    border-radius: 3px;
+    padding: 0px;
+    width: 40rem;
+    height: 80rem;
+    max-width: 484px;
+    max-height: 800px;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
+}
+
+.close {
+    font-size: 2rem;
+    color: grey;
+    align-self: flex-end;
+    padding-right: 5px;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.form-note {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.signup-form-title {
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 36px;
+
+}
+
+.signup-form-login-link {
+    color: green;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form-firstname,
+.signup-form-lastname,
+.signup-form-email,
+.signup-form-password,
+.signup-form-confirmpassword {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 0.5rem;
+}
+
+#firstName, #lastName, #email, #password, #confirmPassword {
+    outline: 2px solid rgba(235, 216, 216, 0.2);
+    border-radius: 0.5rem;
+
+    transition-duration: .15s;
+    width: 20rem;
+    height: 2rem;
+}
+
+#firstName:focus, #lastName:focus, #email:focus, #password:focus, #confirmPassword:focus {
+    outline: 2px solid rgba(231, 236, 229, 0.1);
+}
+
+.signup-form-button {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: #f65858;
+    border-color: #f65858;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+
+.signup-form-button:hover {
+    cursor:grab/pointer;
+}

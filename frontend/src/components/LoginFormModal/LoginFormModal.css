@@ -1,0 +1,94 @@
+
+.LoginFormModalMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    outline: 3px solid white;
+    border-radius: 3px;
+    padding: 0px;
+    width: 100rem;
+    height: 180rem;
+    max-width: 484px;
+    max-height: 600px;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
+}
+
+.login-form-title {
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 36px;
+
+}
+
+.login-form-signup-link {
+    color: green;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.close {
+    font-size: 2rem;
+    color: grey;
+    align-self: flex-end;
+    padding-right: 5px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-email, .login-form-password {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 1rem;
+}
+
+#login-email, #login-password {
+    outline: 2px solid rgba(235, 216, 216, 0.2);
+    border-radius: 0.5rem;
+
+    transition-duration: .15s;
+    width: 20rem;
+    height: 2rem;
+
+}
+#login-email:focus, #login-password:focus {
+
+    outline: 2px solid rgba(231, 236, 229, 0.1);
+}
+
+.checkbox-label {
+    font-size: 1.2rem;
+}
+
+.login-form-checkbox {
+    fill: currentColor;
+    color:  rgb(0 130 148/var(--tw-text-opacity));
+    margin: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.login-form-button {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: #f65858;
+    border-color: #f65858;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+
+.login-form-button:hover {
+    cursor:grab/pointer;
+}

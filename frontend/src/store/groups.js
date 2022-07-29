@@ -63,22 +63,40 @@ const getMembers = (members, groupId) => {
 export const loadGroupsThunk = () => async dispatch => {
     const response = await fetch('/api/groups');
     if (response.ok) {
-        const data = await response.json();
-        dispatch(loadGroups(data.Groups));
-        return data
+
+        const resbody = await response.json();
+        const groups = {};
+        if (resbody.Groups && resbody.Groups.length > 0) {
+            for (let i = 0; i < resbody.Groups.length; i++) {
+                let group = resbody.Groups[i];
+                const res1 = await fetch(`/api/groups/${group.id}/members`);
+                const data1 = await res1.json();
+                const members = {};
+                data1.Members.forEach(member => members[member.id] = member);
+                group.members = members;
+                groups[group.id] = group;
+            }
+        }
+        dispatch(loadGroups(groups));
     }
+    return response;
 }
 
 export const groupDetailsThunk = (groupId) => async dispatch => {
     const response = await fetch(`/api/groups/${groupId}`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(getGroup(data));
+        const res1 = await fetch(`/api/groups/${groupId}/members`);
+        const data1 = await res1.json();
+        const members = {};
+        data1.Members.forEach(member => members[member.id] = member);
+        dispatch(getGroup({...data, members}));
         return data
     }
 }
 
 export const newGroupThunk = (newGroup) => async dispatch => {
+
     const response = await csrfFetch(`/api/groups`, {
         method: 'POST',
         headers: {
@@ -87,10 +105,12 @@ export const newGroupThunk = (newGroup) => async dispatch => {
         body: JSON.stringify(newGroup)
     });
     if (response.ok) {
+
         const data = await response.json();
         dispatch(createGroup(data));
         return data;
     }
+    return response;
 }
 
 export const updateGroupThunk = (newGroup, groupId) => async dispatch => {
@@ -151,14 +171,12 @@ const groupsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case LOAD_GROUPS: {
-            const groups = {};
-            action.groups.map(group => groups[group.id] = group);
-            newState = { ...groups }
+            newState = action.groups
             return newState;
         }
         case GET_GROUP: {
             newState = {...state};
-            newState[action.group.id] = {...newState[action.group.id], ...action.group};
+            newState[action.group.id] = action.group;
             return newState;
         }
         case CREATE_GROUP: {
@@ -168,7 +186,7 @@ const groupsReducer = (state = initialState, action) => {
         }
         case UPDATE_GROUP: {
             newState = {...state};
-            newState[action.group.id] = action.group;
+            newState[action.group.id] = {...newState[action.group.id], ...action.group };
             return newState;
         }
         case GROUP_EVENTS: {

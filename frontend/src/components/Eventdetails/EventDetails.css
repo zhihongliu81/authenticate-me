@@ -1,0 +1,99 @@
+.event-detail-main-container {
+    width: 1120px;
+    margin: 0 auto;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
+}
+
+.event-detail-top-container {
+
+}
+
+.event-detail-start-date {
+    font-size: 16px;
+    color: #757575;
+
+}
+
+.event-detail-name {
+    font-size: 36px;
+    color: black;
+}
+
+.event-detail-organizer-header {
+    font-size: 16px;
+    color: black;
+}
+
+.event-detail-bottom-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.event-detail-bottom-left {
+
+}
+
+.event-detail-image {
+    height: 370px;
+    width: 660px;
+}
+
+.event-detail-description-header {
+    font-size: 20px;
+    color: black;
+
+}
+
+.event-detail-description {
+    font-size: 16px;
+    color: black;
+}
+
+.event-detail-attendees-list-header {
+    font-size: 20px;
+    color: black;
+}
+
+.event-detail-attendees-list {
+
+}
+
+.event-detail-bottom-right {
+
+}
+
+.event-detail-group-name {
+    font-size: 14px;
+    color: black;
+}
+
+.event-detail-group-private {
+    font-size: 14px;
+    color: #757575;
+}
+
+.event-detail-start-end-date {
+    font-size: 14px;
+    color: black;
+}
+
+.event-detail-venue-address {
+    font-size: 14px;
+    color: #757575;
+}
+
+.event-detail-delete-button,
+.event-detail-group-name,
+.event-detail-group-private,
+.event-detail-start-end-date,
+.event-detail-venue-address {
+    margin-left: 1rem;
+}
+
+.event-detail-delete-button {
+    border-radius: 4px;
+    background-color: rgb(217, 235, 235);
+    height: 2rem;
+    width: 4rem;
+}
