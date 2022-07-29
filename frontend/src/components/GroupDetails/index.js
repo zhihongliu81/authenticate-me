@@ -20,13 +20,14 @@ const GroupDetails = () => {
     const user = useSelector(state => state.session.user);
     const [showForm, setShowForm] = useState(false);
     const [showEditGroupForm, setShowEditGroupForm] = useState(false);
-    const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
+    // const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);
+    const [showCreateEventModal, setShowCreateEventModal] = useState(false);
 
     useEffect(() => {
-        dispatch(groupDetailsThunk(groupId)).then(() => {setGroupDetailsIsLoaded(true)});
+        dispatch(groupDetailsThunk(groupId));
         // dispatch(getMembersThunk(groupId));
-    }, [dispatch]);
+    }, [dispatch, groupId]);
 
 
     let showNewEventButton = false;
@@ -67,7 +68,7 @@ const GroupDetails = () => {
     if (!group) return null;
     if (!group.members) return null;
     if (!group.Organizer) return null;
-    return <>{groupDetailsIsLoaded && <div className="group-detail-main">
+    return <><div className="group-detail-main">
     <div className="group-detail-top">
         <div>
             <img className="group-detail-image" alt="group preview image" src="https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg" />
@@ -76,18 +77,21 @@ const GroupDetails = () => {
         <div className="group-detail-header">
             <h2 className="group-detail-name">{group.name}</h2>
             <h3 className="group-detail-address">{`${group.city}, ${group.state}`}</h3>
-            <h3 className="group-detail-members">{`${Object.keys(group.members).length} members . ${group.private ? 'private' : 'public'}`}</h3>
-            <h3 className="group-detail-header-organizer">Organized by <span className="organizer-name">{`${group.Organizer.firstName} ${group.Organizer.lastName}`}</span></h3>
+            {group.members && <h3 className="group-detail-members">{`${Object.keys(group.members).length} members . ${group.private ? 'private' : 'public'}`}</h3>}
+            {group.Organizer && <h3 className="group-detail-header-organizer">Organized by <span className="organizer-name">{`${group.Organizer.firstName} ${group.Organizer.lastName}`}</span></h3>}
         </div>
         <div>
             <div className="group-detail-buttons">
-                {showNewEventButton && <button className="button" onClick={() => setShowForm(true)}>New Event</button>}
+                {showNewEventButton && <button className="button" onClick={() => setShowCreateEventModal(true)}>New Event</button>}
                 {showEditGroupButton && <button className="button" onClick={() => setShowEditGroupModal(true)}>Edit Group</button>}
                 {showEditGroupButton && <button className="button" onClick={() => handleDelete(group.id)}>DELETE</button>}
             </div>
             <div>
-                {showForm && (
-                    <CreateNewEvent hiddenForm={() => setShowForm(false)} groupId={group.id} />
+                {showCreateEventModal && (
+                    <Modal>
+                       <CreateNewEvent close={() => setShowCreateEventModal(false)} groupId={group.id} />
+                    </Modal>
+
                 )}
             </div>
             <div>
@@ -119,7 +123,7 @@ const GroupDetails = () => {
     <Route path={'/api/groups/:groupId/events'}>
         <GroupEvents />
     </Route>
-</div>}
+</div>
     </>
 
 

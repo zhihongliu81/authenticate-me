@@ -104,15 +104,12 @@ export const newGroupThunk = (newGroup) => async dispatch => {
         },
         body: JSON.stringify(newGroup)
     });
-
-
     if (response.ok) {
 
         const data = await response.json();
         dispatch(createGroup(data));
         return data;
     }
-
     return response;
 }
 
