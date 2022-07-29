@@ -9,7 +9,7 @@ const CreateNewEvent = ({ close, groupId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [venueId, setVenueId] = useState('');
+    // const [venueId, setVenueId] = useState('');
     const [name, setName] = useState('');
     const [type, setType] = useState('');
     const [capacity, setCapacity] = useState(0);
@@ -28,7 +28,7 @@ const CreateNewEvent = ({ close, groupId }) => {
     const [startDateValidationErrors, setStartDateValidationErrors] = useState([]);
     const [endDateValidationErrors, setEndDateValidationErrors] = useState([]);
 
-    const [showVenueIdErrors, setShowVenueIdErrors] = useState(false);
+    // const [showVenueIdErrors, setShowVenueIdErrors] = useState(false);
     const [showNameErrors, setShowNameErrors] = useState(false);
     const [showTypeErrors, setShowTypeErrors] = useState(false);
     const [showCapacityErrors, setShowCapacityErrors] = useState(false);

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './SignupFormModal.css';
 import { NavLink, Redirect } from "react-router-dom";
 
-function SignupForm({close}) {
+function SignupForm({close, toLogin}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -187,7 +187,7 @@ function SignupForm({close}) {
       </form>
       <div>
         <span>Already a member?</span>
-        <NavLink to={'/login'} className='signup-form-login-link' onClick={close}>Log in</NavLink>
+        <NavLink to={'/login'} className='signup-form-login-link' onClick={toLogin}>Log in</NavLink>
       </div>
     </div>
     </div>

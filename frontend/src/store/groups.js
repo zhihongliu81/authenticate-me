@@ -163,6 +163,7 @@ export const newEventThunk = (groupId, event) => async dispatch => {
         dispatch(newEvent(data));
         return data;
     }
+    return response;
 
 }
 

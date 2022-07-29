@@ -1,14 +1,17 @@
 // frontend/src/components/Navigation/index.js
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+import { Modal } from '../../context/Modal';
+import LoginForm from '../LoginFormModal/LoginForm';
+import SignupForm from '../SignupFormModal/SignupForm';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   let sessionLinks;
   if (sessionUser) {
@@ -18,8 +21,29 @@ function Navigation({ isLoaded }){
   } else {
     sessionLinks = (
       <>
-        <LoginFormModal />
-        <SignupFormModal />
+        <>
+      <button onClick={() => setShowLoginModal(true)}>Log In</button>
+      {/* <NavLink onClick={() => setShowLoginModal(true)}  to={'/login'} className='navlink-login'>Log In</NavLink> */}
+      {showLoginModal && (
+        <Modal onClose={() => setShowLoginModal(false)}>
+          <LoginForm
+          close={() => setShowLoginModal(false)}
+          toSignup = {() => {setShowLoginModal(false); setShowSignupModal(true)}}/>
+        </Modal>
+      )}
+    </>
+    <>
+      <button onClick={() => setShowSignupModal(true)}>Sign up</button>
+      {/* <NavLink onClick={() => setShowModal(true)}  to={'/signup'} className='navlink-signup'>Sign up</NavLink> */}
+      {showSignupModal && (
+        <Modal onClose={() => setShowSignupModal(false)}>
+          <SignupForm
+           close={() => setShowSignupModal(false)}
+           toLogin={() => {setShowSignupModal(false); setShowLoginModal(true)}}
+           />
+        </Modal>
+      )}
+    </>
       </>
     );
   }

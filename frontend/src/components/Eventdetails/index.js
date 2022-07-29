@@ -14,8 +14,8 @@ const EventDetails = () => {
     const event = useSelector(state => state.events[eventId]);
     const user = useSelector(state => state.session.user);
     const groups = useSelector(state => state.session.groups);
-    const [showForm, setShowForm] = useState(false);
-    const [showAttendees, setShowAttendees] = useState(false);
+    // const [showForm, setShowForm] = useState(false);
+    // const [showAttendees, setShowAttendees] = useState(false);
     const [eventDetailsIsLoaded, setEeventDetailsIsLoaded] = useState(false);
 
 

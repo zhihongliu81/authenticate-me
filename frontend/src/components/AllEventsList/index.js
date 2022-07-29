@@ -25,10 +25,6 @@ const AllEvents = () => {
             </div>
         ))}
     </>
-
-
-
-
 }
 
 export default AllEvents;

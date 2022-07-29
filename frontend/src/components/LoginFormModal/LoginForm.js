@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import './LoginFormModal.css';
 import { NavLink } from "react-router-dom";
 
-function LoginForm({close}) {
+function LoginForm({close, toSignup}) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,7 +67,7 @@ function LoginForm({close}) {
       <h1 className="login-form-title">Log in</h1>
       <div>
         <span>Not a member yet?</span>
-        <NavLink to={'/signup'} className='login-form-signup-link' onClick={close}>Sign Up</NavLink>
+        <NavLink to={'/signup'} className='login-form-signup-link' onClick={toSignup}>Sign Up</NavLink>
       </div>
       <form onSubmit={handleSubmit} className='login-form'>
         <ul>
