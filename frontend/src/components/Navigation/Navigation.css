@@ -3,7 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
-
+.navlink-container {
+    
+   padding-top: 1rem;
+}
 .navlink-login, .navlink-signup {
     text-decoration: none;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;

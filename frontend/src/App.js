@@ -12,8 +12,7 @@ import GroupDetails from "./components/GroupDetails";
 import EventDetails from "./components/Eventdetails";
 import YourGroups from "./components/YourGroups";
 import CreateGroup from "./components/CreateGroup";
-import LoginFormModal from "./components/LoginFormModal";
-import SignupFormModal from "./components/SignupFormModal";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -42,18 +41,9 @@ function App() {
           <Route path={'/allGroups'}>
             <AllGroups />
           </Route>
-          {/* <Route path={'/login'}>
-            <LoginFormModal />
-          </Route>
-          <Route path={'/signup'}>
-            <SignupFormModal />
-          </Route> */}
           <Route path={'/yourGroups'}>
             <YourGroups />
           </Route>
-          {/* <Route path={'/createGroup'}>
-            <CreateGroup />
-          </Route> */}
           <Route path={'/api/groups/:groupId'}>
             <GroupDetails />
           </Route>
@@ -65,7 +55,7 @@ function App() {
 
       <div>
         <div>Create your own Meetup Group</div>
-        <button onClick={() => {if (user) { setShowCreateGroupModal(true)} else {history.push('/login')}}}>Get Stated</button>
+        <button onClick={() => {if (user) { setShowCreateGroupModal(true)} else {alert("Please Log in!")}}}>Get Stated</button>
         {showCreateGroupModal && (
         <Modal onClose={() => setShowCreateGroupModal(false)}>
           <CreateGroup close={() => setShowCreateGroupModal(false)}/>

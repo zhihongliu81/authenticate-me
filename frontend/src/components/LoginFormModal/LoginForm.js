@@ -42,7 +42,7 @@ function LoginForm({close, toSignup}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ email, password })).catch(
+    return dispatch(sessionActions.login({ email, password })).then(() => close()).catch(
       async (res) => {
         const data = await res.json();
         if (Object.keys(data.errors).length > 0) {
