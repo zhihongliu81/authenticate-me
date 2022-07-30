@@ -644,8 +644,9 @@ router.post('/:groupId/events/new', restoreUser, requireAuth, validateEvent, asy
 
     if (membership && (membership.status === 'organizer' || membership.status === 'co-host')) {
         const event = await Event.create({
-            groupId: req.params.groupId,
-            ...req.body
+            ...req.body,
+            groupId: req.params.groupId
+
         })
         const formattedEvent = {
             id: event.id,

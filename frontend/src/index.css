@@ -1,1 +1,32 @@
 /* TODO Add site wide styles */
+.main-container {
+    margin: 0;
+}
+
+.homepage-bottom-link {
+
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    padding: 2rem;
+    height: 4rem;
+}
+
+.homepage-bottom-link-para {
+    color: white;
+    margin-left: 23rem;
+    font-size: 20px;
+    padding-top: 0.5rem;
+}
+
+.homepage-bottom-link > button {
+    margin-left: 2rem;
+    height: 2.5rem;
+    width: 7rem;
+    font-size: 16px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-weight: 600;
+}

@@ -33,9 +33,7 @@ function App() {
         <NavLink to={'/allEvents'}>Events</NavLink>
         <NavLink to={'/allGroups'}>Groups</NavLink>
       </div> */}
-
-
-
+      <div className="home-page-container">
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
@@ -58,14 +56,15 @@ function App() {
           </Route>
         </Switch>
       )}
-
-      <div>
-        <div>Create your own Meetup Group</div>
+</div>
+      <div className="homepage-bottom-link">
+        <div className="homepage-bottom-link-para">Create your own Meetup Group</div>
         <button onClick={() => {if (user) { setShowCreateGroupModal(true)} else {alert("Please Log in!")}}}>Get Stated</button>
         {showCreateGroupModal && (
         <Modal onClose={() => setShowCreateGroupModal(false)}>
           <CreateGroup close={() => setShowCreateGroupModal(false)}/>
         </Modal>)}
+
       </div>
     </div>
   );

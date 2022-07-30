@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { loadEventsThunk } from '../../store/events';
 import EventCard from './EventCard';
+import EventsGroupsBar from '../EventsGroupsBar/EventsGroupsBar';
 
 const AllEvents = () => {
     const events = useSelector(state => Object.values(state.events));
@@ -19,11 +20,19 @@ const AllEvents = () => {
     }
 
     return <>
-        {allEventsIsLoaded && events.map(event => (
+
+
+        {allEventsIsLoaded && (<>
+        <div><EventsGroupsBar /></div>
+        <div>{ events.map(event => (
             <div key={event.id}>
                 <EventCard event={event} />
             </div>
         ))}
+        </div>
+        </>)
+
+       }
     </>
 }
 

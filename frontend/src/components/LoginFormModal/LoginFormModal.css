@@ -15,6 +15,19 @@
 
 }
 
+.login-form-demo-title {
+display: flex;
+flex-direction: row;
+}
+
+.login-form-demo-button {
+    height: 2.2rem;
+    width: 4rem;
+    margin-top: 1.2rem;
+    margin-left: 1rem;
+    border-radius: 4px;
+}
+
 .login-form-title {
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
     font-weight: 600;

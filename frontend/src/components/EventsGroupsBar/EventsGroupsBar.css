@@ -1,0 +1,21 @@
+.events-groups-bar-container {
+    margin: 1rem 40rem 1rem 39.5rem;
+
+}
+
+.events-groups-bar-events,
+.events-groups-bar-groups {
+    margin-right: 1rem;
+    font-size: 20px;
+    color: #757575;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.navilink-focused {
+    font-size: 20px;
+    color: #008294;
+    margin-right: 1rem;
+    font-weight: 600;
+
+}

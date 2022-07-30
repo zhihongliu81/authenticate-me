@@ -69,13 +69,15 @@ const EventDetails = () => {
 
         </div>
         <div className="event-detail-bottom-right">
-            <div>
-                <p className="event-detail-group-name">{event.Group.name}</p>
-                <p className="event-detail-group-private">{event.Group.private? "private" : "public"}</p>
-            </div>
+            {event.Group ? <div>
+               <p className="event-detail-group-name">{event.Group.name}</p>
+               <p className="event-detail-group-private">{event.Group.private? "private" : "public"}</p>
+            </div> : null }
+
             <div>
                 <p className="event-detail-start-end-date">{event.startDate} to {event.endDate}</p>
-                <p className="event-detail-venue-address">{event.Venue.address}.{event.Venue.city}, {event.Venue.state}</p>
+                {event.Venue ? <p className="event-detail-venue-address">{event.Venue.address}.{event.Venue.city}, {event.Venue.state}</p> : null}
+
             </div>
             {showEditEventButton && (
                 <div>

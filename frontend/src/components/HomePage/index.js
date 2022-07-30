@@ -32,20 +32,20 @@ const HomePage= ({trigger, setTrigger}) => {
     <div className="landing-links-para">
       <p>Meet new people who share your interests through online and in-person events. It’s free to create an account.</p>
     </div>
-    <div>
-      <div>
+    <div className="landing-links-all-links">
+      <div className="landing-links-all-groups">
         <img alt="landing-links-image1" src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"/>
-        <NavLink to='/allGroups' >Find a group</NavLink>
+        <NavLink className={"landing-links-navilink"} to='/allGroups' >Find a group</NavLink>
         <p>Do what you love, meet others who love it, find your community. The rest is history!</p>
       </div>
-      <div>
+      <div className="landing-links-all-events">
         <img alt="landing-links-image2" src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"/>
-        <NavLink to={'/allEvents'} >Find an Event</NavLink>
+        <NavLink className={"landing-links-navilink"} to={'/allEvents'} >Find an Event</NavLink>
         <p>Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking.</p>
       </div>
-      <div>
+      <div className="landing-links-create-group">
         <img alt="landing-links-image3" src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"/>
-        <NavLink to='/' onClick={handle} >Start a group</NavLink>
+        <NavLink className={"landing-links-navilink"} to='/' onClick={handle} >Start a group</NavLink>
         <p>You don't have to be an expert to gather people together and explore shared interests.</p>
       </div>
     </div>

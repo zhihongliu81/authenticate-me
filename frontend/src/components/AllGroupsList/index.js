@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { loadGroupsThunk } from '../../store/groups';
 import GroupCard from './GroupCard';
+import EventsGroupsBar from '../EventsGroupsBar/EventsGroupsBar';
 
 
 const AllGroups = () => {
@@ -18,12 +19,13 @@ const AllGroups = () => {
         return null
     }
 
-    return <div>
-{groupsIsLoaded && groups.map(group => (<div
-    key={group.id}><GroupCard  group={group}/>
+    return (groupsIsLoaded && <>
+        <div><EventsGroupsBar /></div>
+        {groups.map(group => (<div
+            key={group.id}><GroupCard group={group} />
         </div>))}
-    </div>
-
+    </>
+    )
 
 }
 

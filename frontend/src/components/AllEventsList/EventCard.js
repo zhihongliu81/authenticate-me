@@ -20,7 +20,8 @@ const EventCard = ({event}) => {
                 <div>
                     <p className="event-card-start-date">{event.startDate}</p>
                     <p className="event-card-name">{event.name}</p>
-                    <p className="event-card-group">{event.Group.name}.{event.Group.city},{event.Group.state}</p>
+                    {event.Group ?<p className="event-card-group">{event.Group.name}.{event.Group.city},{event.Group.state}</p> : null}
+
                 </div>
                 <div>
                     <p></p>

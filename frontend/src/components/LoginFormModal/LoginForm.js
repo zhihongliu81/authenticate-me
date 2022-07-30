@@ -65,7 +65,10 @@ function LoginForm({close, toSignup}) {
           </g>
         </svg>
       </div>
+      <div className="login-form-demo-title">
       <h1 className="login-form-title">Log in</h1>
+      <button className="login-form-demo-button" onClick={() => {setEmail("john.smith@gmail.com"); setPassword("secret password")}}>Demo User</button>
+      </div>
       <div>
         <span>Not a member yet?</span>
         <NavLink to={'/signup'} className='login-form-signup-link' onClick={toSignup}>Sign Up</NavLink>

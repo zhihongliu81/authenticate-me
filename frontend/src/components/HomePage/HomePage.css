@@ -1,5 +1,6 @@
 .main-container {
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
   }
 
 .landing-backgroup-red {
@@ -29,11 +30,23 @@
   }
 
 .landing-introduction-left {
-      width: 30vw;
+      width: 25vw;
+      margin: 0 4rem;
   }
 
+  .landing-introduction-left > h1 {
+    font-size: 44px;
+
+  }
+
+  .landing-introduction-left > p {
+    font-size: 16px;
+    line-height: 1.5rem;
+    color: black;
+  }
 .landing-introduction-right-image {
       width: 30vw;
+
   }
 
 .landing-links {
@@ -52,5 +65,37 @@
 }
 
 .landing-links-para > p {
+  text-align: center;
+  line-height: 1.5rem;
+}
+
+.landing-links-all-links {
+  display: flex;
+  flex-direction: row;
+}
+
+.landing-links-all-groups,
+.landing-links-all-events,
+.landing-links-create-group {
+  width: 16vw;
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.landing-links-navilink {
+  text-decoration: none;
+  color: #008294;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.landing-links-all-groups > p,
+.landing-links-all-events > p,
+.landing-links-create-group > p {
+  font-size: 14px;
+  line-height: 1.4rem;
+  text-align: center;
 
 }
