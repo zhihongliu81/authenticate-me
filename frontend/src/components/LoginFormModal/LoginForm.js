@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './LoginFormModal.css';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function LoginForm({close, toSignup}) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -42,7 +43,7 @@ function LoginForm({close, toSignup}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ email, password })).then(() => close()).catch(
+    return dispatch(sessionActions.login({ email, password })).then(() => {close(); history.push('/');}).catch(
       async (res) => {
         const data = await res.json();
         if (Object.keys(data.errors).length > 0) {

@@ -1,0 +1,56 @@
+.main-container {
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  }
+
+.landing-backgroup-red {
+      position: absolute;
+      z-index: -1;
+      left: 3vw;
+      bottom: 10vh;
+  }
+
+.landing-backgroup-green {
+      position: absolute;
+      z-index: -1;
+      right: 0vw;
+  }
+
+.landing-backgroup-yellow {
+      position: absolute;
+      z-index: -1;
+      top: 20vh;
+      left: 30vW;
+  }
+
+.landing-introduction {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+  }
+
+.landing-introduction-left {
+      width: 30vw;
+  }
+
+.landing-introduction-right-image {
+      width: 30vw;
+  }
+
+.landing-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.landing-links-header {
+    font-size: 2rem;
+}
+
+.landing-links-para {
+    font-size: 1rem;
+    width: 520px;
+}
+
+.landing-links-para > p {
+
+}

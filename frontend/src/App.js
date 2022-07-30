@@ -12,6 +12,7 @@ import GroupDetails from "./components/GroupDetails";
 import EventDetails from "./components/Eventdetails";
 import YourGroups from "./components/YourGroups";
 import CreateGroup from "./components/CreateGroup";
+import HomePage from "./components/HomePage";
 
 
 function App() {
@@ -20,21 +21,26 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const user = useSelector(state => state.session.user);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
-    <>
+    <div className="main-container">
       <Navigation isLoaded={isLoaded} />
-      <div>
+      {/* <div>
         <NavLink to={'/allEvents'}>Events</NavLink>
-        <NavLink to={'/allgroups'}>Groups</NavLink>
-      </div>
+        <NavLink to={'/allGroups'}>Groups</NavLink>
+      </div> */}
+
 
 
       {isLoaded && (
         <Switch>
+          <Route exact path={'/'}>
+            <HomePage trigger={showCreateGroupModal} setTrigger={setShowCreateGroupModal}/>
+          </Route>
           <Route path={'/allEvents'}>
             <AllEvents />
           </Route>
@@ -61,7 +67,7 @@ function App() {
           <CreateGroup close={() => setShowCreateGroupModal(false)}/>
         </Modal>)}
       </div>
-    </>
+    </div>
   );
 }
 

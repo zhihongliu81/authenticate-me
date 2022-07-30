@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import './SignupFormModal.css';
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink, Redirect, useHistory } from "react-router-dom";
 
 function SignupForm({close, toLogin}) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
 
   const [firstName, setFirstName] = useState("");
@@ -68,7 +69,7 @@ function SignupForm({close, toLogin}) {
     e.preventDefault();
     if (password === confirmPassword) {
         setErrors([]);
-        return dispatch(sessionActions.signup({ email, firstName, lastName, password })).then(() => close()).catch(
+        return dispatch(sessionActions.signup({ email, firstName, lastName, password })).then(() => {close(); history.push('/')}).catch(
           async (res) => {
             const data = await res.json();
             if (Object.keys(data.errors).length > 0) {
