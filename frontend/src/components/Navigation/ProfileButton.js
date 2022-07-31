@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import {NavLink, useHistory} from 'react-router-dom';
 import * as sessionActions from '../../store/session';
+import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -32,23 +33,23 @@ function ProfileButton({ user }) {
   };
 
   return (
-    <>
-      <button onClick={openMenu}>
+    <div className="profile-button-container">
+      <button className="profile-button-icon" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
           {/* <li><NavLink to=''>Your events</NavLink></li> */}
-          <li><NavLink to='/yourGroups'>Your groups</NavLink></li>
+          <li><NavLink className={"profile-dropdown-navlink"} to='/yourGroups'>Your groups</NavLink></li>
           <li>{user.firstName}</li>
           <li>{user.lastName}</li>
           <li>{user.email}</li>
           <li>
-            <button onClick={logout}>Log Out</button>
+            <button className="profile-dropdown-logout-buttom" onClick={logout}>Log Out</button>
           </li>
         </ul>
       )}
-    </>
+    </div>
   );
 }
 

@@ -147,6 +147,7 @@ const readyToSubmit = firstNameValidationErrors.length === 0 &&
           <input
             type="text"
             id="email"
+            placeholder="example@email.com"
             value={email}
             onChange={(e) => {setEmail(e.target.value); setShowEmailErrors(true)}}
             required

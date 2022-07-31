@@ -54,18 +54,23 @@
 
 #create-event-form-venueId-input,
 #create-event-form-name-input,
-#create-event-form-type-input,
 #create-event-form-capacity-input,
 #create-event-form-price-input,
 #create-event-form-description-input,
 #create-event-form-startDate-input,
 #create-event-form-endDate-input {
-    outline: 2px solid rgba(235, 216, 216, 0.2);
+    border: 2px solid rgba(53, 46, 46, 0.2);
     border-radius: 0.5rem;
-
     transition-duration: .15s;
     width: 20rem;
     height: 2rem;
+}
+
+#create-event-form-type-input {
+    border-radius: 0.5rem;
+    border: 2px solid rgba(53, 46, 46, 0.2);
+    width: 20.5rem;
+    height: 2.5rem;
 }
 
 #create-event-form-venueId-input:focus,
@@ -76,7 +81,7 @@
 #create-event-form-description-input:focus,
 #create-event-form-startDate-input:focus,
 #create-event-form-endDate-input:focus {
-    outline: 2px solid rgba(231, 236, 229, 0.1);
+    border: 2px solid rgba(53, 46, 46, 0.6);
 }
 
 .create-event-form-submit-button {

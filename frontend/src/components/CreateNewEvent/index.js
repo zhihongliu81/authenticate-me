@@ -12,7 +12,7 @@ const CreateNewEvent = ({ close, groupId }) => {
     // const [venueId, setVenueId] = useState('');
     const [name, setName] = useState('');
     const [type, setType] = useState('');
-    const [capacity, setCapacity] = useState(0);
+    const [capacity, setCapacity] = useState('');
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -59,7 +59,7 @@ const CreateNewEvent = ({ close, groupId }) => {
         const errors = [];
         if (capacity.length === 0) errors.push("Capacity is required")
         if (!Number.isInteger(Number(capacity))) errors.push("Capacity must be an integer");
-
+        if (Number(capacity) <= 0) errors.push("Capacity must be lager than 0")
         setCapacityValidationErrors(errors);
     }, [capacity])
 
@@ -186,12 +186,24 @@ const CreateNewEvent = ({ close, groupId }) => {
                 </div>
                 <div className="create-event-form-type">
                     <label htmlFor="create-event-form-type-input">type</label>
-                    <input
+                    <select
+                        name='eventType'
+                        onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}
+                        value={type}
+                        id="create-event-form-type-input"
+                    >
+                        <option value='' disabled>
+                            Select a event type...
+                        </option>
+                        <option>Online</option>
+                        <option>In person</option>
+                    </select>
+                    {/* <input
                         type={'text'}
                         placeholder={'Online or In person'}
                         value={type}
                         id="create-event-form-type-input"
-                        onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}></input>
+                        onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}></input> */}
                     <>
                         {showTypeErrors && typeValidationErrors.map((error, idx) => (
                             <li key={idx} className='create-event-error'>{error}</li>
@@ -203,6 +215,7 @@ const CreateNewEvent = ({ close, groupId }) => {
                     <input
                         type={'number'}
                         value={capacity}
+                        placeholder={"Capacity must be lager than 0"}
                         id="create-event-form-capacity-input"
                         onChange={e => { setCapacity(e.target.value); setShowCapacityErrors(true) }}></input>
                     <>
