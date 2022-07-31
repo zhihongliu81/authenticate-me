@@ -28,7 +28,7 @@ function Navigation({ isLoaded }){
       {showLoginModal && (
         <Modal onClose={() => {setShowLoginModal(false); history.push('/')}}>
           <LoginForm
-          close={() => setShowLoginModal(false)}
+          close={() => {setShowLoginModal(false); history.push('/')}}
           toSignup = {() => {setShowLoginModal(false); setShowSignupModal(true)}}/>
         </Modal>
       )}
@@ -39,7 +39,7 @@ function Navigation({ isLoaded }){
       {showSignupModal && (
         <Modal onClose={() => {setShowSignupModal(false); history.push('/')}}>
           <SignupForm
-           close={() => setShowSignupModal(false)}
+           close={() => {setShowSignupModal(false); history.push('/')}}
            toLogin={() => {setShowSignupModal(false); setShowLoginModal(true)}}
            />
         </Modal>
