@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/index.js
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { Modal } from '../../context/Modal';
@@ -12,6 +12,7 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const history = useHistory();
 
   let sessionLinks;
   if (sessionUser) {
@@ -25,7 +26,7 @@ function Navigation({ isLoaded }){
       {/* <button onClick={() => setShowLoginModal(true)}>Log In</button> */}
       <NavLink onClick={() => setShowLoginModal(true)}  to={'/login'} className='navlink-login'>Log In</NavLink>
       {showLoginModal && (
-        <Modal onClose={() => setShowLoginModal(false)}>
+        <Modal onClose={() => {setShowLoginModal(false); history.push('/')}}>
           <LoginForm
           close={() => setShowLoginModal(false)}
           toSignup = {() => {setShowLoginModal(false); setShowSignupModal(true)}}/>
@@ -36,7 +37,7 @@ function Navigation({ isLoaded }){
       {/* <button onClick={() => setShowSignupModal(true)}>Sign up</button> */}
       <NavLink onClick={() => setShowSignupModal(true)}  to={'/signup'} className='navlink-signup'>Sign up</NavLink>
       {showSignupModal && (
-        <Modal onClose={() => setShowSignupModal(false)}>
+        <Modal onClose={() => {setShowSignupModal(false); history.push('/')}}>
           <SignupForm
            close={() => setShowSignupModal(false)}
            toLogin={() => {setShowSignupModal(false); setShowLoginModal(true)}}

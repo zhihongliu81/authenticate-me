@@ -14,7 +14,7 @@ module.exports = {
    await queryInterface.bulkInsert('Events', [
     {
       groupId: 1,
-      venueId: null,
+      venueId: 1,
       name: "Tennis Group First Meet and Greet",
       description: "The first meet and greet for our group! Come say hello!",
       type: "Online",
@@ -63,7 +63,7 @@ module.exports = {
       [Op.or]: [
         {
           groupId: 1,
-          venueId: null,
+          venueId: 1,
           name: "Tennis Group First Meet and Greet",
           description: "The first meet and greet for our group! Come say hello!",
           type: "Online",

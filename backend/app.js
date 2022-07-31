@@ -190,6 +190,9 @@ app.use((err, _req, res, _next) => {
             if (el ===  'Please provide a valid email.') {
                 errors.invalidEmail = el;
             }
+            if (el === 'Validation isIn on type failed') {
+                errors.validationError = el;
+            }
         };
 
 
