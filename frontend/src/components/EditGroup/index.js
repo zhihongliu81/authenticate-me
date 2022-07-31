@@ -11,7 +11,7 @@ const EditGroup = ({close, group}) => {
     const [name, setName] = useState(group.name);
     const [about, setAbout] = useState(group.about);
     const [type, setType] = useState(group.type);
-    const [privateStatus, setPrivateStatus] = useState(group.private);
+    const [privateStatus, setPrivateStatus] = useState(String(group.private));
     const [city, setCity] = useState(group.city);
     const [state, setState] = useState(group.state);
 
@@ -65,6 +65,13 @@ const EditGroup = ({close, group}) => {
         if (state.length === 0) errors.push("State is required");
         setStateValidationErrors(errors);
     }, [state])
+
+    const readyToSubmit = nameValidationErrors.length === 0 &&
+                          aboutValidationErrors.length === 0 &&
+                          typeValidationErrors.length === 0 &&
+                          privateValidationErrors.length === 0 &&
+                          cityValidationErrors.length === 0 &&
+                          stateValidationErrors.length === 0
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -181,7 +188,7 @@ const EditGroup = ({close, group}) => {
                 ))}
               </>
             </div>
-            <button type="submit" className="create-group-form-submit-button" >Submit</button>
+            <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ? "create-group-form-submit-button" : "not-ready-to-create-group"} >Submit</button>
           </form>
         </div>
           );

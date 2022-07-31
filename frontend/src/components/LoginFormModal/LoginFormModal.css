@@ -105,3 +105,16 @@ flex-direction: row;
 .login-form-button:hover {
     cursor:grab/pointer;
 }
+
+.not-ready-to-login {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: gray;
+    border-color: gray;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}

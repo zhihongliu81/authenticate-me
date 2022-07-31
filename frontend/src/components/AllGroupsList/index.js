@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { loadGroupsThunk } from '../../store/groups';
 import GroupCard from './GroupCard';
 import EventsGroupsBar from '../EventsGroupsBar/EventsGroupsBar';
+import './index.css';
 
 
 const AllGroups = () => {
@@ -21,9 +22,12 @@ const AllGroups = () => {
 
     return (groupsIsLoaded && <>
         <div><EventsGroupsBar /></div>
+        <div className='all-group-list-container'>
         {groups.map(group => (<div
             key={group.id}><GroupCard group={group} />
         </div>))}
+        </div>
+
     </>
     )
 

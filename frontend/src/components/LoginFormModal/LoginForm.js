@@ -40,6 +40,8 @@ function LoginForm({close, toSignup}) {
     setPasswordValidationErrors(errors);
   }, [password])
 
+  const readyToSubmit = emailValidationErrors.length === 0 && passwordValidationErrors.length === 0;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
@@ -119,7 +121,7 @@ function LoginForm({close, toSignup}) {
         Keep me signed in
       </label>
     </div>
-        <button type="submit" className="login-form-button">Log In</button>
+        <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ?"login-form-button": "not-ready-to-login"}>Log In</button>
       </form>
     </div>
     </div>

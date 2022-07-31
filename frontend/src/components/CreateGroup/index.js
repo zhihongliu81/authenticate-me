@@ -14,7 +14,7 @@ const CreateGroup = ({close}) => {
     const [name, setName] = useState('');
     const [about, setAbout] = useState('');
     const [type, setType] = useState('');
-    const [privateStatus, setPrivateStatus] = useState(false);
+    const [privateStatus, setPrivateStatus] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
 
@@ -55,6 +55,7 @@ const CreateGroup = ({close}) => {
 
     useEffect(() => {
         const errors =[];
+        if (privateStatus.length === 0) errors.push("Private is required");
         if (privateStatus !== 'true' && privateStatus !== 'false') errors.push("Private must be a boolean");
         setPrivateValidationErrors(errors);
     }, [privateStatus])
@@ -75,6 +76,12 @@ const CreateGroup = ({close}) => {
 
 
     // if (!user) history.push('/login');
+    const readyToSubmit = nameValidationErrors.length === 0 &&
+                          aboutValidationErrors.length === 0 &&
+                          typeValidationErrors.length === 0 &&
+                          privateValidationErrors.length === 0 &&
+                          cityValidationErrors.length === 0 &&
+                          stateValidationErrors.length === 0
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -192,7 +199,7 @@ const CreateGroup = ({close}) => {
           ))}
         </>
       </div>
-      <button type="submit" className="create-group-form-submit-button" >Submit</button>
+      <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ? "create-group-form-submit-button" : "not-ready-to-create-group"} >Submit</button>
     </form>
   </div>
     );

@@ -8,7 +8,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [venueId, setVenueId] = useState(event.venueId);
+    // const [venueId, setVenueId] = useState(event.venueId);
     const [name, setName] = useState(event.name);
     const [type, setType] = useState(event.type);
     const [capacity, setCapacity] = useState(event.capacity);
@@ -19,6 +19,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const venueId = 1;
         const updatedEvent = {
             venueId,
             name,
@@ -46,7 +47,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
     return (
         <div>{`Update Event for Event ${eventId}:`}
             <form onSubmit={handleSubmit}>
-                <label>venueId:<input type={'number'} value={venueId} onChange={e => setVenueId(e.target.value)}></input></label>
+                {/* <label>venueId:<input type={'number'} value={venueId} onChange={e => setVenueId(e.target.value)}></input></label> */}
                 <label>name:<input type={'text'} value={name} onChange={e => setName(e.target.value)}></input></label>
                 <label>type:<input type={'text'} value={type} onChange={e => setType(e.target.value)}></input></label>
                 <label>capacity:<input type={'number'} value={capacity} onChange={e => setCapacity(e.target.value)}></input></label>

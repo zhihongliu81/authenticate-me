@@ -62,7 +62,11 @@ function SignupForm({close, toLogin}) {
 
   if (sessionUser) return <Redirect to="/" />;
 
-
+const readyToSubmit = firstNameValidationErrors.length === 0 &&
+                      lastNameValidationErrors.length === 0 &&
+                      emailValidationErrors.length === 0 &&
+                      passwordValidationErrors.length === 0 &&
+                      password === confirmPassword
 
 
   const handleSubmit = (e) => {
@@ -184,7 +188,7 @@ function SignupForm({close, toLogin}) {
           </div>
         <div>
     </div>
-        <button type="submit" className="signup-form-button">Sign up</button>
+        <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ? "signup-form-button" : "not-ready-to-signup"}>Sign up</button>
       </form>
       <div>
         <span>Already a member?</span>

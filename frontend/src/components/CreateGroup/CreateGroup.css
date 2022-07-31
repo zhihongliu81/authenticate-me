@@ -71,8 +71,21 @@
     cursor: pointer;
     color: #fff;
     fill: #fff;
-    background-color: #57616b;
-    border-color: #b6babe;
+    background-color: #458cd4;
+    border-color: #376390;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+
+.not-ready-to-create-group {
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    fill: #fff;
+    background-color: gray;
+    border-color: gray;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     margin: 1rem;

@@ -57,7 +57,7 @@ const CreateNewEvent = ({ close, groupId }) => {
 
     useEffect(() => {
         const errors = [];
-        if (capacity.length === 0) errors.push("Capacity must be an integer")
+        if (capacity.length === 0) errors.push("Capacity is required")
         if (!Number.isInteger(Number(capacity))) errors.push("Capacity must be an integer");
 
         setCapacityValidationErrors(errors);
@@ -80,6 +80,7 @@ const CreateNewEvent = ({ close, groupId }) => {
         const errors = [];
         const now = Date.now();
         const startTime = Date.parse(startDate);
+        if(startDate.length === 0) errors.push("Start date is required");
         if (startTime <= now) errors.push("Start date must be in the future");
         setStartDateValidationErrors(errors);
     }, [startDate])
@@ -89,12 +90,20 @@ const CreateNewEvent = ({ close, groupId }) => {
         const errors = [];
         const startTime = Date.parse(startDate);
         const endTime = Date.parse(endDate);
+        if (endDate.length === 0) errors.push("End date is required");
         if (endTime <= startTime) errors.push("End date is less than start date");
         setEndDateValidationErrors(errors);
     }, [endDate])
 
+    const readyToSubmit = nameValidationErrors.length === 0 &&
+                          typeValidationErrors.length === 0 &&
+                          capacityValidationErrors.length === 0 &&
+                          priceValidationErrors.length === 0 &&
+                          descriptionValidationErrors.length === 0 &&
+                          startDateValidationErrors.length === 0 &&
+                          endDateValidationErrors.length === 0
 
-    const handleSumbit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const venueId = 1;
 
@@ -143,7 +152,7 @@ const CreateNewEvent = ({ close, groupId }) => {
             <div>
                 <h1 className="create-event-form-title">{`Create Event for Group ${groupId}:`}</h1>
             </div>
-            <form className="create-event-form" onSubmit={handleSumbit}>
+            <form className="create-event-form" onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => (
                         <li key={idx} className='create-event-error'>{error}</li>
@@ -256,7 +265,7 @@ const CreateNewEvent = ({ close, groupId }) => {
                         ))}
                     </>
                 </div>
-                    <button className="create-event-form-submit-button" type="sumbit" >Sumbit</button>
+                    <button disabled={!readyToSubmit} className={readyToSubmit ? "create-event-form-submit-button" : "not-ready-to-create-event"} type="sumbit" >Sumbit</button>
             </form>
         </div>
     );

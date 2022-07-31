@@ -20,6 +20,7 @@ const GroupEvents = () => {
     }, [dispatch, groupId]);
 
     if (!events) return null;
+    if (events.length === 0) return (<div><h2>No Event yet!</h2></div>);
 
     return events.map(event => {
             return (

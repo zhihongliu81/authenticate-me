@@ -64,7 +64,6 @@ function App() {
         <Modal onClose={() => setShowCreateGroupModal(false)}>
           <CreateGroup close={() => setShowCreateGroupModal(false)}/>
         </Modal>)}
-
       </div>
     </div>
   );
