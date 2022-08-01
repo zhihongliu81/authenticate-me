@@ -193,6 +193,9 @@ app.use((err, _req, res, _next) => {
             if (el === 'Validation isIn on type failed') {
                 errors.validationError = el;
             }
+            if (el === 'Invalid value') {
+                errors.validation = el;
+            }
         };
 
 
