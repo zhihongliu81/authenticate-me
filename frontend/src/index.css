@@ -1,32 +1,43 @@
 /* TODO Add site wide styles */
+body {
+    margin: 0;
+}
+
 .main-container {
     margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100vh;
 }
 
 .home-page-container {
-    height: 83vh;
+    height: 80%;
 }
 .homepage-bottom-link {
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     background-color: black;
-    padding: 2rem;
-    height: 4rem;
-    margin-top: 4rem;
+    padding: 1rem;
+    margin-top: 5rem;
+    /* height: 10%; */
 
 }
 
 .homepage-bottom-link-para {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: white;
-    margin-left: 23rem;
     font-size: 20px;
-    padding-top: 0.5rem;
 }
 
-.homepage-bottom-link > button {
+.homepage-bottom-link-para > p {
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.homepage-bottom-link-para > button {
     margin-left: 2rem;
     height: 2.5rem;
     width: 7rem;
@@ -36,4 +47,18 @@
     border: 2px solid white;
     border-radius: 5px;
     font-weight: 600;
+    cursor: pointer;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.homepage-bottom-link-a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.homepage-bottom-link-a > a {
+    color: white;
+    font-size: 1rem;
+    margin-left: 1rem;
 }

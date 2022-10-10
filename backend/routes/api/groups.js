@@ -11,13 +11,15 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const groups = await Group.findAll({
         include: {
-            model: User,
+            model: Membership
         }
     });
     let formattedGroups = [];
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        let numMembers = group.Users.length;
+
+        let members = group.Memberships.filter(member => member.status !== 'pending');
+        let numMembers = members.length;
         let formattedGroup = {
             id: group.id,
             organizerId: group.organizerId,

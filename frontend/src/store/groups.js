@@ -69,10 +69,10 @@ export const loadGroupsThunk = () => async dispatch => {
         if (resbody.Groups && resbody.Groups.length > 0) {
             for (let i = 0; i < resbody.Groups.length; i++) {
                 let group = resbody.Groups[i];
-                const res1 = await fetch(`/api/groups/${group.id}/members`);
-                const data1 = await res1.json();
+                // const res1 = await fetch(`/api/groups/${group.id}/members`);
+                // const data1 = await res1.json();
                 const members = {};
-                data1.Members.forEach(member => members[member.id] = member);
+                // data1.Members.forEach(member => members[member.id] = member);
                 group.members = members;
                 groups[group.id] = group;
             }

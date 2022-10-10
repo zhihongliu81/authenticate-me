@@ -29,7 +29,7 @@ const GroupCard = ({group}) => {
 
                 </div>
                 <div className='groupcard-members-private'>
-                    {`${Object.keys(group.members).length} members . ${group.private ? 'private' : 'public'}`}
+                    {group.numMembers} members .  {group.private ? 'private' : 'public'}
 
                 </div>
 
