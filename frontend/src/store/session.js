@@ -87,25 +87,25 @@ export const logout = () => async (dispatch) => {
 
 export const getYourGroupsThunk = (user) => async dispatch => {
   if (!user) return null;
-  const userId = user.id;
+  // const userId = user.id;
   const res = await fetch('/api/groups/current');
   if (res.ok) {
     const resbody = await res.json();
     const groups = {};
-    if (resbody.Groups && resbody.Groups.length > 0) {
+
       for (let i = 0; i < resbody.Groups.length; i++) {
         let group = resbody.Groups[i];
-        const res1 = await fetch(`/api/groups/${group.id}/members`);
-        const data1 = await res1.json();
-        const member = data1.Members.find(ele => userId === ele.id);
-        const members = {};
-        data1.Members.forEach(member => members[member.id] = member);
-        if (member) {
-          const status = member.Membership.status;
-          groups[group.id] = { ...group, status, members };
-        }
+        // const res1 = await fetch(`/api/groups/${group.id}/members`);
+        // const data1 = await res1.json();
+        // const member = data1.Members.find(ele => userId === ele.id);
+        // const members = {};
+        // data1.Members.forEach(member => members[member.id] = member);
+        // if (member) {
+        //   const status = member.Membership.status;
+          groups[group.id] = group;
+        // }
       }
-    }
+    
     dispatch(getYourGroups(groups));
   }
 

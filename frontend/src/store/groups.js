@@ -52,13 +52,13 @@ const newEvent = (newEvent) => {
     }
 }
 
-const getMembers = (members, groupId) => {
-    return {
-        type: GET_MEMBERS,
-        members,
-        groupId
-    }
-}
+// const getMembers = (members, groupId) => {
+//     return {
+//         type: GET_MEMBERS,
+//         members,
+//         groupId
+//     }
+// }
 
 export const loadGroupsThunk = () => async dispatch => {
     const response = await fetch('/api/groups');
@@ -86,11 +86,11 @@ export const groupDetailsThunk = (groupId) => async dispatch => {
     const response = await fetch(`/api/groups/${groupId}`);
     if (response.ok) {
         const data = await response.json();
-        const res1 = await fetch(`/api/groups/${groupId}/members`);
-        const data1 = await res1.json();
-        const members = {};
-        data1.Members.forEach(member => members[member.id] = member);
-        dispatch(getGroup({...data, members}));
+        // const res1 = await fetch(`/api/groups/${groupId}/members`);
+        // const data1 = await res1.json();
+        // const members = {};
+        // data1.Members.forEach(member => members[member.id] = member);
+        dispatch(getGroup(data));
         return data
     }
 }
@@ -128,14 +128,14 @@ export const updateGroupThunk = (newGroup, groupId) => async dispatch => {
     }
 }
 
-export const getMembersThunk = (groupId) => async dispatch => {
-    const response = await fetch(`/api/groups/${groupId}/members`);
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(getMembers(data.Members, groupId));
-        return data;
-    }
-}
+// export const getMembersThunk = (groupId) => async dispatch => {
+//     const response = await fetch(`/api/groups/${groupId}/members`);
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(getMembers(data.Members, groupId));
+//         return data;
+//     }
+// }
 
 export const groupEventsThunk = (groupId) => async dispatch => {
     const response = await fetch(`/api/groups/${groupId}/events`);

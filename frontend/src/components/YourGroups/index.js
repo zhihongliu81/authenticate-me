@@ -49,7 +49,6 @@ const YourGroups = () => {
 
     const groupsArr = Object.values(groups);
     if (groupsArr.length === 0) return (<div><h2>No Group yet!</h2></div>)
-
     return <div>
         {yourGroupsIsLoaded &&
             groupsArr.map((group, index) =>

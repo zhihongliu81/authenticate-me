@@ -47,16 +47,19 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
     const groups = await Group.findAll({
         include: {
-            model: User
+            model: Membership,
+            where: {
+                memberId: req.user.id
+            }
         },
     });
     let formattedGroups = [];
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        let numMembers = group.Users.length;
+        let numMembers = group.Memberships.length;
         for (let j = 0; j < numMembers; j++) {
-            let member = group.Users[j];
-            if (member.id === req.user.id) {
+            let member = group.Memberships[j];
+            if (member.memberId === req.user.id) {
                 let formattedGroup = {
                     id: group.id,
                     organizerId: group.organizerId,
@@ -258,26 +261,52 @@ router.get('/:groupId/members', restoreUser, async (req, res, next) => {
     });
 
     const formattedMembers = [];
-    if (!req.user || group.organizerId !== req.user.id) {
+    // if (!req.user || group.organizerId !== req.user.id) {
+    //     members.forEach(member => {
+    //         let memberObj = {};
+    //         memberObj.id = member.id;
+    //         memberObj.memberId = member.memberId
+    //         memberObj.firstName = member.User.firstName;
+    //         memberObj.lastName = member.User.lastName;
+    //         memberObj.status =  member.status;
+    //         if (member.status !== 'pending') {
+    //             formattedMembers.push(memberObj);
+    //         }
+    //     })
+    // } else {
+    //         members.forEach(member => {
+    //         let memberObj = {};
+    //         memberObj.id = member.id;
+    //         memberObj.memberId = member.memberId
+    //         memberObj.firstName = member.User.firstName;
+    //         memberObj.lastName = member.User.lastName;
+    //         memberObj.status =  member.status;
+    //         formattedMembers.push(memberObj);
+    //     })
+    // }
+    const currentMember = members.filter(member => member.memberId === req.user.id);       
+    if (req.user && (group.organizerId === req.user.id || (currentMember.length > 0 && currentMember[0].status === 'co-host'))) {
         members.forEach(member => {
-            let memberObj = {};
-            memberObj.id = member.memberId;
-            memberObj.firstName = member.User.firstName;
-            memberObj.lastName = member.User.lastName;
-            memberObj.Membership = {status: member.status};
-            if (member.status !== 'pending') {
-                formattedMembers.push(memberObj);
-            }
-        })
-    } else {
-            members.forEach(member => {
-            let memberObj = {};
-            memberObj.id = member.memberId;
-            memberObj.firstName = member.User.firstName;
-            memberObj.lastName = member.User.lastName;
-            memberObj.Membership = {status: member.status};
-            formattedMembers.push(memberObj);
-        })
+                    let memberObj = {};
+                    memberObj.id = member.id;
+                    memberObj.memberId = member.memberId
+                    memberObj.firstName = member.User.firstName;
+                    memberObj.lastName = member.User.lastName;
+                    memberObj.status =  member.status;
+                    formattedMembers.push(memberObj);
+    })
+   }else {
+    members.forEach(member => {
+                let memberObj = {};
+                memberObj.id = member.id;
+                memberObj.memberId = member.memberId
+                memberObj.firstName = member.User.firstName;
+                memberObj.lastName = member.User.lastName;
+                memberObj.status =  member.status;
+                if (member.status !== 'pending') {
+                    formattedMembers.push(memberObj);
+                }
+            })
     }
 
     res.json({Members:formattedMembers});
@@ -337,7 +366,12 @@ router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => 
             exclude: ['createdAt', 'updatedAt']
         }
     })
-    res.json(membership);
+    res.json({
+        id:membership.id,
+        memberId: membership.memberId,
+        status: membership.status,
+        firstName:req.user.firstName,
+        lastName:req.user.lastName});
 })
 
 
@@ -354,7 +388,7 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
     const membership = await Membership.findOne({
         where: {
             groupId: req.params.groupId,
-            memberId: req.body.memberId
+            memberId: req.body.member.memberId
         },
         attributes: {
             include: ['id', 'groupId', 'memberId', 'status'],
@@ -421,6 +455,8 @@ router.patch('/:groupId/membership', restoreUser, requireAuth, async (req, res) 
         id: membership.id,
         groupId: membership.groupId,
         memberId: membership.memberId,
+        firstName:req.body.member.firstName,
+        lastName: req.body.member.lastName,
         status: membership.status
     });
 })
@@ -450,10 +486,13 @@ router.delete('/:groupId/membership/membershipId', restoreUser, requireAuth, asy
           })
     };
 
+    const membershipId = membership.id;
+
     if (req.user.id === group.organizerId || req.user.id === req.body.memberId) {
         await membership.destroy();
         return res.json({
-            "message": "Successfully deleted membership from group"
+            "message": "Successfully deleted membership from group",
+            membershipId
           })
     } else {
         res.statusCode = 403;

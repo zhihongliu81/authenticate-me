@@ -6,7 +6,6 @@ const GroupCard = ({group}) => {
     const history = useHistory();
 
     if (!group) return null;
-    if (!group.members) return null;
 
     return (
         <div className='groupcard-main' onClick={() => history.push(`/api/groups/${group.id}`)} >

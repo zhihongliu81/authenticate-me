@@ -1,17 +1,27 @@
 .group-detail-main {
-    width: 1000px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
+    padding-top: 2rem;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+
 }
 .group-detail-top {
     display: flex;
     flex-direction: row;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    width: 80%;
 
 }
 
 .group-detail-image {
-    height: 337px;
-    width: 600px;
+    height: 40vh;
+    width: 50%;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .group-detail-name {
@@ -59,8 +69,22 @@
     color: #212121;
 }
 
-.group-detail-topright, .group-detail-organizer {
+.group-detail-topright {
+    display: flex;
+    flex-direction: column;
     margin-left: 20px;
+}
+
+.group-detail-topright > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.group-detail-topright img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
 }
 
 .group-detail-buttons {
