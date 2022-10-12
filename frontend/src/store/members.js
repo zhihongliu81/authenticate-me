@@ -47,13 +47,13 @@ export const getMembersThunk = (groupId) => async dispatch => {
 }
 
 export const requestMemberThunk = (groupId) => async dispatch => {
+
     const response = await csrfFetch(`/api/groups/${groupId}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
     });
-
     const data = await response.json();
     if (response.ok) {
         dispatch(requestMember(data))

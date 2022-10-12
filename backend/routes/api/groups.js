@@ -261,53 +261,41 @@ router.get('/:groupId/members', restoreUser, async (req, res, next) => {
     });
 
     const formattedMembers = [];
-    // if (!req.user || group.organizerId !== req.user.id) {
-    //     members.forEach(member => {
-    //         let memberObj = {};
-    //         memberObj.id = member.id;
-    //         memberObj.memberId = member.memberId
-    //         memberObj.firstName = member.User.firstName;
-    //         memberObj.lastName = member.User.lastName;
-    //         memberObj.status =  member.status;
-    //         if (member.status !== 'pending') {
-    //             formattedMembers.push(memberObj);
-    //         }
-    //     })
-    // } else {
-    //         members.forEach(member => {
-    //         let memberObj = {};
-    //         memberObj.id = member.id;
-    //         memberObj.memberId = member.memberId
-    //         memberObj.firstName = member.User.firstName;
-    //         memberObj.lastName = member.User.lastName;
-    //         memberObj.status =  member.status;
-    //         formattedMembers.push(memberObj);
-    //     })
-    // }
-    const currentMember = members.filter(member => member.memberId === req.user.id);       
-    if (req.user && (group.organizerId === req.user.id || (currentMember.length > 0 && currentMember[0].status === 'co-host'))) {
-        members.forEach(member => {
-                    let memberObj = {};
-                    memberObj.id = member.id;
-                    memberObj.memberId = member.memberId
-                    memberObj.firstName = member.User.firstName;
-                    memberObj.lastName = member.User.lastName;
-                    memberObj.status =  member.status;
-                    formattedMembers.push(memberObj);
-    })
-   }else {
+
     members.forEach(member => {
-                let memberObj = {};
-                memberObj.id = member.id;
-                memberObj.memberId = member.memberId
-                memberObj.firstName = member.User.firstName;
-                memberObj.lastName = member.User.lastName;
-                memberObj.status =  member.status;
-                if (member.status !== 'pending') {
-                    formattedMembers.push(memberObj);
-                }
-            })
-    }
+        let memberObj = {};
+        memberObj.id = member.id;
+        memberObj.memberId = member.memberId
+        memberObj.firstName = member.User.firstName;
+        memberObj.lastName = member.User.lastName;
+        memberObj.status =  member.status;
+        formattedMembers.push(memberObj);
+    })
+
+//     const currentMember = members.filter(member => member.memberId === req.user.id);
+//     if (req.user && (group.organizerId === req.user.id || (currentMember.length > 0 && currentMember[0].status === 'co-host'))) {
+//         members.forEach(member => {
+//                     let memberObj = {};
+//                     memberObj.id = member.id;
+//                     memberObj.memberId = member.memberId
+//                     memberObj.firstName = member.User.firstName;
+//                     memberObj.lastName = member.User.lastName;
+//                     memberObj.status =  member.status;
+//                     formattedMembers.push(memberObj);
+//     })
+//    }else {
+//     members.forEach(member => {
+//                 let memberObj = {};
+//                 memberObj.id = member.id;
+//                 memberObj.memberId = member.memberId
+//                 memberObj.firstName = member.User.firstName;
+//                 memberObj.lastName = member.User.lastName;
+//                 memberObj.status =  member.status;
+//                 if (member.status !== 'pending') {
+//                     formattedMembers.push(memberObj);
+//                 }
+//             })
+//     }
 
     res.json({Members:formattedMembers});
 })
@@ -330,7 +318,6 @@ router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => 
             memberId: req.user.id
         }
     })
-
     if (membership) {
         if (membership.status === "pending") {
             res.statusCode = 400;
@@ -340,6 +327,7 @@ router.post('/:groupId/register', restoreUser, requireAuth, async (req, res) => 
               })
         } else {
             res.statusCode = 400;
+
             return res.json({
                 "message": "User is already a member of the group",
                 "statusCode": 400

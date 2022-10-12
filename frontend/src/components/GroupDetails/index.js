@@ -31,6 +31,7 @@ const GroupDetails = () => {
     const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
     const [currentMember, setCurrentMember] = useState({});
     const [status, setStatus] = useState('');
+    const [statusValidationErrors, setStatusValidationErrors] = useState([]);
     const [membershipErrors, setMembershipErrors] = useState([]);
 
 
@@ -38,6 +39,12 @@ const GroupDetails = () => {
         dispatch(groupDetailsThunk(groupId)).then(() => setGroupDetailsIsLoaded(true));
         dispatch(getMembersThunk(groupId)).then(() => setMembersIsLoaded(true));
     }, [dispatch, groupId]);
+
+    useEffect(() => {
+        if (status.length === 0) {
+            setStatusValidationErrors(["Status is required"])
+        };
+    }, [status])
 
 
     let showNewEventButton = false;
@@ -97,21 +104,35 @@ const GroupDetails = () => {
     }
 
     const handleMembership = (groupId) => {
+        setMembershipErrors([]);
         if (inGroup.length > 0) {
             // leave the group
             dispatch(deleteMemberThunk(groupId, user.id))
+            .catch((data) => {
+                const error = data.message
+                if (error) {
+                    setMembershipErrors([error])
+                }
+            })
 
         } else {
             // request joining the group
             dispatch(requestMemberThunk(groupId))
+            .catch((data) => {
+                const error = data.message
+                if (error) {
+                    setMembershipErrors([error])
+                }
+            })
         }
     }
 
     const updateStatus = (e) => {
         e.preventDefault();
-        dispatch(updateMemberThunk(groupId, currentMember, status))
-        .then(() => { setShowUpdateStatusModal(false)});
-
+        if (status.length > 0) {
+            dispatch(updateMemberThunk(groupId, currentMember, status))
+            .then(() => { setShowUpdateStatusModal(false)});
+        }
     }
 
 
@@ -164,81 +185,78 @@ const GroupDetails = () => {
                         <h2>What we're about</h2>
                         <p>{group.about}</p>
                     </div>
+                    <Route path={'/api/groups/:groupId/events'}>
+                        <GroupEvents />
+                    </Route>
                 </div>
                 <div className="group-detail-bottom-right">
-                    {user && user.id !== group.organizerId && <button onClick={() => { handleMembership(groupId) }}>{inGroup.length > 0 ? 'Leave this Group' : 'Join this Group'}</button>}
+                    <>
+                        {membershipErrors.map((error, idx) => (
+                            <li key={idx} className='error'>{error}</li>
+                        ))}
+                    </>
+                    {user && user.id !== group.organizerId && <button className="group-join-leave-button" onClick={() => { handleMembership(groupId) }}>{inGroup.length > 0 ? 'Leave this Group' : 'Join this Group'}</button>}
                     <div className="group-detail-organizer">
                         <h2>Organizers</h2>
                         <p>{`${group.Organizer?.firstName} ${group.Organizer?.lastName}`}</p>
                     </div>
-                    <div>
-
-
-                    </div>
-                    <div>
-                        <h2>Members:</h2>
-                        {
-                            isMembers.map(ele => {
-                                return (
-                                    <p key={ele.id}>{ele.firstName} {ele.lastName}</p>
-                                )
-                            })
-                        }
-                    </div>
-                    {showPendingMembers &&
-                        <div>
-                            <h2>Pending members:</h2>
-                            {pendingMembers.map(ele => {
-                                return (
-                                    <div key={ele.id}>
-                                        <p>{ele.firstName} {ele.lastName}</p>
-                                        <button onClick={() => { setCurrentMember(ele); setShowUpdateStatusModal(true) }}>Update Status</button>
-                                    </div>
-                                )
-                            })}
-                            {showUpdateStatusModal &&
-                                <Modal onClose={() => setShowUpdateStatusModal(false)}>
-                                    <div>
-                                        <h2>Update Status</h2>
-                                        <form onSubmit={(e) => updateStatus(e)}>
-                                            <select
-                                                name="status"
-                                                onChange={e => setStatus(e.target.value)}
-                                                value={status}
-                                            >
-                                                <option value={''} disabled>select the status...</option>
-                                                {statusList.map((ele => {
-                                                    return (
-                                                        <option key={ele} value={ele}>{ele}</option>
-                                                    )
-                                                }))}
-                                            </select>
-                                            <button>Update Status</button>
-                                        </form>
-                                    </div>
-                                </Modal>
+                    <div className="group-detail-members-container">
+                        <div className="group-detail-members">
+                            <h2>Members:</h2>
+                            {
+                                isMembers.map(ele => {
+                                    return (
+                                        <p key={ele.id}>{ele.firstName} {ele.lastName}</p>
+                                    )
+                                })
                             }
                         </div>
-                    }
+                        {showPendingMembers &&
+                            <div className="group-detail-pending-members">
+                                <h2>Pending members:</h2>
+                                {pendingMembers.map(ele => {
+                                    return (
+                                        <div key={ele.id}>
+                                            <p>{ele.firstName} {ele.lastName}</p>
+                                            <button onClick={() => { setCurrentMember(ele); setShowUpdateStatusModal(true) }}>Update Status</button>
+                                        </div>
+                                    )
+                                })}
+                                {showUpdateStatusModal &&
+                                    <Modal onClose={() => setShowUpdateStatusModal(false)}>
+                                        <div>
+                                            <h2>Update Status</h2>
+                                            <>
+                                                {statusValidationErrors.map((error, idx) => (
+                                                    <li key={idx} className='error'>{error}</li>
+                                                ))}
+                                            </>
+                                            <form onSubmit={(e) => updateStatus(e)}>
+                                                <select
+                                                    name="status"
+                                                    onChange={e => { setStatusValidationErrors([]); setStatus(e.target.value) }}
+                                                    value={status}
+                                                >
+                                                    <option value={''} disabled>select the status...</option>
+                                                    {statusList.map((ele => {
+                                                        return (
+                                                            <option key={ele} value={ele}>{ele}</option>
+                                                        )
+                                                    }))}
+                                                </select>
+                                                <button>Update Status</button>
+                                            </form>
+                                        </div>
+                                    </Modal>
+                                }
+                            </div>
+                        }
+                    </div>
+
+
                 </div>
             </div>
-            <div className="group-detail-navlinks">
 
-
-                <>
-                    {membershipErrors.map((error, idx) => (
-                        <li key={idx} className='error'>{error}</li>
-                    ))}
-                </>
-            </div>
-            <div className="group-detail-bottom">
-
-
-
-            </div>
-            <Route path={'/api/groups/:groupId/events'}>
-                <GroupEvents />
-            </Route>
         </div>}
     </>
 

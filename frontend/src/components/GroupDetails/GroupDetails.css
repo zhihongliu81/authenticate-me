@@ -7,8 +7,12 @@
     border-top: 1px solid rgba(128, 128, 128, 0.4);
     padding-top: 2rem;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
-
 }
+
+.group-detail-main p {
+    overflow-wrap: break-word;
+}
+
 .group-detail-top {
     display: flex;
     flex-direction: row;
@@ -47,18 +51,9 @@
     color: #00A2c7;
     font-size: 20px;
     line-height: 3rem;
-
+    cursor: pointer;
 }
 
-.group-detail-bottom {
-    display: flex;
-    flex-direction: row;
-}
-
-.group-detail-about {
-    min-height: 150px;
-    width: 600px;
-}
 .group-detail-about > h2 {
     font-size: 20px;
     color: #212121;
@@ -72,7 +67,7 @@
 .group-detail-topright {
     display: flex;
     flex-direction: column;
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 .group-detail-topright > div {
@@ -96,4 +91,54 @@
     background-color: rgb(226, 236, 232);
     margin-right: 10px;
     border-radius: 4px;
+}
+
+.group-detail-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
+}
+
+.group-detail-bottom-left {
+    width: 40%;
+}
+
+.group-detail-bottom-right {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.group-join-leave-button {
+    height: 40px;
+    width: 150px;
+    background-color: #F65858;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: 1px solid #F65858;
+    border-radius: 10px;
+}
+
+.group-detail-members-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.group-detail-members {
+    max-width: 45%;
+}
+
+.group-detail-pending-members {
+    width: 45%;
+    margin-left: 50px;
+}
+
+.group-detail-bottom-right h2 {
+    font-size: 20px;
 }
