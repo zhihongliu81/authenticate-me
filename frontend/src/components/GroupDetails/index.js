@@ -218,20 +218,20 @@ const GroupDetails = () => {
                                     return (
                                         <div key={ele.id}>
                                             <p>{ele.firstName} {ele.lastName}</p>
-                                            <button onClick={() => { setCurrentMember(ele); setShowUpdateStatusModal(true) }}>Update Status</button>
+                                            <button className="pending-members-button" onClick={() => { setCurrentMember(ele); setShowUpdateStatusModal(true) }}>Update Status</button>
                                         </div>
                                     )
                                 })}
                                 {showUpdateStatusModal &&
                                     <Modal onClose={() => setShowUpdateStatusModal(false)}>
-                                        <div>
-                                            <h2>Update Status</h2>
+                                        <div className="update-status-modal-container">
+                                            <h2>Update Status of {currentMember.firstName} {currentMember.lastName}</h2>
                                             <>
                                                 {statusValidationErrors.map((error, idx) => (
                                                     <li key={idx} className='error'>{error}</li>
                                                 ))}
                                             </>
-                                            <form onSubmit={(e) => updateStatus(e)}>
+                                            <form className="update-status-modal-form" onSubmit={(e) => updateStatus(e)}>
                                                 <select
                                                     name="status"
                                                     onChange={e => { setStatusValidationErrors([]); setStatus(e.target.value) }}
@@ -244,7 +244,7 @@ const GroupDetails = () => {
                                                         )
                                                     }))}
                                                 </select>
-                                                <button>Update Status</button>
+                                                <button className="">Update Status</button>
                                             </form>
                                         </div>
                                     </Modal>

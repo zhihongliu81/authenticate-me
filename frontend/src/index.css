@@ -3,6 +3,10 @@ body {
     margin: 0;
 }
 
+button {
+    cursor: pointer;
+}
+
 .main-container {
     margin: 0;
     display: flex;
