@@ -20,7 +20,7 @@ module.exports = {
       private: true,
       city: "G1-New York",
       state: "NY",
-      previewImage: "image url-group1",
+      previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
       },
       {
         organizerId: 2,
@@ -30,7 +30,7 @@ module.exports = {
         private: true,
         city: "G2-New York",
         state: "NY",
-        previewImage: "image url-group2",
+        previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
         },
         {
           organizerId: 3,
@@ -40,7 +40,7 @@ module.exports = {
           private: true,
           city: "G3-New York",
           state: "NY",
-          previewImage: "image url-group3",
+          previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
           },
      ], {} )
   },
@@ -63,7 +63,7 @@ module.exports = {
           private: true,
           city: "G1-New York",
           state: "NY",
-          previewImage: "image url-group1",
+          previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
           },
           {
             organizerId: 2,
@@ -73,7 +73,7 @@ module.exports = {
             private: true,
             city: "G2-New York",
             state: "NY",
-            previewImage: "image url-group2",
+            previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
             },
             {
               organizerId: 3,
@@ -83,7 +83,7 @@ module.exports = {
               private: true,
               city: "G3-New York",
               state: "NY",
-              previewImage: "image url-group3",
+              previewImage: "https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg",
               },
       ]
      }, {})

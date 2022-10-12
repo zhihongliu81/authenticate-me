@@ -7,7 +7,7 @@ import './HomePage.css'
 
 const HomePage= ({trigger, setTrigger}) => {
     const user = useSelector(state => state.session.user);
-    const [image, setImage] = useState(null);
+    
 
     const handle = (e) => {
         if (user) {
@@ -19,24 +19,7 @@ const HomePage= ({trigger, setTrigger}) => {
 
 
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("image", image);
-      csrfFetch('/api/images/upload', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData
-      }).then((res) => res.json()).then((data) => console.log(data))
 
-    };
-
-    const updateFile = (e) => {
-      const file = e.target.files[0];
-      if (file) setImage(file);
-    };
 
 
 
@@ -56,12 +39,6 @@ const HomePage= ({trigger, setTrigger}) => {
         </div>
       </div>
       <div className="landing-links">
-      <form onSubmit={handleSubmit}>
-        <label>Use AWS to Upload Image
-          <input type="file" onChange={updateFile} />
-        </label>
-        <button type="submit">upload image</button>
-      </form>
         <h2 className="landing-links-header">How Meetup works</h2>
         <div className="landing-links-para">
           <p>Meet new people who share your interests through online and in-person events. It’s free to create an account.</p>

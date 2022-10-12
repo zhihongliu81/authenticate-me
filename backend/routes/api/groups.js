@@ -122,7 +122,8 @@ router.get('/:groupId', async(req, res) => {
         updatedAt: group.updatedAt,
         numMembers: group.Users.length,
         images,
-        Organizer: organizer
+        Organizer: organizer,
+        previewImage: group.previewImage
     };
     res.json(formattedGroup);
 })
@@ -153,7 +154,7 @@ const validateGroup = [
     handleValidationErrors
 ]
 router.post('/', restoreUser, requireAuth, validateGroup, async (req, res) => {
-    const {name, about, type, private, city, state} = req.body;
+    const {name, about, type, private, city, state, previewImage} = req.body;
     const group = await Group.create({
         organizerId: req.user.id,
         name,
@@ -162,6 +163,7 @@ router.post('/', restoreUser, requireAuth, validateGroup, async (req, res) => {
         private,
         city,
         state,
+        previewImage
     });
     const membership = await Membership.create({
         groupId: group.id,
@@ -178,6 +180,7 @@ router.post('/', restoreUser, requireAuth, validateGroup, async (req, res) => {
         private:group.private,
         city: group.city,
         state: group.state,
+        previewImage: group.previewImage,
         createdAt: group.createdAt,
         updatedAt: group.updatedAt
     });

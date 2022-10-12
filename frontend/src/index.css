@@ -7,6 +7,11 @@ button {
     cursor: pointer;
 }
 
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+    font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
 .main-container {
     margin: 0;
     display: flex;

@@ -68,13 +68,13 @@ router.delete('/:imageId', restoreUser, requireAuth, async (req, res) => {
 
 // upload image to AWS /api/images/upload
 router.post('/upload', singleMulterUpload("image"), async (req, res) => {
-console.log("in upload back end-------------------req.file:",req.file)
-    const profileImageUrl = await singlePublicFileUpload(req.file);
+
+    const url = await singlePublicFileUpload(req.file);
 
 
 
     return res.json({
-      profileImageUrl,
+      url,
     });
   })
 

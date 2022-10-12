@@ -140,7 +140,7 @@ const GroupDetails = () => {
     return <>{groupDetailsIsLoaded && membersIsLoaded &&
         <div className="group-detail-main">
             <div className="group-detail-top">
-                <img className="group-detail-image" alt="group preview image" src="https://secure.meetupstatic.com/photos/event/2/3/a/a/clean_495789130.jpeg" />
+                <img className="group-detail-image" alt="group preview image" src={group.previewImage}/>
                 <div className="group-detail-topright">
                     <h2 className="group-detail-name">{group.name}</h2>
                     <div>

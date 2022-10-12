@@ -11,7 +11,7 @@ const GroupCard = ({group}) => {
         <div className='groupcard-main' onClick={() => history.push(`/api/groups/${group.id}`)} >
             <div className='groupcard-left'>
                 <div className='groupcard-image'>
-                    <img className="image" alt="group preview image" src='https://res.cloudinary.com/zhihongliu/image/upload/v1658940429/cld-sample-4.jpg' />
+                    <img className="image" alt="group preview image" src={group.previewImage} />
                 </div>
                 <div className='groupcard-blank'>
 
