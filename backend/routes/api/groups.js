@@ -207,11 +207,7 @@ router.put('/:groupId', restoreUser, requireAuth, validateGroup, async (req, res
     await group.update({
         ...req.body
     })
-    group = await Group.findByPk(req.params.groupId, {
-        attributes: {
-            exclude: ['previewImage']
-        }
-    });
+    group = await Group.findByPk(req.params.groupId);
     res.json(group);
 })
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateGroupThunk } from "../../store/groups";
+import { csrfFetch } from "../../store/csrf";
 
 
 const EditGroup = ({close, group}) => {
@@ -14,6 +15,8 @@ const EditGroup = ({close, group}) => {
     const [privateStatus, setPrivateStatus] = useState(String(group.private));
     const [city, setCity] = useState(group.city);
     const [state, setState] = useState(group.state);
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState(group.previewImage);
 
     const [nameValidationErrors, setNameValidationErrors] = useState([]);
     const [aboutValidationErrors, setAboutValidationErrors] = useState([]);
@@ -21,6 +24,7 @@ const EditGroup = ({close, group}) => {
     const [privateValidationErrors, setPrivateValidationErrors] = useState([]);
     const [cityValidationErrors, setCityValidationErrors] = useState([]);
     const [stateValidationErrors, setStateValidationErrors] = useState([]);
+    const [urlValidationErrors, setUrlValidationErrors] = useState([]);
     const [errors, setErrors] =useState([]);
 
     const [showNameErrors, setShowNameErrors] = useState(false);
@@ -66,12 +70,19 @@ const EditGroup = ({close, group}) => {
         setStateValidationErrors(errors);
     }, [state])
 
+    useEffect(() => {
+      const errors =[];
+      if (url.length === 0) errors.push("previewImage is required");
+      setUrlValidationErrors(errors);
+  }, [url])
+
     const readyToSubmit = nameValidationErrors.length === 0 &&
                           aboutValidationErrors.length === 0 &&
                           typeValidationErrors.length === 0 &&
                           privateValidationErrors.length === 0 &&
                           cityValidationErrors.length === 0 &&
-                          stateValidationErrors.length === 0
+                          stateValidationErrors.length === 0 &&
+                          url.length > 0
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -81,7 +92,8 @@ const EditGroup = ({close, group}) => {
             type,
             private: privateStatus,
             city,
-            state
+            state,
+            previewImage:url
         };
         setErrors([]);
         dispatch(updateGroupThunk(newGroup, group.id)).then((res) => {
@@ -98,124 +110,155 @@ const EditGroup = ({close, group}) => {
       );
     };
 
+    const uploadImage = (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("image", image);
+      csrfFetch('/api/images/upload', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData
+      }).then((res) => res.json()).then((data) => {setUrl(data.url)})
+
+    };
+
+    const updateFile = (e) => {
+      const file = e.target.files[0];
+      if (file) setImage(file);
+    };
+
     return (
-        <div className="create-group-form-main">
-          <span onClick={close} className="close" title="Close Modal">&times;</span>
-          <div>
-            <h1 className="create-form-title"> Edit Group</h1>
-          </div>
-          <form onSubmit={handleSubmit} className="create-group-form">
-            <ul>
-              {errors.map((error, idx) => (
+      <div className="create-group-form-main">
+        <span onClick={close} className="close" title="Close Modal">&times;</span>
+        <div className="create-group-input-container">
+          <div className="create-group-left-container">
+            {url && <img alt="previewImage" src={url} />}
+            <>
+              {urlValidationErrors.map((error, idx) => (
                 <li key={idx} className='create-group-error'>{error}</li>
               ))}
-            </ul>
-            <div className="create-group-form-name">
-              <label>name:</label>
+            </>
+            <form className="create-group-upload-image" onSubmit={uploadImage}>
+              <label>Upload Preview Image:
+              </label>
               <input
-                type={'text'}
-                value={name}
-                id="create-group-form-name-input"
-                onChange={e => { setName(e.target.value); setShowNameErrors(true) }} />
-              <>
-                {showNameErrors && nameValidationErrors.map((error, idx) => (
+              id='file-upload'
+              type="file"
+              accept="image/*"
+              onChange={updateFile} />
+              <button className="upload-picture-button" type="submit">upload image</button>
+            </form>
+          </div>
+          <div>
+            <div>
+              <h1 className="create-form-title"> Create Group</h1>
+            </div>
+            <form onSubmit={handleSubmit} className="create-group-form">
+              <ul>
+                {errors.map((error, idx) => (
                   <li key={idx} className='create-group-error'>{error}</li>
                 ))}
-              </>
-            </div>
-            <div className="create-group-form-about">
-              <label>about:</label>
-              <input
-                type={'text'}
-                value={about}
-                id="create-group-form-about-input"
-                onChange={e => { setAbout(e.target.value); setShowAboutErrors(true) }} />
-              <>
-                {showAboutErrors && aboutValidationErrors.map((error, idx) => (
-                  <li key={idx} className='create-group-error'>{error}</li>
-                ))}
-              </>
-            </div>
-            <div className="create-group-form-type">
-              <label>type:</label>
-              <select
-            name='groupType'
-            onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}
-            value={type}
-            id="create-group-form-type-input"
-          >
-            <option value='' disabled>
-              Select a group type...
-            </option>
-            <option>Online</option>
-            <option>In person</option>
-          </select>
-              {/* <input
-                type={'text'}
-                value={type}
-                id="create-group-form-type-input"
-                onChange={e => { setType(e.target.value); setShowTypeErrors(true) }} /> */}
-              <>
-                {showTypeErrors && typeValidationErrors.map((error, idx) => (
-                  <li key={idx} className='create-group-error'>{error}</li>
-                ))}
-              </>
-            </div>
-            <div className="create-group-form-private">
-              <label>private:</label>
-              <select
-            name='private'
-            onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }}
-            value={privateStatus}
-            id="create-group-form-private-input"
-          >
-            <option value='' disabled>
-              Select a private status...
-            </option>
-            <option>true</option>
-            <option>false</option>
-          </select>
-              {/* <input
-                type={'boolean'}
-                value={privateStatus}
-                id="create-group-form-private-input"
-                onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }} /> */}
-              <>
-                {showPrivateErrors && privateValidationErrors.map((error, idx) => (
-                  <li key={idx} className='create-group-error'>{error}</li>
-                ))}
-              </>
-            </div>
-            <div className="create-group-form-city">
-              <label>city:</label>
-              <input
-                type={'text'}
-                value={city}
-                id="create-group-form-city-input"
-                onChange={e => { setCity(e.target.value); setShowCityErrors(true) }} />
-              <>
-                {showCityErrors && cityValidationErrors.map((error, idx) => (
-                  <li key={idx} className='create-group-error'>{error}</li>
-                ))}
-              </>
-            </div>
-            <div className="create-group-form-state">
-              <label>state:</label>
-              <input
-                type={'text'}
-                value={state}
-                id="create-group-form-state-input"
-                onChange={e => { setState(e.target.value); setShowStateErrors(true) }} />
-              <>
-                {showStateErrors && stateValidationErrors.map((error, idx) => (
-                  <li key={idx} className='create-group-error'>{error}</li>
-                ))}
-              </>
-            </div>
-            <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ? "create-group-form-submit-button" : "not-ready-to-create-group"} >Submit</button>
-          </form>
+              </ul>
+              <div className="create-group-form-name">
+                <label>name:</label>
+                <input
+                  type={'text'}
+                  value={name}
+                  id="create-group-form-name-input"
+                  onChange={e => { setName(e.target.value); setShowNameErrors(true) }} />
+                <>
+                  {showNameErrors && nameValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <div className="create-group-form-about">
+                <label>about:</label>
+                <input
+                  type={'text'}
+                  value={about}
+                  id="create-group-form-about-input"
+                  onChange={e => { setAbout(e.target.value); setShowAboutErrors(true) }} />
+                <>
+                  {showAboutErrors && aboutValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <div className="create-group-form-type">
+                <label>type:</label>
+                <select
+                  name='groupType'
+                  onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}
+                  value={type}
+                  id="create-group-form-type-input"
+                >
+                  <option value='' disabled>
+                    Select a group type...
+                  </option>
+                  <option>Online</option>
+                  <option>In person</option>
+                </select>
+                <>
+                  {showTypeErrors && typeValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <div className="create-group-form-private">
+                <label>private:</label>
+                <select
+                  name='private'
+                  onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }}
+                  value={privateStatus}
+                  id="create-group-form-private-input"
+                >
+                  <option value='' disabled>
+                    Select a private status...
+                  </option>
+                  <option>true</option>
+                  <option>false</option>
+                </select>
+                <>
+                  {showPrivateErrors && privateValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <div className="create-group-form-city">
+                <label>city:</label>
+                <input
+                  type={'text'}
+                  value={city}
+                  id="create-group-form-city-input"
+                  onChange={e => { setCity(e.target.value); setShowCityErrors(true) }} />
+                <>
+                  {showCityErrors && cityValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <div className="create-group-form-state">
+                <label>state:</label>
+                <input
+                  type={'text'}
+                  value={state}
+                  id="create-group-form-state-input"
+                  onChange={e => { setState(e.target.value); setShowStateErrors(true) }} />
+                <>
+                  {showStateErrors && stateValidationErrors.map((error, idx) => (
+                    <li key={idx} className='create-group-error'>{error}</li>
+                  ))}
+                </>
+              </div>
+              <button disabled={!readyToSubmit} type="submit" className={readyToSubmit ? "create-group-form-submit-button" : "not-ready-to-create-group"} >Submit</button>
+            </form>
+          </div>
         </div>
-          );
+      </div>
+      );
 };
 
 

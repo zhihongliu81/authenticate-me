@@ -212,11 +212,6 @@ const CreateGroup = ({close}) => {
                 <option>Online</option>
                 <option>In person</option>
               </select>
-              {/* <input
-          type={'text'}
-          value={type}
-          id="create-group-form-type-input"
-          onChange={e => { setType(e.target.value); setShowTypeErrors(true) }} /> */}
               <>
                 {showTypeErrors && typeValidationErrors.map((error, idx) => (
                   <li key={idx} className='create-group-error'>{error}</li>
@@ -237,11 +232,6 @@ const CreateGroup = ({close}) => {
                 <option>true</option>
                 <option>false</option>
               </select>
-              {/* <input
-          type={'boolean'}
-          value={privateStatus}
-          id="create-group-form-private-input"
-          onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }} /> */}
               <>
                 {showPrivateErrors && privateValidationErrors.map((error, idx) => (
                   <li key={idx} className='create-group-error'>{error}</li>
