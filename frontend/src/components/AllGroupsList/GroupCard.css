@@ -3,9 +3,14 @@
     width: 40rem;
     margin: 0 auto;
     height: 153px;
-    padding: 10px;
-    border-bottom: 1px solid #757575 ;
+    padding-top: 10px;
+    border-top: 1px solid rgba(128, 128, 128, 0.4) ;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    cursor: pointer;
+}
+
+.groupcard-main:hover {
+    background-color: rgba(213, 245, 227, 0.2);
 }
 
 .groupcard-left {
@@ -21,6 +26,8 @@
 .image {
     width: 178px;
     height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .name-address {

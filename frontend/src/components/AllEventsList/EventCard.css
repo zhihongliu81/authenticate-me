@@ -1,16 +1,22 @@
 .event-card-container {
     display: flex;
     width: 40rem;
-    margin:0 auto;
-    margin-top: 1rem;
+    padding-top: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid gray;
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    cursor: pointer;
+}
+
+.event-card-container:hover {
+    background-color: rgba(213, 245, 227, 0.2);
 }
 
 .event-card-image {
-    height: 90px;
-    width: 160px;
+    width: 178px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .event-card-left-blank {
@@ -21,6 +27,7 @@
 .event-card-right {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
 }
 
 .event-card-start-date {
@@ -38,8 +45,8 @@
     color: #877457;
 }
 
-.event-card-start-date,
-.event-card-name,
-.event-card-group {
-    margin-left: 1rem;
+.event-card-attendee {
+    font-size: 14px;
+    color: #757575;
+    margin-top: 30px;
 }

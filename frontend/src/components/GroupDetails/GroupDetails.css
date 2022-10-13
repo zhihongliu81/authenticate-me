@@ -98,6 +98,34 @@
     border-radius: 4px;
 }
 
+.delete-modal-container {
+    padding: 2rem;
+    background-color: antiquewhite;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-modal-container > h2 {
+    font-family: Helvetica Neue, Avenir, Helvetica, sans-serif;
+    overflow-wrap: break-word;
+}
+
+.delete-modal-button {
+    margin-right: 1rem;
+    font-family: Helvetica Neue, Avenir, Helvetica, sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: #3498DB;
+    border-radius: 4px;
+    height: 2rem;
+    width: 5rem;
+    cursor: pointer;
+    border: 0;
+}
+
+
 .group-detail-bottom {
     display: flex;
     flex-direction: row;

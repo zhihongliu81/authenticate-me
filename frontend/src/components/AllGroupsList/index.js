@@ -21,13 +21,14 @@ const AllGroups = () => {
     }
 
     return (groupsIsLoaded && <>
-        <div><EventsGroupsBar /></div>
-        <div className='all-group-list-container'>
-        {groups.map(group => (<div
-            key={group.id}><GroupCard group={group} />
-        </div>))}
+        <div className='all-group-main-container'>
+            <div className='all-group-list-container'>
+                <EventsGroupsBar />
+                {groups.map(group => (<div
+                    key={group.id}><GroupCard group={group} />
+                </div>))}
+            </div>
         </div>
-
     </>
     )
 

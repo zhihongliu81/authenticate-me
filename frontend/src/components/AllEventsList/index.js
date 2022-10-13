@@ -24,13 +24,18 @@ const AllEvents = () => {
 
 
         {allEventsIsLoaded && (<>
-        <div><EventsGroupsBar /></div>
-        <div className='all-events-list-container'>{ events.map(event => (
-            <div key={event.id}>
-                <EventCard event={event} />
+            <div className='all-event-main-container'>
+                <div className='all-events-list-container'>
+                    <EventsGroupsBar />
+                    {events.map(event => (
+                        <div key={event.id}>
+                            <EventCard event={event} />
+                        </div>
+                    ))}
+                </div>
             </div>
-        ))}
-        </div>
+
+
         </>)
 
        }

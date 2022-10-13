@@ -1,6 +1,8 @@
 .events-groups-bar-container {
-    margin: 1rem 40rem 1rem 39.5rem;
-
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 20px;
 }
 
 .events-groups-bar-events,

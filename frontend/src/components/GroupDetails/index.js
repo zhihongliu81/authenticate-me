@@ -29,6 +29,7 @@ const GroupDetails = () => {
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);
     const [showCreateEventModal, setShowCreateEventModal] = useState(false);
     const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
+    const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
     const [currentMember, setCurrentMember] = useState({});
     const [status, setStatus] = useState('');
     const [statusValidationErrors, setStatusValidationErrors] = useState([]);
@@ -159,7 +160,7 @@ const GroupDetails = () => {
                         <div className="group-detail-buttons">
                             {showNewEventButton && <button className="button" onClick={() => setShowCreateEventModal(true)}>New Event</button>}
                             {showEditGroupButton && <button className="button" onClick={() => setShowEditGroupModal(true)}>Edit Group</button>}
-                            {showEditGroupButton && <button className="button" onClick={() => handleDelete(group.id)}>DELETE</button>}
+                            {showEditGroupButton && <button className="button" onClick={() => setShowDeleteGroupModal(true)}>DELETE</button>}
                         </div>
                         <div>
                             {showCreateEventModal && (
@@ -175,6 +176,19 @@ const GroupDetails = () => {
                                 </Modal>
                             )}
                         </div>
+                        <>
+                        {showDeleteGroupModal &&
+                            <Modal onClose={() => setShowDeleteGroupModal(false)}>
+                            <div className='delete-modal-container'>
+                                <h2>Are you sure you would like to delete group: {group.name}?</h2>
+                                <div>
+                                    <button className='delete-modal-button' onClick={() => { handleDelete(groupId) }}>Delete</button>
+                                    <button className='delete-modal-button' onClick={() => setShowDeleteGroupModal(false)}>Cancle</button>
+                                </div>
+                            </div>
+                        </Modal>
+                        }
+                        </>
                     </div>
                 </div>
             </div>
