@@ -183,7 +183,7 @@ router.get('/:eventId', async (req, res) => {
             }
         ],
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'previewImage']
+            exclude: ['createdAt', 'updatedAt']
         }
     });
 
@@ -212,6 +212,7 @@ router.get('/:eventId', async (req, res) => {
             startDate: event.startDate,
             endDate: event.endDate,
             numAttending: event.Users.length,
+            previewImage: event.previewImage,
             Group: event.Group,
             Venue: event.Venue,
             images
@@ -301,6 +302,7 @@ router.put('/:eventId', restoreUser, requireAuth, validateEvent, async (req, res
             capacity: newEvent.capacity,
             price: newEvent.price,
             description: newEvent.description,
+            previewImage: newEvent.previewImage,
             startDate: newEvent.startDate,
             endDate: newEvent.endDate
         }

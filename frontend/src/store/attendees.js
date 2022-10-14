@@ -3,10 +3,10 @@ import { csrfFetch } from './csrf';
 const GET_ATTENDEES = 'attendees/GET_ATTENDEES';
 
 
-const getAttendees = (eventId, attendees) => {
+const getAttendees = (attendees) => {
     return {
         type: GET_ATTENDEES,
-        eventId,
+
         attendees
     }
 }
@@ -18,8 +18,9 @@ export const getAttendeesThunk = (eventId) => async dispatch => {
         const data = await response.json();
         const attendees = {};
         data.Attendees.forEach(attendee => attendees[attendee.id] = attendee);
-        dispatch(getAttendees(eventId, attendees))
+        dispatch(getAttendees(attendees))
     }
+    return response;
 }
 
 const initialState = {};
@@ -27,8 +28,7 @@ const attendeesReducer = (state = initialState, action) => {
     let newState;
     switch(action.type) {
         case GET_ATTENDEES: {
-            newState = {...state};
-            newState[action.eventId] = action.attendees;
+            newState= action.attendees;
             return newState;
         }
         default:

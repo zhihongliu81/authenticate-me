@@ -22,8 +22,8 @@ const GroupDetails = () => {
     const group = useSelector(state => state.groups[groupId]);
     const user = useSelector(state => state.session.user);
     const members = useSelector(state => state.members);
-    const [showForm, setShowForm] = useState(false);
-    const [showEditGroupForm, setShowEditGroupForm] = useState(false);
+    // const [showForm, setShowForm] = useState(false);
+    // const [showEditGroupForm, setShowEditGroupForm] = useState(false);
     const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
     const [membersIsLoaded, setMembersIsLoaded] = useState(false);
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);

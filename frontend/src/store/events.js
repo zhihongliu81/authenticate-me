@@ -66,6 +66,7 @@ export const updateEventThunk = (eventId, updatedEvent) => async dispatch => {
         dispatch(updateEvent(data))
         return data;
     }
+    return response;
 };
 
 export const deleteEventThunk = (eventId) => async dispatch => {
@@ -76,7 +77,7 @@ export const deleteEventThunk = (eventId) => async dispatch => {
     if (response.ok) {
         dispatch(deleteEvent(eventId));
     }
-    return response.ok;
+    return response;
 }
 
 const initialState = {}
@@ -96,7 +97,7 @@ const eventsReducer = (state = initialState, action) => {
         };
         case UPDATE_EVENT: {
             newState = {...state};
-            newState[action.event.id] = action.event;
+            newState[action.event.id] = {...newState[action.event.id], ...action.event};
             return newState;
         };
         case DELETE_EVENT: {

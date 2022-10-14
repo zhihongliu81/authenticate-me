@@ -685,6 +685,7 @@ router.post('/:groupId/events/new', restoreUser, requireAuth, validateEvent, asy
             capacity: event.capacity,
             price: event.price,
             description: event.description,
+            previewImage: event.previewImage,
             startDate: event.startDate,
             endDate: event.endDate
         }

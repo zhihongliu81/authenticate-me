@@ -1,18 +1,13 @@
 .event-detail-main-container {
-    width: 1120px;
+    width: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
+    padding-top: 2rem;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
-
-}
-
-.event-detail-top-container {
-
-}
-
-.event-detail-start-date {
-    font-size: 16px;
-    color: #757575;
-
+    padding-bottom: 5%;
 }
 
 .event-detail-name {
@@ -20,23 +15,56 @@
     color: black;
 }
 
+.event-detail-organizer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.event-detail-organizer-container > img {
+    border-radius: 50%;
+}
+
+.event-detail-organizer-container > div {
+    margin-left: 5px;
+}
+
 .event-detail-organizer-header {
     font-size: 16px;
     color: black;
+    margin: 0;
+    margin-bottom: 2px;
+}
+
+.event-detail-organizer {
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+    margin: 0;
+    margin-top: 2px;
 }
 
 .event-detail-bottom-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
+    width: 100%;
+    background-color: rgba(213, 245, 227, 0.2);
+    padding-bottom: 5%;
 }
 
 .event-detail-bottom-left {
-
+    width: 30%;
 }
 
 .event-detail-image {
-    height: 370px;
-    width: 660px;
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .event-detail-description-header {
@@ -56,11 +84,46 @@
 }
 
 .event-detail-attendees-list {
+    display: flex;
+    flex-direction: column;
+}
 
+.event-detail-attendees-list > div {
+    display: flex;
+    flex-direction: row;
+}
+
+.event-detail-attendance {
+    margin-left: 5px;
+    color: #757575;
 }
 
 .event-detail-bottom-right {
+    width: 30%;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
+.event-detail-group-container {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 400px;
+}
+
+.event-detail-group-container > img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.event-detail-group-container > div {
+    margin-left: 10px;
 }
 
 .event-detail-group-name {
@@ -73,9 +136,34 @@
     color: #757575;
 }
 
+.event-detail-time-address {
+    background-color: white;
+    margin-top: 20px;
+    width: 400px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.event-detail-time-address img {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+}
+
+.event-detail-time-address p {
+    margin-left: 10px;
+}
+
+.event-detail-time-address > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .event-detail-start-end-date {
     font-size: 14px;
     color: black;
+    margin: 0px 0px 5px 0px;
 }
 
 .event-detail-venue-address {
@@ -83,17 +171,17 @@
     color: #757575;
 }
 
-.event-detail-delete-button,
-.event-detail-group-name,
-.event-detail-group-private,
-.event-detail-start-end-date,
-.event-detail-venue-address {
-    margin-left: 1rem;
+.event-detail-buttons {
+    margin-top: 20px;
 }
 
-.event-detail-delete-button {
+.event-detail-buttons > button {
+    background-color: #3498DB;
+    color: white;
+    height: 28px;
+    width: 90px;
+    border: 1px solid #3498DB;
+    margin-right: 10px;
     border-radius: 4px;
-    background-color: rgb(217, 235, 235);
-    height: 2rem;
-    width: 4rem;
 }
+

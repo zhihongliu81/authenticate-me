@@ -54,6 +54,7 @@ function App() {
           </Switch>
         )}
       </div>
+      <div className="homepage-empty-div"></div>
       <div className="homepage-bottom-link">
         <div className="homepage-bottom-link-para">
           <p>Create your own Meetup Group</p>
