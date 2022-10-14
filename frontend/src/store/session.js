@@ -4,7 +4,7 @@ import { loadGroups } from './groups';
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const GET_YOURGROUPS = 'session/GET_YOURGROUPS';
-const DELETE_GROUP = 'session/DELETE_GROUP';
+// const DELETE_GROUP = 'session/DELETE_GROUP';
 // const setUser = (user) => {
 //   return {
 //     type: SET_USER,
@@ -32,12 +32,12 @@ const getYourGroups = (groups) => {
   }
 };
 
-const deleteGroup = (groupId) => {
-  return {
-    type: DELETE_GROUP,
-    groupId
-  }
-}
+// const deleteGroup = (groupId) => {
+//   return {
+//     type: DELETE_GROUP,
+//     groupId
+//   }
+// }
 
 export const login = (user) => async (dispatch) => {
   const { email, password } = user;
@@ -106,16 +106,16 @@ export const getYourGroupsThunk = (user) => async dispatch => {
   return res;
 }
 
-export const deleteGroupThunk = (groupId) => async dispatch => {
-  const response = await csrfFetch(`/api/groups/${groupId}`, {
-    method: 'DELETE'
-  });
-  if (response.ok) {
-    dispatch(deleteGroup(groupId));
-  }
-  return response;
+// export const deleteGroupThunk = (groupId) => async dispatch => {
+//   const response = await csrfFetch(`/api/groups/${groupId}`, {
+//     method: 'DELETE'
+//   });
+//   if (response.ok) {
+//     dispatch(deleteGroup(groupId));
+//   }
+//   return response;
 
-}
+// }
 
 const initialState = { user: null };
 
@@ -135,12 +135,12 @@ const sessionReducer = (state = initialState, action) => {
       newState.groups = action.groups ;
       return newState;
     }
-    case DELETE_GROUP: {
-      newState = { ...state };
-      delete newState.groups[action.groupId];
-      newState.groups = {...newState.groups};
-      return newState;
-    }
+    // case DELETE_GROUP: {
+    //   newState = { ...state };
+    //   delete newState.groups[action.groupId];
+    //   newState.groups = {...newState.groups};
+    //   return newState;
+    // }
     default:
       return state;
   }

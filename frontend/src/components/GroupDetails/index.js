@@ -7,7 +7,7 @@ import { getMembersThunk, deleteMemberThunk, requestMemberThunk, updateMemberThu
 import GroupEvents from "../GroupEvents";
 import CreateNewEvent from "../CreateNewEvent";
 import EditGroup from "../EditGroup";
-import { deleteGroupThunk } from "../../store/session";
+import { deleteGroupThunk } from "../../store/groups";
 import './GroupDetails.css';
 import addressIcon from '../../images/address.png';
 import membersIcon from '../../images/members.png';
