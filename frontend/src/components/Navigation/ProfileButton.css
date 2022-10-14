@@ -4,26 +4,41 @@
 }
 
 .profile-button-icon {
-    height: 2rem;
-    width: 2rem;
-    background-color: rgb(240, 159, 163);
+    height: 3rem;
+    width: 3rem;
+    background-color: rgba(95, 106, 106, 0.4);
     border-radius: 50%;
 }
 
 .profile-dropdown {
     position: absolute;
-    right: 5px;
+    right: 1rem;
+    top: 5rem;
+    border:1px solid rgba(128, 128, 128, 0.4);
+    padding: 1rem;
+    background-color: white;
+    border-radius: 10px;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
 
-.profile-dropdown > li {
-    margin-bottom: 0.5rem;
+.profile-dropdown p {
+    color: #212121;
 }
+
 
 .profile-dropdown-navlink {
     text-decoration: none;
+    color: #212121;
 }
 
-.profile-dropdown-logout-buttom {
-    border-radius: 4px;
+.profile-dropdown-navlink:hover {
+    color: #008294;
+}
+
+.profile-dropdown-logout {
+    cursor: pointer;
+}
+
+.profile-dropdown-logout:hover {
+    color: #008294;
 }
