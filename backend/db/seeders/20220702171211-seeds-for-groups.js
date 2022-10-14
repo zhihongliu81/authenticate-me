@@ -45,7 +45,7 @@ module.exports = {
             {
               organizerId: 4,
               name: "Heart Of Texas Chorus",
-              about: "The Heart Of Texas Chorus is an A Capella chorus that sings in the barbershop style. We welcome all men and women who love to sing! We meet Thursday nights at 7:00 pm at Fairfield Inn, 1250 IH 35 in San Marcos, Texas.",
+              about: "The Heart Of Texas Chorus is an A Capella chorus that sings in the barbershop style. We welcome all men and women who love to sing!",
               type: "In person",
               private: false,
               city: "San Marcos",
@@ -55,7 +55,7 @@ module.exports = {
               {
                 organizerId: 5,
                 name: "Austin Ladies' Coffee and Brunch",
-                about: "Are you female? Do you like coffee? Do you like brunch? If so, then this is the group for you! Austin Ladies Coffee and Brunch is a way to connect with other women through food and community.",
+                about: "Are you female? Do you like coffee? Do you like brunch? If so, then this is the group for you!",
                 type: "In person",
                 private: true,
                 city: "Austin",
@@ -119,7 +119,7 @@ module.exports = {
               {
                 organizerId: 4,
                 name: "Heart Of Texas Chorus",
-                about: "The Heart Of Texas Chorus is an A Capella chorus that sings in the barbershop style. We welcome all men and women who love to sing! We meet Thursday nights at 7:00 pm at Fairfield Inn, 1250 IH 35 in San Marcos, Texas.",
+                about: "The Heart Of Texas Chorus is an A Capella chorus that sings in the barbershop style. We welcome all men and women who love to sing!",
                 type: "In person",
                 private: false,
                 city: "San Marcos",
@@ -129,7 +129,7 @@ module.exports = {
                 {
                   organizerId: 5,
                   name: "Austin Ladies' Coffee and Brunch",
-                  about: "Are you female? Do you like coffee? Do you like brunch? If so, then this is the group for you! Austin Ladies Coffee and Brunch is a way to connect with other women through food and community.",
+                  about: "Are you female? Do you like coffee? Do you like brunch? If so, then this is the group for you!",
                   type: "In person",
                   private: true,
                   city: "Austin",
