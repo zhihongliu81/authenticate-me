@@ -1,0 +1,12 @@
+.your-groups-main-container {
+    border-top: 1px solid rgba(128, 128, 128, 0.4);
+    width: 100%;
+    padding-bottom: 5%;
+    display: flex;
+}
+
+.your-groups-main-container > div {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}

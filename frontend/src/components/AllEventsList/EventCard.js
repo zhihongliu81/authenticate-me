@@ -23,7 +23,7 @@ const EventCard = ({event}) => {
     return (
         <div className="event-card-container" onClick={() => history.push(`/api/events/${event.id}`)}>
             <div>
-                <img className="event-card-image" alt="event image" src="https://res.cloudinary.com/zhihongliu/image/upload/v1658940428/cld-sample-2.jpg" />
+                <img className="event-card-image" alt="event image" src={event.previewImage} />
                 <div className="event-card-left-blank">
                 </div>
             </div>

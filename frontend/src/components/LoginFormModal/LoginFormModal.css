@@ -21,11 +21,14 @@ flex-direction: row;
 }
 
 .login-form-demo-button {
+    color: white;
     height: 2.2rem;
     width: 4rem;
     margin-top: 1.2rem;
     margin-left: 1rem;
     border-radius: 4px;
+    background-color: #f65858;
+    border-color: #f65858;
 }
 
 .login-form-title {

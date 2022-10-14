@@ -100,7 +100,7 @@ const EventDetails = () => {
             </div>
             <div className="event-detail-bottom-container">
                 <div className="event-detail-bottom-left">
-                    <img className="event-detail-image" alt="event-detail-image" src="https://res.cloudinary.com/zhihongliu/image/upload/v1658940428/cld-sample-2.jpg" />
+                    <img className="event-detail-image" alt="event-detail-image" src={event.previewImage} />
                     <div>
                         <h2 className="event-detail-description-header">Details</h2>
                         <p className="event-detail-description">{event.description}</p>

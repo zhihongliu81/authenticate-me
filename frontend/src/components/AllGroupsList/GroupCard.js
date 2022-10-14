@@ -24,7 +24,7 @@ const GroupCard = ({group}) => {
                         <h3 className="address">{`${group.city}, ${group.state}`}</h3>
                 </div>
                 <div className="groupcard-about">
-                    <p className="about">{group.about}</p>
+                    <p className="about">{group.about.lenth < 120 ?group.about : (group.about.slice(0, 117) + '...')}</p>
 
                 </div>
                 <div className='groupcard-members-private'>

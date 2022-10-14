@@ -9,7 +9,7 @@ const GROUP_NEWEVENT = 'groups/GROUP_NEWEVENT';
 const GET_MEMBERS = 'groups/GET_MEMBERS';
 
 
-const loadGroups = (groups) => {
+export const loadGroups = (groups) => {
     return {
         type: LOAD_GROUPS,
         groups

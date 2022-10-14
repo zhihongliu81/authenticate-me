@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import { getYourGroupsThunk, deleteGroupThunk } from '../../store/session';
 // import EditGroup from '../EditGroup';
 import GroupCard from '../AllGroupsList/GroupCard.js';
+import './YourGroups.css';
 
 
 
@@ -11,7 +12,7 @@ const YourGroups = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
-    const groups = useSelector(state => state.session.groups);
+    const groups = useSelector(state => state.groups);
     const [yourGroupsIsLoaded, setYourGroupsIsLoaded] = useState(false);
 
     // const [showEditGroupForm, setShowEditGroupForm] = useState(false);
@@ -48,14 +49,22 @@ const YourGroups = () => {
     if (!groups) return null ;
 
     const groupsArr = Object.values(groups);
-    if (groupsArr.length === 0) return (<div><h2>No Group yet!</h2></div>)
-    return <div>
-        {yourGroupsIsLoaded &&
-            groupsArr.map((group, index) =>
-                <div key={group.id}>
-                    <GroupCard group={group} />
-                </div>)}
-    </div>
+    return (
+        <div className='your-groups-main-container'>
+            <div>
+            <h1>You have {groupsArr.length} {groupsArr.length === 1 ? 'group' : 'groups'}</h1>
+            <div>
+                {yourGroupsIsLoaded &&
+                    groupsArr.map((group, index) =>
+                        <div key={group.id}>
+                            <GroupCard group={group} />
+                        </div>)}
+            </div>
+            </div>
+
+
+        </div>
+    )
 
 
 };

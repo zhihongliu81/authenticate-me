@@ -57,9 +57,9 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
         let numMembers = group.Memberships.length;
-        for (let j = 0; j < numMembers; j++) {
-            let member = group.Memberships[j];
-            if (member.memberId === req.user.id) {
+        // for (let j = 0; j < numMembers; j++) {
+        //     let member = group.Memberships[j];
+        //     if (member.memberId === req.user.id) {
                 let formattedGroup = {
                     id: group.id,
                     organizerId: group.organizerId,
@@ -75,8 +75,8 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
                     previewImage: group.previewImage
                 };
                 formattedGroups.push(formattedGroup);
-            }
-        }
+            // }
+        // }
     }
     res.json({Groups: formattedGroups});
 })

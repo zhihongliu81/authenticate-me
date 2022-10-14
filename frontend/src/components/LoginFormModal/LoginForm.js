@@ -21,7 +21,7 @@ function LoginForm({close, toSignup}) {
     if (!email.length) errors.push('email is required');
 
     function ValidateEmail(email) {
-      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      var mailformat = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
       if (email.match(mailformat)) {
         return true;
       }
@@ -56,6 +56,13 @@ function LoginForm({close, toSignup}) {
     );
   };
 
+  const handleDemo = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.login({email:"john.smith@gmail.com", password:'secret password'}))
+    .then(() => {close(); history.push('/');})
+  };
+
+
   return (
     <div className="Modal">
     <div className="LoginFormModalMain">
@@ -69,7 +76,7 @@ function LoginForm({close, toSignup}) {
       </div>
       <div className="login-form-demo-title">
       <h1 className="login-form-title">Log in</h1>
-      <button className="login-form-demo-button" onClick={() => {setEmail("john.smith@gmail.com"); setPassword("secret password")}}>Demo User</button>
+      <button className="login-form-demo-button" onClick={(e) => handleDemo(e)}>Demo User</button>
       </div>
       <div>
         <span>Not a member yet?</span>

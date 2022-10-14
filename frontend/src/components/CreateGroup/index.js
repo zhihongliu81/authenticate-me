@@ -38,7 +38,7 @@ const CreateGroup = ({close}) => {
     const [showStateErrors, setShowStateErrors] = useState(false);
 
 
-
+console.log(url)
     useEffect(() => {
         const errors =[];
         if(name.length > 60 || name.length === 0) errors.push("Name must be 60 characters or less");
