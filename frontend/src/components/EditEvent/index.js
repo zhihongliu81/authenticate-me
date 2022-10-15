@@ -39,7 +39,7 @@ const EditEvent = ({hiddenForm, eventId}) => {
         }
 
         if (newEvent) {
-            history.push(`/api/events/${eventId}`);
+            history.push(`/events/${eventId}`);
             hiddenForm();
         }
     }

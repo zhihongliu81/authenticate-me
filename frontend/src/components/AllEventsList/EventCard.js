@@ -21,7 +21,7 @@ const EventCard = ({event}) => {
     }
 
     return (
-        <div className="event-card-container" onClick={() => history.push(`/api/events/${event.id}`)}>
+        <div className="event-card-container" onClick={() => history.push(`/events/${event.id}`)}>
             <div>
                 <img className="event-card-image" alt="event image" src={event.previewImage} />
                 <div className="event-card-left-blank">

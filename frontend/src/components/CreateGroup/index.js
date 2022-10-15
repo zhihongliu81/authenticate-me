@@ -107,7 +107,7 @@ const CreateGroup = ({close}) => {
         setErrors([]);
         dispatch(newGroupThunk(newGroup)).then((res) => {
           close()
-          history.push(`/api/groups/${res.id}`);
+          history.push(`/groups/${res.id}`);
         }).catch(
           async (res) => {
               const data = await res.json();

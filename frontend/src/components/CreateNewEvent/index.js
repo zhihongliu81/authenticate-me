@@ -135,7 +135,7 @@ const CreateNewEvent = ({ close, groupId, event, action }) => {
             dispatch(updateEventThunk(event.id, newEvent))
             .then((res) => {
                 close()
-                history.push(`/api/events/${res.id}`);
+                history.push(`/events/${res.id}`);
             })
             .catch(async (res) => {
                 const data = await res.json();
@@ -148,7 +148,7 @@ const CreateNewEvent = ({ close, groupId, event, action }) => {
             dispatch(newEventThunk(groupId, newEvent))
             .then((res) => {
                 close()
-                history.push(`/api/events/${res.id}`);
+                history.push(`/events/${res.id}`);
             })
             .catch(
                 async (res) => {

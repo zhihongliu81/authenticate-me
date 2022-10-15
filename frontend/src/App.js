@@ -45,10 +45,10 @@ function App() {
             <Route path={'/yourGroups'}>
               <YourGroups />
             </Route>
-            <Route path={'/api/groups/:groupId'}>
+            <Route path={'/groups/:groupId'}>
               <GroupDetails />
             </Route>
-            <Route path={'/api/events/:eventId'}>
+            <Route path={'/events/:eventId'}>
               <EventDetails />
             </Route>
           </Switch>

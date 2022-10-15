@@ -8,7 +8,7 @@ const GroupCard = ({group}) => {
     if (!group) return null;
 
     return (
-        <div className='groupcard-main' onClick={() => history.push(`/api/groups/${group.id}`)} >
+        <div className='groupcard-main' onClick={() => history.push(`/groups/${group.id}`)} >
             <div className='groupcard-left'>
                 <div className='groupcard-image'>
                     <img className="image" alt="group preview image" src={group.previewImage} />

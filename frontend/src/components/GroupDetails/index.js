@@ -194,12 +194,12 @@ const GroupDetails = () => {
             </div>
             <div className="group-detail-bottom">
                 <div className="group-detail-bottom-left">
-                    <NavLink to={`/api/groups/${groupId}/events`} className="group-detail-events"><span>Events</span></NavLink>
+                    <NavLink to={`/groups/${groupId}/events`} className="group-detail-events"><span>Events</span></NavLink>
                     <div className="group-detail-about">
                         <h2>What we're about</h2>
                         <p>{group.about}</p>
                     </div>
-                    <Route path={'/api/groups/:groupId/events'}>
+                    <Route path={'/groups/:groupId/events'}>
                         <GroupEvents />
                     </Route>
                 </div>

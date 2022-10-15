@@ -98,7 +98,7 @@ const EditGroup = ({close, group}) => {
         setErrors([]);
         dispatch(updateGroupThunk(newGroup, group.id)).then((res) => {
           close()
-          history.push(`/api/groups/${res.id}`);
+          history.push(`/groups/${res.id}`);
         }).catch(
           async (res) => {
               const data = await res.json();
