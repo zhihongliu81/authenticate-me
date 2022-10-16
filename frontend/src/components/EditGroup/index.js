@@ -16,6 +16,7 @@ const EditGroup = ({close, group}) => {
     const [city, setCity] = useState(group.city);
     const [state, setState] = useState(group.state);
     const [image, setImage] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
     const [url, setUrl] = useState(group.previewImage);
 
     const [nameValidationErrors, setNameValidationErrors] = useState([]);
@@ -114,13 +115,16 @@ const EditGroup = ({close, group}) => {
       e.preventDefault();
       const formData = new FormData();
       formData.append("image", image);
+
+      setImageLoading(true);
+
       csrfFetch('/api/images/upload', {
         method: 'POST',
         headers: {
           "Content-Type": "multipart/form-data",
         },
         body: formData
-      }).then((res) => res.json()).then((data) => {setUrl(data.url)})
+      }).then((res) => res.json()).then((data) => {setUrl(data.url);setImageLoading(false)})
 
     };
 
@@ -149,6 +153,7 @@ const EditGroup = ({close, group}) => {
               accept="image/*"
               onChange={updateFile} />
               <button className="upload-picture-button" type="submit">upload image</button>
+              {(imageLoading) && <p>Loading...</p>}
             </form>
           </div>
           <div>

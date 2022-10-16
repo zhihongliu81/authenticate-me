@@ -21,6 +21,7 @@ const CreateNewEvent = ({ close, groupId, event, action }) => {
     const [endDate, setEndDate] = useState(action === 'edit'? event.endDate: '');
     const [errors, setErrors] = useState([]);
     const [image, setImage] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
     const [url, setUrl] = useState(action === 'edit'? event.previewImage: '');
 
     // const [venueIdValidationErrors, setVenueIdValidationErrors] = useState([]);
@@ -167,13 +168,16 @@ const CreateNewEvent = ({ close, groupId, event, action }) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
+
+        setImageLoading(true);
+
         csrfFetch('/api/images/upload', {
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
           },
           body: formData
-        }).then((res) => res.json()).then((data) => {setUrl(data.url)})
+        }).then((res) => res.json()).then((data) => {setUrl(data.url);setImageLoading(false)})
 
       };
 
@@ -202,6 +206,7 @@ const CreateNewEvent = ({ close, groupId, event, action }) => {
                                 accept="image/*"
                                 onChange={updateFile} />
                             <button className="upload-picture-button" type="submit">upload image</button>
+                            {(imageLoading) && <p>Loading...</p>}
                         </form>
                     </div>
                 <div className="create-event-right-container">
