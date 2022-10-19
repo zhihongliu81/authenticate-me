@@ -22,8 +22,7 @@ const GroupDetails = () => {
     const group = useSelector(state => state.groups[groupId]);
     const user = useSelector(state => state.session.user);
     const members = useSelector(state => state.members);
-    // const [showForm, setShowForm] = useState(false);
-    // const [showEditGroupForm, setShowEditGroupForm] = useState(false);
+
     const [groupDetailsIsLoaded, setGroupDetailsIsLoaded] = useState(false);
     const [membersIsLoaded, setMembersIsLoaded] = useState(false);
     const [showEditGroupModal, setShowEditGroupModal] = useState(false);
@@ -34,6 +33,7 @@ const GroupDetails = () => {
     const [status, setStatus] = useState('');
     const [statusValidationErrors, setStatusValidationErrors] = useState([]);
     const [membershipErrors, setMembershipErrors] = useState([]);
+    const [showEvents, setShowEvents] = useState(false);
 
 
     useEffect(() => {
@@ -137,7 +137,6 @@ const GroupDetails = () => {
     }
 
 
-
     return <>{groupDetailsIsLoaded && membersIsLoaded &&
         <div className="group-detail-main">
             <div className="group-detail-top">
@@ -160,7 +159,7 @@ const GroupDetails = () => {
                         <div className="group-detail-buttons">
                             {showNewEventButton && <button className="button" onClick={() => setShowCreateEventModal(true)}>New Event</button>}
                             {showEditGroupButton && <button className="button" onClick={() => setShowEditGroupModal(true)}>Edit Group</button>}
-                            {showEditGroupButton && <button className="button" onClick={() => setShowDeleteGroupModal(true)}>DELETE</button>}
+                            {showEditGroupButton && <button className="button" onClick={() => setShowDeleteGroupModal(true)}>Delete Group</button>}
                         </div>
                         <div>
                             {showCreateEventModal && (
@@ -194,13 +193,14 @@ const GroupDetails = () => {
             </div>
             <div className="group-detail-bottom">
                 <div className="group-detail-bottom-left">
-                    <NavLink to={`/groups/${groupId}/events`} className="group-detail-events"><span>Events</span></NavLink>
+
                     <div className="group-detail-about">
                         <h2>What we're about</h2>
                         <p>{group.about}</p>
                     </div>
+                    <NavLink onClick={() => setShowEvents(!showEvents)} to={`/groups/${groupId}/events`} className="group-detail-events"><span>{showEvents? 'Hide Events': 'Show Events'}</span></NavLink>
                     <Route path={'/groups/:groupId/events'}>
-                        <GroupEvents />
+                        <GroupEvents showEvents={showEvents}/>
                     </Route>
                 </div>
                 <div className="group-detail-bottom-right">

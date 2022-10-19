@@ -158,7 +158,7 @@ const EditGroup = ({close, group}) => {
           </div>
           <div>
             <div>
-              <h1 className="create-form-title"> Create Group</h1>
+              <h1 className="create-form-title"> Edit Group</h1>
             </div>
             <form onSubmit={handleSubmit} className="create-group-form">
               <ul>
@@ -167,7 +167,7 @@ const EditGroup = ({close, group}) => {
                 ))}
               </ul>
               <div className="create-group-form-name">
-                <label>name:</label>
+                <label>Name:</label>
                 <input
                   type={'text'}
                   value={name}
@@ -180,9 +180,10 @@ const EditGroup = ({close, group}) => {
                 </>
               </div>
               <div className="create-group-form-about">
-                <label>about:</label>
-                <input
-                  type={'text'}
+                <label>About:</label>
+                <textarea
+                  rows='5'
+                  cols='20'
                   value={about}
                   id="create-group-form-about-input"
                   onChange={e => { setAbout(e.target.value); setShowAboutErrors(true) }} />
@@ -193,7 +194,7 @@ const EditGroup = ({close, group}) => {
                 </>
               </div>
               <div className="create-group-form-type">
-                <label>type:</label>
+                <label>Type:</label>
                 <select
                   name='groupType'
                   onChange={e => { setType(e.target.value); setShowTypeErrors(true) }}
@@ -213,7 +214,7 @@ const EditGroup = ({close, group}) => {
                 </>
               </div>
               <div className="create-group-form-private">
-                <label>private:</label>
+                <label>Private:</label>
                 <select
                   name='private'
                   onChange={e => { setPrivateStatus(e.target.value); setShowPrivateErrors(true) }}
@@ -233,7 +234,7 @@ const EditGroup = ({close, group}) => {
                 </>
               </div>
               <div className="create-group-form-city">
-                <label>city:</label>
+                <label>City:</label>
                 <input
                   type={'text'}
                   value={city}
@@ -246,7 +247,7 @@ const EditGroup = ({close, group}) => {
                 </>
               </div>
               <div className="create-group-form-state">
-                <label>state:</label>
+                <label>State:</label>
                 <input
                   type={'text'}
                   value={state}

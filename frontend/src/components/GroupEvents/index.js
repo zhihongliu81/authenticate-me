@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { groupEventsThunk } from "../../store/groups";
 import EventCard from "../AllEventsList/EventCard";
 
-const GroupEvents = () => {
+const GroupEvents = ({showEvents}) => {
 
     const {groupId} = useParams();
     const dispatch = useDispatch();
@@ -20,9 +20,9 @@ const GroupEvents = () => {
     }, [dispatch, groupId]);
 
     if (!events) return null;
-    if (events.length === 0) return (<div><h2>No Event yet!</h2></div>);
+    if (events.length === 0) return (showEvents && <div><h2>No Event yet!</h2></div>);
 
-    return events.map(event => {
+    return showEvents && events.map(event => {
             return (
                 <div key={event.id}>
                     <EventCard event={event}/>

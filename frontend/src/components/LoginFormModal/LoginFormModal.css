@@ -10,7 +10,7 @@
     width: 100rem;
     height: 180rem;
     max-width: 484px;
-    max-height: 600px;
+    max-height: 650px;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 
 }
@@ -22,13 +22,12 @@ flex-direction: row;
 
 .login-form-demo-button {
     color: white;
-    height: 2.2rem;
-    width: 4rem;
-    margin-top: 1.2rem;
-    margin-left: 1rem;
-    border-radius: 4px;
+    border-radius: 8px;
+    width: 328px;
+    height: 58px;
     background-color: #f65858;
     border-color: #f65858;
+    font-size: 1.5rem;
 }
 
 .login-form-title {

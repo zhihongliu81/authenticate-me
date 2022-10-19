@@ -35,15 +35,17 @@ function ProfileButton({ user }) {
   return (
     <div className="profile-button-container">
       <button className="profile-button-icon" onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        {/* <i className="fas fa-user-circle" /> */}
+        <p>{user?.firstName[0].toUpperCase()}</p>
       </button>
       {showMenu && (
         <div className="profile-dropdown">
-          {/* <li><NavLink to=''>Your events</NavLink></li> */}
-          <NavLink className={"profile-dropdown-navlink"} to='/yourGroups'>Your groups</NavLink>
-          <p>{user.firstName} {user.lastName}</p>
-          <p>{user.email}</p>
+          <div>
+            <p>{user.firstName} {user.lastName}</p>
+            <p>{user.email}</p>
+          </div>
           <p className="profile-dropdown-logout" onClick={logout}>Log Out</p>
+          <NavLink className={"profile-dropdown-navlink"} to='/yourGroups'>Your groups</NavLink>
         </div>
       )}
     </div>

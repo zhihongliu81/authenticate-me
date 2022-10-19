@@ -10,6 +10,11 @@
     border-radius: 50%;
 }
 
+.profile-button-icon > p {
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .profile-dropdown {
     position: absolute;
     right: 1rem;
@@ -19,6 +24,10 @@
     background-color: white;
     border-radius: 10px;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.profile-dropdown > div {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 }
 
 .profile-dropdown p {

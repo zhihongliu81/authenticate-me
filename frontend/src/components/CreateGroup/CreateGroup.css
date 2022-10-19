@@ -108,7 +108,6 @@
 }
 
 #create-group-form-name-input,
-#create-group-form-about-input,
 #create-group-form-city-input,
 #create-group-form-state-input {
     border: 2px solid rgba(53, 46, 46, 0.2);
@@ -116,6 +115,14 @@
     transition-duration: .15s;
     width: 20rem;
     height: 2rem;
+}
+
+#create-group-form-about-input {
+    border: 2px solid rgba(53, 46, 46, 0.2);
+    border-radius: 0.5rem;
+    transition-duration: .15s;
+    width: 20rem;
+    height: 5rem;
 }
 
 #create-group-form-type-input,

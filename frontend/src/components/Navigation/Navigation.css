@@ -7,6 +7,11 @@
     height: 6%;
 }
 
+.nav-image {
+    height: 4rem;
+    object-fit: cover;
+}
+
 .navlink-login, .navlink-signup {
     text-decoration: none;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
