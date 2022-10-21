@@ -27,6 +27,7 @@ const EditGroup = ({close, group}) => {
     const [stateValidationErrors, setStateValidationErrors] = useState([]);
     const [urlValidationErrors, setUrlValidationErrors] = useState([]);
     const [errors, setErrors] =useState([]);
+    const [imageUploadErrors, setImageUploadErrors] = useState([])
 
     const [showNameErrors, setShowNameErrors] = useState(false);
     const [showAboutErrors, setShowAboutErrors] = useState(false);
@@ -113,6 +114,7 @@ const EditGroup = ({close, group}) => {
 
     const uploadImage = (e) => {
       e.preventDefault();
+      setImageUploadErrors([]);
       const formData = new FormData();
       formData.append("image", image);
 
@@ -124,11 +126,20 @@ const EditGroup = ({close, group}) => {
           "Content-Type": "multipart/form-data",
         },
         body: formData
-      }).then((res) => res.json()).then((data) => {setUrl(data.url);setImageLoading(false)})
+      }).then(async (res) => {
+        const data = await res.json();
+        setUrl(data.url);
+        setImageLoading(false);
+      }).catch(async (res) => {
+        const data = await res.json();
+        setImageUploadErrors([data.message]);
+        setImageLoading(false);
+      })
 
     };
 
     const updateFile = (e) => {
+      setImageUploadErrors([]);
       const file = e.target.files[0];
       if (file) setImage(file);
     };
@@ -144,6 +155,11 @@ const EditGroup = ({close, group}) => {
                 <li key={idx} className='create-group-error'>{error}</li>
               ))}
             </>
+            <>
+            {imageUploadErrors.map((error, idx) => (
+              <li key={idx} className='create-group-error'>{error}</li>
+            ))}
+          </>
             <form className="create-group-upload-image" onSubmit={uploadImage}>
               <label>Upload Preview Image:
               </label>

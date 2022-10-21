@@ -10,6 +10,19 @@ const multer = require("multer");
 //  and aws will automatically use those environment variables
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+ALLOWED_EXTENSIONS = ["png", "jpg", "jpeg", "gif", "jfif"];
+
+const allowedFile = (filename) => {
+  if (filename.includes('.')) {
+    const nameList = filename.split('.')
+    if ( ALLOWED_EXTENSIONS.includes(nameList[nameList.length - 1].toLowerCase())) {
+      return true
+    }
+
+  }
+  return false
+
+}
 
 // --------------------------- Public UPLOAD ------------------------
 
@@ -49,4 +62,5 @@ const storage = multer.memoryStorage({
         s3,
         singlePublicFileUpload,
         singleMulterUpload,
+        allowedFile
       };

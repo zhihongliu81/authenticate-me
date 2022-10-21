@@ -4,7 +4,7 @@ const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth')
 const { User, Group, sequelize, Membership, Image, Event, Venue, Attendee } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const {singleMulterUpload, singlePublicFileUpload} = require('../../awsS3.js')
+const {singleMulterUpload, singlePublicFileUpload, allowedFile} = require('../../awsS3.js')
 
 const router = express.Router();
 
@@ -68,8 +68,25 @@ router.delete('/:imageId', restoreUser, requireAuth, async (req, res) => {
 
 // upload image to AWS /api/images/upload
 router.post('/upload', singleMulterUpload("image"), async (req, res) => {
+    if (!req.file) {
+        res.statusCode = 400;
+        return res.json({
+            "message": "Image is require",
+            "statusCode": 400
+          })
+    }
+    const fileName = req.file.originalname;
+    if (!allowedFile(fileName)) {
+        res.statusCode = 400;
+        return res.json({
+            "message": "The file type is not allowed",
+            "statusCode": 400
+          })
+    }
 
     const url = await singlePublicFileUpload(req.file);
+
+
 
 
 

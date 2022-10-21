@@ -57,7 +57,7 @@ function App() {
       <div className="homepage-empty-div"></div>
       <div className="homepage-bottom-link">
         <div className="homepage-bottom-link-para">
-          <p>Create your own Meetup Group</p>
+          <p>Create your own Meetnature Group</p>
           <button onClick={() => { if (user) { setShowCreateGroupModal(true) } else { alert("Please Log in!") } }}>Get Stated</button>
         </div>
 

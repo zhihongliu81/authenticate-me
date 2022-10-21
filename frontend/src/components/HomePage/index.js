@@ -7,7 +7,7 @@ import './HomePage.css'
 
 const HomePage= ({trigger, setTrigger}) => {
     const user = useSelector(state => state.session.user);
-    
+
 
     const handle = (e) => {
         if (user) {
@@ -31,15 +31,15 @@ const HomePage= ({trigger, setTrigger}) => {
       </div>
       <div className="landing-introduction">
         <div className="landing-introduction-left">
-          <h1>Celebrating 20 years of real connections on Meetup</h1>
-          <p>Whatever you're looking to do this year, Meetup can help. For 20 years, people have turned to Meetup to meet people, make friends, find support, grow a business, and explore their interests. Thousands of events are happening every day—join the fun.</p>
+          <h1>Celebrating 20 years of real connections on Meetnature</h1>
+          <p>Whatever you're looking to do this year, Meetnature can help. For 20 years, people have turned to Meetnature to meet people, make friends, find support, grow a business, and explore their interests. Thousands of events are happening every day—join the fun.</p>
         </div>
         <div className="landing-introduction-right">
           <img className="landing-introduction-right-image" alt="landing-introduction-image" src="https://secure.meetupstatic.com/next/images/shared/online_events.svg?w=640" />
         </div>
       </div>
       <div className="landing-links">
-        <h2 className="landing-links-header">How Meetup works</h2>
+        <h2 className="landing-links-header">How Meetnature works</h2>
         <div className="landing-links-para">
           <p>Meet new people who share your interests through online and in-person events. It’s free to create an account.</p>
         </div>
