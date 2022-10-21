@@ -40,12 +40,14 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <div className="profile-dropdown">
-          <div>
+          <div className="profile-dropdown-user-info">
             <p>{user.firstName} {user.lastName}</p>
             <p>{user.email}</p>
           </div>
+          <div className="profile-dropdown-link-container">
+          <NavLink className={"profile-dropdown-navlink"} to='/yourGroups'>Your Groups</NavLink>
+          </div>
           <p className="profile-dropdown-logout" onClick={logout}>Log Out</p>
-          <NavLink className={"profile-dropdown-navlink"} to='/yourGroups'>Your groups</NavLink>
         </div>
       )}
     </div>

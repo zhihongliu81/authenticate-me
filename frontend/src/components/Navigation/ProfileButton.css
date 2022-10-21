@@ -30,7 +30,7 @@
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
 
-.profile-dropdown > div {
+.profile-dropdown-user-info {
     border-bottom: 1px solid rgba(128, 128, 128, 0.4);
 }
 
@@ -38,6 +38,9 @@
     color: #212121;
 }
 
+.profile-dropdown-link-container {
+    margin-top: 10px;
+}
 
 .profile-dropdown-navlink {
     text-decoration: none;
@@ -50,6 +53,7 @@
 
 .profile-dropdown-logout {
     cursor: pointer;
+    margin: 10px 0 0 0;
 }
 
 .profile-dropdown-logout:hover {
